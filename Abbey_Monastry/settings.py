@@ -1,5 +1,5 @@
 from pathlib import Path
-import os 
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-@f1i073wl+l$*l-cb)t*ja+cjqynl#w#u3u6@^_^7u93xm_t3@
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['.vercel.app', 'now.sh', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,9 +29,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-
-
 
 ROOT_URLCONF = 'Abbey_Monastry.urls'
 
@@ -96,13 +93,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+STATIC_URL = 'static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
