@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-4">
+    <h1 class="mb-4">Our Lady of Mepkin</h1>
+    <p>
+        {% if text.our_lady_of_mepkin %}
+        {{text.our_lady_of_mepkin}}
+        {% else %}
+        Xereperum re aut ipsus issendiciis eiusamus et ad quoditio vellabo. Ut eumqui id maioresse aut aliquam iunt
+        fugitatenis eum re, apeditat laborem iusa dellecto quas ulpa consed moluptatius quisquas autentinval ea cum
+        alignam id mo volorem poreiur, as volut laturia derectotat.
+        <br>
+        Oloreic totam qui sequis digenectem et mossim nectemp orerspel et aut exeruptatur, necus res sent voloreh
+        entibustis cum es prestempor sum vellibu sdaerit accum hilibus cullaburome saestis ma placitatur as minveri
+        atemped ut dolorepudi beaqui.
+        {% endif %}
+    </p>
+</div>
+
+{% include 'navbar.html' %}
+{% endblock %}

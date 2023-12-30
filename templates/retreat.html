@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-4">
+    <h1 class="mb-4">St. Francis Retreat Center</h1>
+    <p>
+        St. Francis Retreat Center provides an atmosphere of respite and solitude for those who care to share in our
+        prayer life, menu, and the landscape of the monastery.
+    </p>
+
+    <div class="ratio ratio-21x9">
+        <iframe src="https://www.youtube.com/embed/zp_vmecwmxI" title="YouTube video" allowfullscreen></iframe>
+    </div>
+
+    <a href="https://youtu.be/zp_vmecwmxI" target="_blank"
+       class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
+        <img src="{% if image.watch_video %}{{image.watch_video.url}}{% else %}../media/MEPKING/g3.png{% endif %}" width="250rem;" alt="">
+        <h4>Watch Video</h4>
+    </a>
+
+    <a href="https://mepkinabbey.org/retreat-center-news/" target="_blank"
+       class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
+        <img src="{% if image.about_the_center %}{{image.about_the_center.url}}{% else %}../media/MEPKING/center.png{% endif %}" width="250rem;" alt="">
+        <h4>About the Center</h4>
+    </a>
+</div>
+
+{% include 'navbar.html' %}
+
+{% endblock %}

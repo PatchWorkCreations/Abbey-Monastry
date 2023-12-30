@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% include 'navbar.html' %}
+{% load static %}
+
+{% include 'header.html' %}
+
+<div class="home-wrapper">
+    <a href="/gardens/" class="linker mt-2">
+        <img src=" {% if image %} {{image.the_gardens.url}} {% endif %}" alt="">
+        <div class="text">
+            The Gardens
+        </div>
+    </a>
+    <a href="{% url 'artwork' %}" class="linker mt-2">
+        <img src=" {% if layout %} {{layout.artwork_img.url}} {% endif %}" alt="">
+        <div class="text">
+            Fr.Francis' Artwork
+        </div>
+    </a>
+    <a href="/brothers/" class="linker mt-2">
+        <img src=" {% if layout %} {{layout.brothers_img.url}} {% endif %}" alt="">
+        <div class="text">
+            The Brothers 
+        </div>
+    </a>
+    <a href="/retreat-center/" class="linker mt-2">
+        <img src=" {% if layout %} {{layout.retreat_center_img.url}} {% endif %}" alt="">
+        <div class="text">
+            Retreat Center
+        </div>
+    </a>
+</div>
+
+
+{% endblock %}

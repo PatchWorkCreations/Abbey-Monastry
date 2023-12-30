@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-4">
+    <h1 class="mb-4">The Brothers</h1>
+    <p>
+        Mepkin Abbey is a community of Roman Catholic monks belonging to the world-wide Order of Cistercians of the
+        Strict Observance popularly known as Trappist.
+    </p>
+
+    <a href="/who-we-are/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
+        <img src="{% if image.who_we_are %}{{image.who_we_are.url}}{% else %}../media/MEPKING/monks.png{% endif %}" width="250rem;" alt="">
+        <h4>Who We Are</h4>
+    </a>
+
+    <a href="/daily-life/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
+        <img src="{% if image.our_daily_life %}{{image.our_daily_life.url}}{% else %}../media/MEPKING/daily-life.png{% endif %}" width="250rem;" alt="">
+        <h4>Our Daily Life</h4>
+    </a>
+
+    <a href="/vacations/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
+        <img src="{% if image.vacation %}{{image.vacation.url}}{% else %}../media/MEPKING/vacations.png{% endif %}" width="250rem;" alt="">
+        <h4>Vacations</h4>
+    </a>
+
+    <a href="/pray-with-us/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
+        <img src="{% if image.pray_with_us %}{{image.pray_with_us.url}}{% else %}../media/MEPKING/g4.png{% endif %}" width="250rem;" alt="">
+        <h4>Pray With Us</h4>
+    </a>
+</div>
+
+{% include 'navbar.html' %}
+{% endblock %}

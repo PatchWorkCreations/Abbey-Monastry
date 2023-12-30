@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'header.html' %}
+
+<style>
+.home-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 2vh;
+}
+
+.home-wrapper .linker {
+    height: 30vh;
+    width: 100%;
+    position: relative;
+}
+
+.home-wrapper .linker img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    filter: brightness(100%);
+    z-index: 1;
+    height: 100%;
+    object-fit: cover;
+    margin: 10px 0;
+}
+
+.home-wrapper .linker .text {
+    position: absolute;
+    font-size: 19px;
+    color: antiquewhite;
+    background-color: rgba(0, 0, 0, 0.629);
+    padding: .5rem;
+    z-index: 10;
+    bottom: 3%;
+}
+</style>
+
+<div class="home-wrapper">
+    <a href="/gardens/" class="linker mt-2">
+        <img src="{% if image.the_gardens %}{{image.the_gardens.url}}{% else %}../media/MEPKING/g2.png{% endif %}"
+             alt="">
+        <div class="text">
+            The Gardens
+        </div>
+    </a>
+    <a href="/brothers/" class="linker mt-2">
+        <img src="{% if image.the_brothers %}{{image.the_brothers.url}}{% else %}../media/MEPKING/brothers.png{% endif %}"
+             alt="">
+        <div class="text">
+            The Brothers
+        </div>
+    </a>
+    <a href="/retreat-center/" class="linker mt-2">
+
+        <img src="{% if image.retreat_center %}{{image.retreat_center.url}}{% else %}../media/MEPKING/brothers.png{% endif %}"
+             alt="">
+        <div class="text">
+            Retreat Center
+        </div>
+    </a>
+</div>
+
+{% include 'navbar.html' %}
+{% endblock %}

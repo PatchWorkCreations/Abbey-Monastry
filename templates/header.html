@@ -1,0 +1,26 @@
+<style>
+.header-wrapper {
+    height: 30vh;
+    position: relative;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) , url({% if image.header %}{{image.header.url}}{% else %}../media/MEPKING/g1.png{% endif %}) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header-wrapper img {
+    width: 5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    background-color: white;
+}
+</style>
+
+<div class="header-wrapper">
+    <img src="../media/MEPKING/logo2.png" class="img-fluid" alt="">
+</div>
+
+
