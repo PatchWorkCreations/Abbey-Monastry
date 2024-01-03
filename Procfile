@@ -1,1 +1,1 @@
-web: gunicorn Abbey_Monastry.wsgi
+web: gunicorn Abbey_Monastry.wsgi --log-file -

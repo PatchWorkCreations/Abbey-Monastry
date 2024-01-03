@@ -3,9 +3,3 @@ myenv/
 
 # Ignore the SQLite database file
 db.sqlite3
-
-staticfiles_build/
-
-vercel.json
-
-build_files.sh
