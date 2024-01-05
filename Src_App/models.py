@@ -10,6 +10,8 @@ class Image(models.Model):
 
     the_gardens = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
                                     verbose_name='The Gardens Image')
+    francis_artwork = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
+                                        verbose_name='Francis Artwork Image')
     the_brothers = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
                                      verbose_name='The Brothers Image')
     retreat_center = models.ImageField(upload_to='dynamic_images', null=True, blank=True,

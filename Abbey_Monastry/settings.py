@@ -61,11 +61,11 @@ WSGI_APPLICATION = 'Abbey_Monastry.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': '5ddB4Gg-5FB34E3DDAcaf*g*e2egDC1e',
-        'HOST': 'viaduct.proxy.rlwy.net',
-        'PORT': '40500',
+        'NAME': 'mofrsdux',
+        'USER': 'mofrsdux',
+        'HOST': 'tiny.db.elephantsql.com',
+        'PASSWORD': 'Bc4F1qBQbb2Q9DwrWMMxU6hzr0wcmhuD',
+        'PORT': '5432',
     }
 }
 

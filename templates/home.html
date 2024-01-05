@@ -47,6 +47,13 @@
             The Gardens
         </div>
     </a>
+    <a href="/francis-artwork/" class="linker mt-2">
+        <img src="{% if image.francis_artwork %}{{image.francis_artwork.url}}{% else %}../media/MEPKING/brothers.png{% endif %}"
+             alt="">
+        <div class="text">
+            Fr. Francis' Artwork
+        </div>
+    </a>
     <a href="/brothers/" class="linker mt-2">
         <img src="{% if image.the_brothers %}{{image.the_brothers.url}}{% else %}../media/MEPKING/brothers.png{% endif %}"
              alt="">
