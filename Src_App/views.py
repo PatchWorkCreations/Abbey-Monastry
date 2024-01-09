@@ -86,6 +86,10 @@ def Support(request):
     return render(request, 'support.html')
 
 
+def VirtualTourPage(request):
+    return render(request, 'virtual-tour-page.html')
+
+
 def LadyOfMepkin(request):
     context = {}
 
@@ -99,6 +103,9 @@ def LadyOfMepkin(request):
 
 def VirtualTour(request):
     return render(request, 'virtual-tour.html')
+
+def Columbarium(request):
+    return render(request, 'columbarium.html')
 
 
 def LaurensCemetry(request):

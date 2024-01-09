@@ -16,5 +16,7 @@ urlpatterns = [
     path('lady-of-mepkin/', views.LadyOfMepkin),
     path('virtual-tour/', views.VirtualTour),
     path('laurens-cemetry/', views.LaurensCemetry),
-    path('francis-artwork/', views.Artwork, name='artwork')
+    path('francis-artwork/', views.Artwork, name='artwork'),
+    path('virtual-tour-page/', views.VirtualTourPage, name='virtual-tour-page'),
+    path('columbarium/', views.Columbarium, name='columbarium'),
 ]
