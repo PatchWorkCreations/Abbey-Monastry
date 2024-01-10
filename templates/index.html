@@ -1,36 +1,115 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="d-flex flex-column" style="height: 100vh;">
-    <img src="{% if image.index %}{{image.index.url}}{% else %}../media/MEPKING/monastry.png{% endif %}" class="img-fluid" style="height: 60%; object-fit: cover;" alt="">
-    <div class="text-center">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Get Started!
-        </button>
-        <h3 class="mx-3">We share our spiritual journey and communal lives with all seekers...</h3>
-        <img src="../media/MEPKING/logo.png" class="img-fluid mx-auto d-block mt-3" style="max-width: 12rem;" alt="">
+<style>
+    .preloader {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; /* Ensure it's above other content */
+        background-color: rgba(0, 0, 0, 0.9); /* Adjust opacity if needed */
+        font-family: 'Arial', sans-serif;
+        font-size: 6rem;
+        text-align: center;
+        color: white;
+    }
+
+    .text-container {
+      position: absolute;
+      left: 50%;
+      top: 50%; /* Center vertically */
+      transform: translate(-50%, -50%);
+      text-align: center;
+      opacity: 0;
+      animation: fadeInOut 1.5s ease-in-out infinite; /* Smoother easing */
+    }
+
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8); /* Add initial scaling */
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8); /* Maintain scaling at end */
+      }
+    }
+</style>
+
+<!-- Preloader -->
+<div id="preloader" class="preloader">
+    <div class="text-container">
+        <span id="text"></span>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content" style="background-color: rgba(165, 131, 88, 0.96);">
-            <div class="modal-body text-center text-white">
-                <h1 class="my-5">Are you currently on site visiting Mepkin?</h1>
-                <div class="my-5">
-                    If YES, <a href="/grounds-tour/" class="btn btn-info">Click Here</a> to join us on a self-guided
-                    tour of the grounds
+<!-- Main content (initially hidden) -->
+<div id="main-content" style="display: none;">
+    <div class="d-flex flex-column" style="height: 100vh;">
+        <img src="{% if image.index %}{{image.index.url}}{% else %}../media/MEPKING/monastry.png{% endif %}"
+             class="img-fluid" style="height: 60%; object-fit: cover;" alt="">
+        <div class="text-center">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Get Started!
+            </button>
+            <h3 class="mx-3">We share our spiritual journey and communal lives with all seekers...</h3>
+            <img src="../media/MEPKING/logo.png" class="img-fluid mx-auto d-block mt-3" style="max-width: 12rem;"
+                 alt="">
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content" style="background-color: rgba(165, 131, 88, 0.96);">
+                <div class="modal-body text-center text-white">
+                    <h1 class="my-5">Are you currently on site visiting Mepkin?</h1>
+                    <div class="my-5">
+                        If YES, <a href="/virtual-tour-page/" class="btn btn-info">Click Here</a> to join us on a
+                        self-guided
+                        tour of the grounds
+                    </div>
+                    <div class="my-5">
+                        If NO, <a href="/home/" class="btn btn-info">Click Here</a> to find out general information
+                        about
+                        MEPKIN
+                    </div>
+                    <img src="../media/MEPKING/logo.png" class="img-fluid" style="max-width: 10rem;" alt="">
                 </div>
-                <div class="my-5">
-                    If NO, <a href="/home/" class="btn btn-info">Click Here</a> to find out general information about
-                    MEPKIN
-                </div>
-                <img src="../media/MEPKING/logo.png" class="img-fluid" style="max-width: 10rem;" alt="">
             </div>
         </div>
     </div>
 </div>
+
+<script>
+        // Your preloader script to change text
+        const textElement = document.getElementById('text');
+        const texts = ['SILENT', 'LISTEN'];
+        let index = 0;
+
+        function changeText() {
+            textElement.textContent = texts[index];
+            index = (index + 1) % texts.length;
+        }
+
+        setInterval(changeText, 1500); /* Adjust text change timing */
+
+        // Simulating loading completion after a certain time (for demonstration)
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('main-content');
+
+            preloader.style.display = 'none'; // Hide the preloader
+            mainContent.style.display = 'block'; // Show the main content
+        }, 5000); // Adjust the time as needed for demonstration
+</script>
 
 {% endblock %}
