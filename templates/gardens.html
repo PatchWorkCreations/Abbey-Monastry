@@ -18,8 +18,10 @@
                 <div class="card">
                     <img src="{% if image.virtual_tour %}{{image.virtual_tour.url}}{% else %}../media/MEPKING/g3.png{% endif %}"
                          class="card-img" alt="Virtual Tour Image">
-                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                        <h5 class="card-text fw-bold" style="color: #fff;">Virtual Tour</h5>
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            Virtual Tour
+                        </h5>
                     </div>
                 </div>
             </a>
@@ -30,8 +32,10 @@
                 <div class="card">
                     <img src="{% if image.the_gardens_and_scenery %}{{image.the_gardens_and_scenery.url}}{% else %}../media/MEPKING/g4.png{% endif %}"
                          class="card-img" alt="Gardens & Scenery Image">
-                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                        <h5 class="card-text fw-bold" style="color: #fff;">The Gardens & Scenery</h5>
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            The Gardens & Scenery
+                        </h5>
                     </div>
                 </div>
             </a>
@@ -41,10 +45,11 @@
             <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
                 <div class="card">
                     <img src="{% if image.meditation_garden %}{{image.meditation_garden.url}}{% else %}../media/MEPKING/carving05-705x529.jpg{% endif %}"
-                         class="card-img-top" alt="Meditation Garden Image">
-                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                        <h5 class="card-text fw-bold" style="color: #fff;">Meditation Garden of Truth &
-                            Reconciliation</h5>
+                         class="card-img" alt="Meditation Garden Image">
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            Meditation Garden of Truth & Reconciliation
+                        </h5>
                     </div>
                 </div>
             </a>
