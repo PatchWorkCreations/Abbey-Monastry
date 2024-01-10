@@ -2,37 +2,53 @@
 {% block content %}
 
 <div class="bg-secondary text-white">
-    <div class="container py-3">
-        <h1 class="mb-4">The Gardens</h1>
-        <p>
-            Situated along the Cooper River, Mepkin's gardens are home to many species of plants and flowers and places
-            of
-            both spiritual and historical significance.
-        </p>
+    <div class="container py-4">
+        <h1>The Gardens</h1>
     </div>
 </div>
 
-<div class="container my-4">
-    <a href="/virtual-tour-page/"
-       class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.virtual_tour %}{{image.virtual_tour.url}}{% else %}../media/MEPKING/g3.png{% endif %}"
-             width="250rem;" alt="">
-        <h4>Virtual Tour</h4>
-    </a>
+<div class="container mt-4">
+    <p>
+        Situated along the Cooper River, Mepkin's gardens are home to many species of plants and flowers and places
+        of both spiritual and historical significance.
+    </p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <a href="/virtual-tour-page/" class="text-decoration-none">
+                <div class="card text-center">
+                    <img src="{% if image.virtual_tour %}{{image.virtual_tour.url}}{% else %}../media/MEPKING/g3.png{% endif %}"
+                         class="card-img-top" alt="Virtual Tour Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Virtual Tour</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
 
-    <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank"
-       class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.the_gardens_and_scenery %}{{image.the_gardens_and_scenery.url}}{% else %}../media/MEPKING/g4.png{% endif %}"
-             width="250rem;" alt="">
-        <h4>The Gardens & Scenery</h4>
-    </a>
+        <div class="col">
+            <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
+                <div class="card text-center">
+                    <img src="{% if image.the_gardens_and_scenery %}{{image.the_gardens_and_scenery.url}}{% else %}../media/MEPKING/g4.png{% endif %}"
+                         class="card-img-top" alt="Gardens & Scenery Image">
+                    <div class="card-body">
+                        <h5 class="card-title">The Gardens & Scenery</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
 
-    <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank"
-       class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.meditation_garden %}{{image.meditation_garden.url}}{% else %}../media/MEPKING/carving05-705x529.jpg{% endif %}"
-             width="250rem;" alt="">
-        <h4>Meditation Garden of Truth & Reconciliation</h4>
-    </a>
+        <div class="col">
+            <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
+                <div class="card text-center">
+                    <img src="{% if image.meditation_garden %}{{image.meditation_garden.url}}{% else %}../media/MEPKING/carving05-705x529.jpg{% endif %}"
+                         class="card-img-top" alt="Meditation Garden Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Meditation Garden of Truth & Reconciliation</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 
 {% include 'navbar.html' %}
