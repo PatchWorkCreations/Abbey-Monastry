@@ -11,43 +11,25 @@
         align-items: center;
         z-index: 9999; /* Ensure it's above other content */
         background-color: rgba(0, 0, 0, 0.9); /* Adjust opacity if needed */
-        font-family: 'Arial', sans-serif;
-        font-size: 6rem;
         text-align: center;
-        color: white;
     }
 
-    .text-container {
-      position: absolute;
-      left: 50%;
-      top: 50%; /* Center vertically */
-      transform: translate(-50%, -50%);
-      text-align: center;
-      opacity: 0;
-      animation: fadeInOut 1.5s ease-in-out infinite; /* Smoother easing */
-    }
+        .text {
+            font-size: 150px; /* Initial large font size */
+            color: white; /* Set the font color to white */
+            transition: all 2s ease;
+        }
 
-    @keyframes fadeInOut {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8); /* Add initial scaling */
-      }
-      50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8); /* Maintain scaling at end */
-      }
-    }
+        /* Style for "silent" */
+        .silent {
+            font-size: 150px;
+            color: black; /* Set the font color of "silent" to black */
+        }
 </style>
 
 <!-- Preloader -->
 <div id="preloader" class="preloader">
-    <div class="text-container">
-        <span id="text"></span>
-    </div>
+        <div class="text" id="text">LISTEN</div>
 </div>
 
 <!-- Main content (initially hidden) -->
@@ -89,18 +71,27 @@
     </div>
 </div>
 
-<script>
-        // Your preloader script to change text
-        const textElement = document.getElementById('text');
-        const texts = ['SILENT', 'LISTEN'];
-        let index = 0;
+    <script>
+        const textElement = document.getElementById("text");
 
-        function changeText() {
-            textElement.textContent = texts[index];
-            index = (index + 1) % texts.length;
-        }
+        setTimeout(() => {
+            textElement.style.fontSize = "20px"; // Gradually shrink the font size
+        }, 1000); // 1 second delay
 
-        setInterval(changeText, 1500); /* Adjust text change timing */
+        setTimeout(() => {
+            document.body.style.backgroundColor = "white"; // Change background to white
+        }, 3000); // 2 seconds delay
+
+        setTimeout(() => {
+            textElement.textContent = "SILENT"; // Change the text
+            textElement.classList.add("silent"); // Apply style for "silent"
+        }, 3000); // 3 seconds delay
+
+        setTimeout(() => {
+            textElement.style.fontSize = "150px"; // Grow the font size back to large
+        }, 3000); // 4 seconds delay
+
+
 
         // Simulating loading completion after a certain time (for demonstration)
         setTimeout(() => {
@@ -110,6 +101,6 @@
             preloader.style.display = 'none'; // Hide the preloader
             mainContent.style.display = 'block'; // Show the main content
         }, 5000); // Adjust the time as needed for demonstration
-</script>
+    </script>
 
 {% endblock %}
