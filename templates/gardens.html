@@ -2,8 +2,11 @@
 {% block content %}
 
 <div class="bg-secondary text-white">
-    <div class="container py-3">
-        <h1>The Gardens</h1>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>The Gardens</h1>
+            <img src="../media/MEPKING/logo2.png" height="75rem" alt="">
+        </div>
     </div>
 </div>
 
@@ -17,7 +20,7 @@
             <a href="/virtual-tour-page/" class="text-decoration-none">
                 <div class="card border-0">
                     <img src="{% if image.virtual_tour %}{{image.virtual_tour.url}}{% else %}../media/MEPKING/g3.png{% endif %}"
-                         class="card-img rounded-3" alt="Virtual Tour Image">
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
                             Virtual Tour
@@ -31,7 +34,7 @@
             <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
                 <div class="card border-0">
                     <img src="{% if image.the_gardens_and_scenery %}{{image.the_gardens_and_scenery.url}}{% else %}../media/MEPKING/g4.png{% endif %}"
-                         class="card-img rounded-3" alt="Gardens & Scenery Image">
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
                             The Gardens & Scenery
@@ -45,7 +48,7 @@
             <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
                 <div class="card border-0">
                     <img src="{% if image.meditation_garden %}{{image.meditation_garden.url}}{% else %}../media/MEPKING/carving05-705x529.jpg{% endif %}"
-                         class="card-img rounded-3" alt="Meditation Garden Image">
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
                             Meditation Garden of Truth & Reconciliation

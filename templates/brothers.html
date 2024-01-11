@@ -1,33 +1,79 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container my-4">
-    <h1 class="mb-4">The Brothers</h1>
+<div class="bg-secondary text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>The Brothers</h1>
+            <img src="../media/MEPKING/logo2.png" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
     <p>
         Mepkin Abbey is a community of Roman Catholic monks belonging to the world-wide Order of Cistercians of the
         Strict Observance popularly known as Trappist.
     </p>
 
-    <a href="/who-we-are/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.who_we_are %}{{image.who_we_are.url}}{% else %}../media/MEPKING/monks.png{% endif %}" width="250rem;" alt="">
-        <h4>Who We Are</h4>
-    </a>
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+            <a href="/who-we-are/" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% if image.who_we_are %}{{image.who_we_are.url}}{% else %}../media/MEPKING/monks.png{% endif %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            Who We Are
+                        </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
 
-    <a href="/daily-life/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.our_daily_life %}{{image.our_daily_life.url}}{% else %}../media/MEPKING/daily-life.png{% endif %}" width="250rem;" alt="">
-        <h4>Our Daily Life</h4>
-    </a>
+        <div class="col">
+            <a href="/daily-life/" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% if image.our_daily_life %}{{image.our_daily_life.url}}{% else %}../media/MEPKING/daily-life.png{% endif %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            Our Daily Life
+                        </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
 
-    <a href="/vacations/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.vacation %}{{image.vacation.url}}{% else %}../media/MEPKING/vacations.png{% endif %}" width="250rem;" alt="">
-        <h4>Vacations</h4>
-    </a>
+        <div class="col">
+            <a href="/vocation/" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% if image.vocation %}{{image.vocation.url}}{% else %}../media/MEPKING/vocation.png{% endif %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            Vocation
+                        </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
 
-    <a href="/pray-with-us/" class="d-flex justify-content-start align-items-center gap-3 text-decoration-none mt-4">
-        <img src="{% if image.pray_with_us %}{{image.pray_with_us.url}}{% else %}../media/MEPKING/g4.png{% endif %}" width="250rem;" alt="">
-        <h4>Pray With Us</h4>
-    </a>
+        <div class="col">
+            <a href="/pray-with-us/" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% if image.pray_with_us %}{{image.pray_with_us.url}}{% else %}../media/MEPKING/g4.png{% endif %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h5 class="card-text fw-bold position-absolute bottom-0 mb-3" style="color: #fff;">
+                            Pray With US
+                        </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
-
+<br>
 {% include 'navbar.html' %}
 {% endblock %}

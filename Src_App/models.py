@@ -28,8 +28,8 @@ class Image(models.Model):
                                    verbose_name='Who We Are Image')
     our_daily_life = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
                                        verbose_name='Our Daily Life Image')
-    vacation = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
-                                 verbose_name='Vacation Image')
+    vocation = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
+                                 verbose_name='Vocation Image')
     pray_with_us = models.ImageField(upload_to='dynamic_images', null=True, blank=True,
                                      verbose_name='Pray With Us Image')
 

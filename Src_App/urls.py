@@ -10,7 +10,7 @@ urlpatterns = [
     path('who-we-are/', views.WeAre, name='who-we-are'),
     path('grounds-tour/', views.Grounds,name='grounds'),
     path('daily-life/', views.DailyLife),
-    path('vacations/', views.Vacations),
+    path('vocation/', views.Vocation),
     path('pray-with-us/', views.PrayWithUs),
     path('support/', views.Support),
     path('lady-of-mepkin/', views.LadyOfMepkin),

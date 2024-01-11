@@ -74,8 +74,8 @@ def DailyLife(request):
     return render(request, 'daily-life.html')
 
 
-def Vacations(request):
-    return render(request, 'vacations.html')
+def Vocation(request):
+    return render(request, 'vocation.html')
 
 
 def PrayWithUs(request):
@@ -103,6 +103,7 @@ def LadyOfMepkin(request):
 
 def VirtualTour(request):
     return render(request, 'virtual-tour.html')
+
 
 def Columbarium(request):
     return render(request, 'columbarium.html')
