@@ -25,17 +25,18 @@
             font-size: 150px;
             color: black; /* Set the font color of "silent" to black */
         }
+
 </style>
 
 <!-- Preloader -->
 <div id="preloader" class="preloader">
-        <div class="text" id="text">LISTEN</div>
+    <div class="text" id="text">LISTEN</div>
 </div>
 
 <!-- Main content (initially hidden) -->
 <div id="main-content" style="display: none;">
     <div class="d-flex flex-column" style="height: 100vh;">
-        <img src="{% if image.index %}{{image.index.url}}{% else %}../media/MEPKING/monastry.png{% endif %}"
+        <img src="../media/MEPKING/monastry.png"
              class="img-fluid" style="height: 60%; object-fit: cover;" alt="">
         <div class="text-center">
             <!-- Button trigger modal -->
@@ -56,13 +57,11 @@
                     <h1 class="my-5">Are you currently on site visiting Mepkin?</h1>
                     <div class="my-5">
                         If YES, <a href="/virtual-tour-page/" class="btn btn-info">Click Here</a> to join us on a
-                        self-guided
-                        tour of the grounds
+                        self-guided tour of the grounds
                     </div>
                     <div class="my-5">
                         If NO, <a href="/home/" class="btn btn-info">Click Here</a> to find out general information
-                        about
-                        MEPKIN
+                        about MEPKIN
                     </div>
                     <img src="../media/MEPKING/logo.png" class="img-fluid" style="max-width: 10rem;" alt="">
                 </div>
@@ -71,7 +70,7 @@
     </div>
 </div>
 
-    <script>
+<script>
         const textElement = document.getElementById("text");
 
         setTimeout(() => {
@@ -101,6 +100,7 @@
             preloader.style.display = 'none'; // Hide the preloader
             mainContent.style.display = 'block'; // Show the main content
         }, 5000); // Adjust the time as needed for demonstration
-    </script>
+
+</script>
 
 {% endblock %}

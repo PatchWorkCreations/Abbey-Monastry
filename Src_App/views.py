@@ -1,65 +1,24 @@
 from django.shortcuts import render
-from .models import *
 
 
 def Index(request):
-    context = {}
-
-    images = Image.objects.all()
-
-    if images:
-        images = images[0]
-        context['image'] = images
-
-    return render(request, 'index.html', context)
+    return render(request, 'index.html')
 
 
 def Home(request):
-    context = {}
-
-    images = Image.objects.all()
-
-    if images:
-        images = images[0]
-        context['image'] = images
-
-    return render(request, 'home.html', context)
+    return render(request, 'home.html')
 
 
 def Brothers(request):
-    context = {}
-
-    images = Image.objects.all()
-
-    if images:
-        images = images[0]
-        context['image'] = images
-
-    return render(request, 'brothers.html', context)
+    return render(request, 'brothers.html')
 
 
 def Gardens(request):
-    context = {}
-
-    images = Image.objects.all()
-
-    if images:
-        images = images[0]
-        context['image'] = images
-
-    return render(request, 'gardens.html', context)
+    return render(request, 'gardens.html')
 
 
 def Retreat(request):
-    context = {}
-
-    images = Image.objects.all()
-
-    if images:
-        images = images[0]
-        context['image'] = images
-
-    return render(request, 'retreat.html', context)
+    return render(request, 'retreat.html')
 
 
 def WeAre(request):
@@ -82,23 +41,16 @@ def PrayWithUs(request):
     return render(request, 'pray-with-us.html')
 
 
+def FrancisArtwork(request):
+    return render(request, 'francis-artwork.html')
+
+
 def Support(request):
     return render(request, 'support.html')
 
 
 def VirtualTourPage(request):
     return render(request, 'virtual-tour-page.html')
-
-
-def LadyOfMepkin(request):
-    context = {}
-
-    texts = Text.objects.all()
-
-    if texts:
-        texts = texts[0]
-        context['text'] = texts
-    return render(request, 'lady-of-mepkin.html', context)
 
 
 def VirtualTour(request):
@@ -109,18 +61,9 @@ def Columbarium(request):
     return render(request, 'columbarium.html')
 
 
-def LaurensCemetry(request):
-    context = {}
-
-    texts = Text.objects.all()
-
-    if texts:
-        texts = texts[0]
-        context['text'] = texts
-    return render(request, 'laurens-cemetry.html', context)
+def MonasticPrayer(request):
+    return render(request, 'monastic-prayer.html')
 
 
-def Artwork(request):
-    artworks = ArtWork.objects.all()
-
-    return render(request, 'artwork.html', {'artworks': artworks})
+def NewsUpdate(request):
+    return render(request, 'news-update.html')
