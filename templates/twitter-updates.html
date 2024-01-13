@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="bg-secondary text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>Twitter Updates</h1>
+            <img src="../media/MEPKING/logo.png" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+
+        <blockquote class="twitter-tweet">
+            <a class="twitter-timeline" data-height="500" href="https://twitter.com/mepkindailyword?ref_src=twsrc%5Etfw">Tweets by mepkindailyword</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </blockquote>
+
+</div>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

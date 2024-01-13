@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+import os
 
 def Index(request):
     return render(request, 'index.html')
@@ -42,7 +42,17 @@ def PrayWithUs(request):
 
 
 def FrancisArtwork(request):
-    return render(request, 'francis-artwork.html')
+
+    base_path = '../media/francis-artwork/'
+
+    image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpeg') for i in range(1, 36)]
+    # If you need more paths, adjust the range accordingly
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'francis-artwork.html', context)
 
 
 def Support(request):
@@ -67,3 +77,11 @@ def MonasticPrayer(request):
 
 def NewsUpdate(request):
     return render(request, 'news-update.html')
+
+
+def TwitterUpdates(request):
+    return render(request, 'twitter-updates.html')
+
+
+def PrayerRequest(request):
+    return render(request, 'prayer-request.html')

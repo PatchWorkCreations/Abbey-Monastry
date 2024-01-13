@@ -19,4 +19,6 @@ urlpatterns = [
     path('columbarium/', views.Columbarium, name='columbarium'),
     path('monastic-prayer/', views.MonasticPrayer),
     path('news-update/', views.NewsUpdate),
+    path('twitter-updates/', views.TwitterUpdates),
+    path('prayer-request/', views.PrayerRequest),
 ]
