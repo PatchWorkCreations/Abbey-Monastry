@@ -17,6 +17,7 @@
     <tr>
       <th scope="col">NAME</th>
       <th scope="col">PRAYER REQUEST</th>
+      <th scope="col">Date & Time</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
     <tr>
       <td>{{prayer_request.name}}</td>
       <td>{{prayer_request.prayer_request}}</td>
+      <td>{{prayer_request.created}}</td>
     </tr>
     {% endfor %}
   </tbody>
