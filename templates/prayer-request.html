@@ -14,9 +14,8 @@
 
     <div class="d-flex justify-content-center align-items-center">
         <div class="card" style="width: 25rem; border-radius: 1rem; background-color: #E0C8A180;">
-
-
-            <div class="card-body rounded-3">
+            <!--            Prayer request card-->
+            <div class="card-body rounded-3 prayer-request-card">
 
                 {% if message %}
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -30,8 +29,8 @@
                         <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                     </symbol>
                 </svg>
-                <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
 
+                <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
                         <use xlink:href="#check-circle-fill"/>
@@ -41,6 +40,7 @@
                     </div>
                 </div>
                 {% endif %}
+
                 <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -48,19 +48,85 @@
                         <input type="text" class="form-control" name="name" placeholder="Enter name..." required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Prayer Request:</label>
-                        <textarea class="form-control" name="prayer_request" rows="3" placeholder="Type here..."
-                                  required></textarea>
+    <label class="form-label">Prayer Request:</label>
+    <textarea class="form-control" name="prayer_req" id="prayer_req" rows="3" placeholder="Type here..."
+              required></textarea>
+    <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">50 words</p>
                     </div>
-                    <div class="d-grid d-block">
-                        <button class="btn btn-dark" type="submit">Submit Prayer Request</button>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-dark" type="submit" name="prayer_request">Submit Prayer Request</button>
+                        <button class="btn btn-secondary login-as-administrator-btn" type="button">Login as
+                            Administrator
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!--            Login card-->
+            <div class="card-body rounded-3 d-none login-card">
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Username:</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter username..."
+                               required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password:</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter password..."
+                               required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-secondary" type="submit" name="admin_login">Login</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
 </div>
 <br>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the elements for the prayer request card and login card
+        var prayerRequestCard = document.querySelector(".prayer-request-card");
+        var loginCard = document.querySelector(".login-card");
+
+        // Get the button for "Login as Administrator"
+        var loginButton = document.querySelector(".login-as-administrator-btn");
+
+        // Add click event listener to the login button
+        loginButton.addEventListener("click", function() {
+            // Toggle the 'd-none' class to hide/show the respective cards
+            prayerRequestCard.classList.toggle("d-none");
+            loginCard.classList.toggle("d-none");
+        });
+    });
+
+</script>
+
+<script>
+    var textarea = document.getElementById('prayer_req');
+    var wordCountDisplay = document.getElementById('wordCount');
+
+    textarea.addEventListener('input', function () {
+        var words = textarea.value.split(/\s+/).filter(function (word) {
+            return word.length > 0;
+        });
+        var wordCount = words.length;
+
+        if (wordCount > 50) {
+            // Truncate the excess words
+            var truncatedWords = words.slice(0, 50);
+            textarea.value = truncatedWords.join(' ');
+            wordCount = 50;
+        }
+
+        var remainingWords = 50 - wordCount;
+        wordCountDisplay.textContent = remainingWords + (remainingWords === 1 ? ' word' : ' words') + ' remaining';
+    });
+</script>
+
 {% include 'navbar.html' %}
 {% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="bg-secondary text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>Prayer Request List</h1>
+            <img src="../media/MEPKING/logo.png" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+<div class="mx-auto table-responsive">
+    <table class="table table-hover">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">NAME</th>
+      <th scope="col">PRAYER REQUEST</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for prayer_request in prayer_requests %}
+    <tr>
+      <td>{{prayer_request.name}}</td>
+      <td>{{prayer_request.prayer_request}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

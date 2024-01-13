@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from .models import PrayerRequest
 import os
+
 
 def Index(request):
     return render(request, 'index.html')
@@ -43,7 +46,6 @@ def PrayWithUs(request):
 
 
 def FrancisArtwork(request):
-
     base_path = '../media/francis-artwork/'
 
     image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpeg') for i in range(1, 36)]
@@ -85,14 +87,34 @@ def TwitterUpdates(request):
 
 
 def PrayerRequests(request):
-
     if request.method == 'POST':
-        PrayerRequest.objects.create(
-            name=request.POST.get('name'),
-            prayer_request=request.POST.get('prayer_request'),
-        )
-        message = "Prayer request submitted successfully."
-    else:
-        message = None
+        if 'prayer_request' in request.POST:
+            PrayerRequest.objects.create(
+                name=request.POST.get('name'),
+                prayer_request=request.POST.get('prayer_req'),
+            )
+            message = "Prayer request submitted successfully."
 
-    return render(request, 'prayer-request.html', {'message': message})
+        elif 'admin_login' in request.POST:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                if user.is_superuser:
+                    return redirect('prayer-request-list')
+            else:
+                message = "Invalid username or password."
+
+        return render(request, 'prayer-request.html', {'message': message})
+
+    return render(request, 'prayer-request.html')
+
+
+@login_required(login_url='prayer-request')
+def PrayerRequestList(request):
+    prayer_requests = PrayerRequest.objects.all()
+
+    return render(request, 'prayer-request-list.html', {'prayer_requests': prayer_requests})
