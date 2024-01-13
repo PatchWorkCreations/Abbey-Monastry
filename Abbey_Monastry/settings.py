@@ -58,16 +58,16 @@ WSGI_APPLICATION = 'Abbey_Monastry.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'HOST': 'viaduct.proxy.rlwy.net',
-#         'PASSWORD': 'bf25g2aE543F3Eb-F*g4dAd4BaD-AAB-',
-#         'PORT': '33760',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PASSWORD': 'bf25g2aE543F3Eb-F*g4dAd4BaD-AAB-',
+        'PORT': '33760',
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {

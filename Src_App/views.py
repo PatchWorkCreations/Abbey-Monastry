@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import PrayerRequest
 import os
 
 def Index(request):
@@ -83,5 +84,15 @@ def TwitterUpdates(request):
     return render(request, 'twitter-updates.html')
 
 
-def PrayerRequest(request):
-    return render(request, 'prayer-request.html')
+def PrayerRequests(request):
+
+    if request.method == 'POST':
+        PrayerRequest.objects.create(
+            name=request.POST.get('name'),
+            prayer_request=request.POST.get('prayer_request'),
+        )
+        message = "Prayer request submitted successfully."
+    else:
+        message = None
+
+    return render(request, 'prayer-request.html', {'message': message})
