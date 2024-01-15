@@ -42,8 +42,8 @@ def RetreatCenter(request):
     return render(request, 'retreat-center.html')
 
 
-def NewsUpdate(request):
-    return render(request, 'news-update.html')
+def NewsUpdates(request):
+    return render(request, 'news-updates.html')
 
 
 def VirtualTour(request):

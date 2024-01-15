@@ -11,7 +11,7 @@ urlpatterns = [
     path('the-brothers/', views.TheBrothers, name='the-brothers'),
     path('vocation/', views.Vocation, name='vocation'),
     path('retreat-center/', views.RetreatCenter, name='retreat-center'),
-    path('news-update/', views.NewsUpdate, name='news-update'),
+    path('news-updates/', views.NewsUpdates, name='news-updates'),
 
     path('virtual-tour/', views.VirtualTour, name='virtual-tour'),
 

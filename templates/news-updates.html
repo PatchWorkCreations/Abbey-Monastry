@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="bg-secondary text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>News Update</h1>
+            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+            <a href="https://mepkinabbey.org/garden-news/" target="_blank"  class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/dummy.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Garden News
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'twitter-updates' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/dummy.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Twitter Updates
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="https://mepkinabbey.org/news/" target="_blank" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/dummy.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            News from Mepkin
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}
