@@ -1,9 +1,11 @@
+{% load static %}
+
 <style>
 .header-wrapper {
     height: 30vh;
     position: relative;
     width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) , url(../media/MEPKING/g1.png);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)) , url({% static 'MEPKING/g1.png' %});
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,7 +22,7 @@
 </style>
 
 <div class="header-wrapper">
-    <img src="../media/MEPKING/logo-secondary.png" class="img-fluid" alt="">
+    <img src="{% static 'MEPKING/logo-secondary.png' %}" class="img-fluid" alt="">
 </div>
 
 

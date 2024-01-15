@@ -1,47 +1,222 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
-<div class="container my-4">
-    <h1 class="mb-4">Virtual Tour</h1>
-    <div id="map" style="width: 100%; height: 400px;"></div>
+<div class="bg-secondary text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <h1>Virtual Tour</h1>
+            <a href="{% url 'grounds-tour-map' %}">
+                <i class="fa-solid fa-map-location-dot fa-xl"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <p>
+        Mepkin Abbey is a community of Roman Catholic monks belonging to the world-wide Order of Cistercians of the
+        Strict Observance popularly known as Trappist.
+    </p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+            <a href="{% url 'mepkin-abbey-church' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Mepkin Abbey Church.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Mepkin Abbey Church
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'st-claire-walkway' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/St. Clare Walkway.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            St. Clare Walkway
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'reception-center-or-gift-shop' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Gift Shop.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Reception Center / Gift Shop
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'memorial-garden' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Memorial Garden.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Memorial Garden
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'fireman-memorial' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Firemans Memorial.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Fireman’s Memorial
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'labyrinth' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Labyrinth.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Labyrinth
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'crossroads-or-sacred-heart-of-jesus-statue' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Sacred heart of Jesus.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Crossroads / Sacred Heart of Jesus Statue
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'luce-gardens' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/LuceCemetery.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Luce Gardens
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'mepkin-abbey-botanical-garden' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Botanical GArden.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Mepkin Abbey Botanical Garden
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'mepkin-abbey-columbarium' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Comlumbarium.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Mepkin Abbey Columbarium
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'john-laurens-grave-or-cemetery' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/LaurensCemetery.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            John Laurens Grave / Cemetery
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'meditation-garden-of-truth-and-reconciliation' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/dummy.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Meditation Garden of Truth & Reconciliation
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'african-american-cemetery' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/African American Cemetery.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            African-American Cemetery
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'offices-and-private-rooms' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Office and Private Rooms.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Offices and Private Rooms
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 
 {% include 'navbar.html' %}
-
-<script>
-    
-    function initMap() {
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
-            zoom: 17,
-        });
-
-        var markerPosition = { lat: 33.1160651, lng: -79.9442717 };
-
-        var marker = new google.maps.Marker({
-            position: markerPosition,
-            map: map,
-            title: 'Mepkin Abbey',
-        });
-
-
-
-
-        var panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
-            position: markerPosition,
-            pov: {
-                heading: 0,
-                pitch: 0,
-            },
-        });
-
-        // Set the Street View panorama as the default panorama for the map
-        map.setStreetView(panorama);
-    }
-
-    initMap();
-
-</script>
-
 {% endblock %}

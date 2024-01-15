@@ -13,40 +13,12 @@ def Home(request):
     return render(request, 'home.html')
 
 
-def Brothers(request):
-    return render(request, 'brothers.html')
-
-
-def Gardens(request):
-    return render(request, 'gardens.html')
-
-
-def Retreat(request):
-    return render(request, 'retreat.html')
-
-
-def WeAre(request):
-    return render(request, 'who-we-are.html')
-
-
-def Grounds(request):
-    return render(request, 'grounds-tour.html')
-
-
-def DailyLife(request):
-    return render(request, 'daily-life.html')
-
-
-def Vocation(request):
-    return render(request, 'vocation.html')
-
-
-def PrayWithUs(request):
-    return render(request, 'pray-with-us.html')
+def TheGardens(request):
+    return render(request, 'the-gardens.html')
 
 
 def FrancisArtwork(request):
-    base_path = '../media/francis-artwork/'
+    base_path = '../static/francis-artwork/'
 
     image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpeg') for i in range(1, 36)]
     # If you need more paths, adjust the range accordingly
@@ -58,32 +30,52 @@ def FrancisArtwork(request):
     return render(request, 'francis-artwork.html', context)
 
 
-def Support(request):
-    return render(request, 'support.html')
+def TheBrothers(request):
+    return render(request, 'the-brothers.html')
 
 
-def VirtualTourPage(request):
-    return render(request, 'virtual-tour-page.html')
+def Vocation(request):
+    return render(request, 'vocation.html')
 
 
-def VirtualTour(request):
-    return render(request, 'virtual-tour.html')
-
-
-def Columbarium(request):
-    return render(request, 'columbarium.html')
-
-
-def MonasticPrayer(request):
-    return render(request, 'monastic-prayer.html')
+def RetreatCenter(request):
+    return render(request, 'retreat-center.html')
 
 
 def NewsUpdate(request):
     return render(request, 'news-update.html')
 
 
+def VirtualTour(request):
+    return render(request, 'virtual-tour.html')
+
+
+def WhoWeAre(request):
+    return render(request, 'who-we-are.html')
+
+
+def OurDailyLife(request):
+    return render(request, 'our-daily-life.html')
+
+
+def PrayWithUs(request):
+    return render(request, 'pray-with-us.html')
+
+
+def MonasticPrayer(request):
+    return render(request, 'monastic-prayer.html')
+
+
 def TwitterUpdates(request):
     return render(request, 'twitter-updates.html')
+
+
+def GroundsTourMap(request):
+    return render(request, 'grounds-tour-map.html')
+
+
+def VirtualTourStreetView(request):
+    return render(request, 'virtual-tour-street-view.html')
 
 
 def PrayerRequests(request):
@@ -118,3 +110,63 @@ def PrayerRequestList(request):
     prayer_requests = PrayerRequest.objects.all()
 
     return render(request, 'prayer-request-list.html', {'prayer_requests': prayer_requests})
+
+
+def Support(request):
+    return render(request, 'support.html')
+
+
+def MepkinAbbeyChurch(request):
+    return render(request, 'mepkin-abbey-church.html')
+
+
+def StClaireWalkway(request):
+    return render(request, 'st-claire-walkway.html')
+
+
+def ReceptionCenterOrGiftShop(request):
+    return render(request, 'reception-center-or-gift-shop.html')
+
+
+def MemorialGarden(request):
+    return render(request, 'memorial-garden.html')
+
+
+def FiremanMemorial(request):
+    return render(request, 'fireman-memorial.html')
+
+
+def Labyrinth(request):
+    return render(request, 'labyrinth.html')
+
+
+def CrossroadsOrSacredHeartOfJesusStatue(request):
+    return render(request, 'crossroads-or-sacred-heart-of-jesus-statue.html')
+
+
+def LuceGardens(request):
+    return render(request, 'luce-gardens.html')
+
+
+def MepkinAbbeyBotanicalGarden(request):
+    return render(request, 'mepkin-abbey-botanical-garden.html')
+
+
+def MepkinAbbeyColumbarium(request):
+    return render(request, 'mepkin-abbey-columbarium.html')
+
+
+def JohnLaurensGraveOrCemetery(request):
+    return render(request, 'john-laurens-grave-or-cemetery.html')
+
+
+def MeditationGardenOfTruthAndReconciliation(request):
+    return render(request, 'meditation-garden-of-truth-and-reconciliation.html')
+
+
+def AfricanAmericanCemetery(request):
+    return render(request, 'african-american-cemetery.html')
+
+
+def OfficesAndPrivateRooms(request):
+    return render(request, 'offices-and-private-rooms.html')

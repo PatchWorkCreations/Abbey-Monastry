@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
 <style>
     .preloader {
@@ -36,7 +37,7 @@
 <!-- Main content (initially hidden) -->
 <div id="main-content" style="display: none;">
     <div class="d-flex flex-column" style="height: 100vh;">
-        <img src="../media/MEPKING/monastry.png"
+        <img src="{% static 'MEPKING/monastry.png' %}"
              class="img-fluid" style="height: 60%; object-fit: cover;" alt="">
         <div class="text-center">
             <!-- Button trigger modal -->
@@ -44,7 +45,7 @@
                 Get Started!
             </button>
             <h3 class="mx-3">We share our spiritual journey and communal lives with all seekers...</h3>
-            <img src="../media/MEPKING/logo.png" class="img-fluid mx-auto d-block mt-3" style="max-width: 12rem;"
+            <img src="{% static 'MEPKING/logo.png' %}" class="img-fluid mx-auto d-block mt-3" style="max-width: 12rem;"
                  alt="">
         </div>
     </div>
@@ -56,14 +57,14 @@
                 <div class="modal-body text-center text-white">
                     <h1 class="my-5">Are you currently on site visiting Mepkin?</h1>
                     <div class="my-5">
-                        If YES, <a href="/virtual-tour-page/" class="btn btn-info">Click Here</a> to join us on a
+                        If YES, <a href="{% url 'virtual-tour' %}" class="btn btn-info">Click Here</a> to join us on a
                         self-guided tour of the grounds
                     </div>
                     <div class="my-5">
-                        If NO, <a href="/home/" class="btn btn-info">Click Here</a> to find out general information
+                        If NO, <a href="{% url 'home' %}" class="btn btn-info">Click Here</a> to find out general information
                         about MEPKIN
                     </div>
-                    <img src="../media/MEPKING/logo.png" class="img-fluid" style="max-width: 10rem;" alt="">
+                    <img src="{% static 'MEPKING/logo.png' %}" class="img-fluid" style="max-width: 10rem;" alt="">
                 </div>
             </div>
         </div>

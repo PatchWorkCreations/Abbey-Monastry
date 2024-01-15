@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container my-4">
+
+    <!-- Add your image here -->
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'virtual-tour-images/Office and Private Rooms.jpeg' %}" class="card-img"
+             style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <h1 class="mb-4">Offices and Private Rooms</h1>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>The Mepkin Abbey Monastery in Moncks Corner, South Carolina, designed to support the monastic life of Trappist
+        monks, includes various offices and private rooms integral to their community and operations. These spaces are
+        typically not open to the public, as they are part of the private areas where the monks live and work. The
+        monastery’s layout is structured to accommodate both the spiritual and practical needs of the monastic
+        community, including areas for prayer, study, and administration.</p>
+
+    <p class="ms-3"> 1. Offices: These are likely used for the administrative functions necessary to manage the monastery, its
+        various programs, and its interactions with the outside world.<br>
+        2. Private Rooms (Cells): In monastic terms, a monk’s private room is often referred to as a “cell”. These cells
+        are simple living quarters where monks spend time in prayer, meditation, and personal reflection, away from the
+        communal areas of the monastery.</p>
+
+    <p>Mepkin Abbey, following the Rule of St. Benedict, places a strong emphasis on the values of prayer, work, study,
+        and community life. The design and use of their spaces reflect this, balancing communal activities with the need
+        for solitude and contemplation. Visitors to Mepkin Abbey are usually restricted to public areas and are offered
+        guided tours to learn more about the monastery and its way of life.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
+            zoom: 17,
+        });
+
+        var markerPosition = { lat: 33.1160651, lng: -79.9442717 };
+
+        var marker = new google.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: 'Mepkin Abbey',
+        });
+
+        var panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+            position: markerPosition,
+            pov: {
+                heading: 0,
+                pitch: 0,
+            },
+        });
+
+        // Set the Street View panorama as the default panorama for the map
+        map.setStreetView(panorama);
+    }
+
+    initMap();
+
+</script>
+
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

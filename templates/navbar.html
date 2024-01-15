@@ -18,17 +18,17 @@
 
 <nav class="navbar fixed-bottom bg-white" style="z-index: 10000;">
     <div class="container-fluid d-flex justify-content-around align-items-center">
-        <a href="/home/"
+        <a href="{% url 'home' %}"
            class="custom-link">
             <i class="fa-solid fa-house"></i>
             <span>HOME</span>
         </a>
-        <a href="/prayer-request/"
+        <a href="{% url 'prayer-request' %}"
            class="custom-link">
             <i class="fa-solid fa-hands-praying"></i>
             <span>REQUEST</span>
         </a>
-        <a href="/support/"
+        <a href="{% url 'support' %}"
            class="custom-link" target="_blank">
             <i class="fa-solid fa-heart"></i>
             <span>SUPPORT</span>

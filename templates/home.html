@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'header.html' %}
+{% load static %}
 
     <style>
         .home-wrapper {
@@ -44,38 +45,38 @@
     </style>
 
     <div class="home-wrapper">
-        <a href="/gardens/" class="linker">
-            <img src="../media/MEPKING/g2.png" class="border rounded-3" alt="">
+        <a href="{% url 'the-gardens' %}" class="linker">
+            <img src="{% static 'MEPKING/g2.png' %}" class="border rounded-3" alt="">
             <div class="text">
                 The Gardens
             </div>
         </a>
-        <a href="/francis-artwork/" class="linker">
-            <img src="../media/MEPKING/brothers.png" class="border rounded-3" alt="">
+        <a href="{% url 'francis-artwork' %}" class="linker">
+            <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
             <div class="text">
                 Fr. Francis Artwork
             </div>
         </a>
-        <a href="/brothers/" class="linker">
-            <img src="../media/MEPKING/brothers.png" class="border rounded-3" alt="">
+        <a href="{% url 'the-brothers' %}" class="linker">
+            <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
             <div class="text">
                 The Brothers
             </div>
         </a>
-        <a href="/vocation/" class="linker">
-            <img src="../media/MEPKING/vocation.png" class="border rounded-3" alt="">
+        <a href="{% url 'vocation' %}" class="linker">
+            <img src="{% static 'MEPKING/vocation.png' %}" class="border rounded-3" alt="">
             <div class="text">
                 Vocation
             </div>
         </a>
-        <a href="/retreat-center/" class="linker">
-            <img src="../media/MEPKING/brothers.png" class="border rounded-3" alt="">
+        <a href="{% url 'retreat-center' %}" class="linker">
+            <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
             <div class="text">
                 Retreat Center
             </div>
         </a>
-        <a href="/news-update/" class="linker">
-            <img src="../media/MEPKING/dummy.jpg" class="border rounded-3" alt="">
+        <a href="{% url 'news-update' %}" class="linker">
+            <img src="{% static 'MEPKING/dummy.jpg' %}" class="border rounded-3" alt="">
             <div class="text">
                 News Update
             </div>

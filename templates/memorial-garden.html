@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container my-4">
+
+    <!-- Add your image here -->
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'virtual-tour-images/Memorial Garden.jpg' %}" class="card-img"
+             style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <h1 class="mb-4">Memorial Garden</h1>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>Mepkin Abbey is developing a new Memorial Garden near the entrance to the African-American cemetery. This garden
+        is intended to be an oasis of prayer and quiet, where visitors can walk around and reflect. The plan includes
+        planting trees and flowers, enhancing the tranquil atmosphere. Additionally, there’s an opportunity for
+        individuals to purchase a block engraved with the name of a loved one as a form of remembrance. More details
+        about this project and how to purchase a memorial block will be available on Mepkin Abbey’s website. This
+        addition to Mepkin Abbey will provide a serene space for visitors to remember and honor their loved ones in a
+        peaceful setting.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
+            zoom: 17,
+        });
+
+        var markerPosition = { lat: 33.1160651, lng: -79.9442717 };
+
+        var marker = new google.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: 'Mepkin Abbey',
+        });
+
+        var panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+            position: markerPosition,
+            pov: {
+                heading: 0,
+                pitch: 0,
+            },
+        });
+
+        // Set the Street View panorama as the default panorama for the map
+        map.setStreetView(panorama);
+    }
+
+    initMap();
+
+</script>
+
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

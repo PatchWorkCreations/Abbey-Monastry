@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="bg-secondary text-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>The Gardens</h1>
+            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <p>
+        Situated along the Cooper River, Mepkin's gardens are home to many species of plants and flowers and places
+        of both spiritual and historical significance.
+    </p>
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+            <a href="{% url 'virtual-tour' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/g3.png' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Virtual Tour
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/g4.png' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            The Gardens & Scenery
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="https://mepkinabbey.org/gardens-scenery/" target="_blank" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/carving05-705x529.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2" style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Meditation Garden of Truth & Reconciliation
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

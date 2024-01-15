@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container my-4">
+
+    <!-- Add your image here -->
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'virtual-tour-images/St. Clare Walkway.jpg' %}" class="card-img"
+             style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <h1 class="mb-4">St. Clare Walkway</h1>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>The St. Clare Walkway at Mepkin Abbey is part of the tranquil and picturesque environment of the monastery,
+        located on the historic grounds of the Mepkin Plantation on the Cooper River. This walkway offers a peaceful
+        retreat for contemplation and exploration, set amidst the natural beauty of the Abbey’s surroundings. Visitors
+        can experience landscaped vistas, gardens, and scenic views along this path, making it an ideal setting for a
+        reflective and serene journey.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
+            zoom: 17,
+        });
+
+        var markerPosition = { lat: 33.1160651, lng: -79.9442717 };
+
+        var marker = new google.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: 'Mepkin Abbey',
+        });
+
+        var panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+            position: markerPosition,
+            pov: {
+                heading: 0,
+                pitch: 0,
+            },
+        });
+
+        // Set the Street View panorama as the default panorama for the map
+        map.setStreetView(panorama);
+    }
+
+    initMap();
+
+</script>
+
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

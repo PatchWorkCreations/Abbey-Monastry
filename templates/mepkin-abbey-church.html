@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container my-4">
+
+    <!-- Add your image here -->
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'virtual-tour-images/Mepkin Abbey Church.jpeg' %}" class="card-img" style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <h1 class="mb-4">Mepkin Abbey Church</h1>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>Mepkin Abbey Church, located within the Mepkin Abbey Trappist Monastery in Moncks Corner, South Carolina, is a
+        significant spiritual site. This church is part of a monastic community where Trappist monks live according to
+        the Rule of St. Benedict. Visitors are welcome to visit the church; however, access is through guided tours
+        only, as the church is in the monastic enclosure, considered the heart of the monastery. The tours provide an
+        opportunity to experience the serene and contemplative environment of the Mepkin Abbey Church.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
+            zoom: 17,
+        });
+
+        var markerPosition = { lat: 33.1160651, lng: -79.9442717 };
+
+        var marker = new google.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: 'Mepkin Abbey',
+        });
+
+        var panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+            position: markerPosition,
+            pov: {
+                heading: 0,
+                pitch: 0,
+            },
+        });
+
+        // Set the Street View panorama as the default panorama for the map
+        map.setStreetView(panorama);
+    }
+
+    initMap();
+
+</script>
+
+<br>
+{% include 'navbar.html' %}
+{% endblock %}
