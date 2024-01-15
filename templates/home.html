@@ -3,7 +3,7 @@
 {% include 'header.html' %}
 {% load static %}
 
-    <style>
+<style>
         .home-wrapper {
             display: flex;
             flex-direction: column;
@@ -42,46 +42,47 @@
             margin-bottom: 0.5rem; /* Added margin bottom */
             margin-left: 0.5rem; /* Added margin left */
         }
-    </style>
+</style>
 
-    <div class="home-wrapper">
-        <a href="{% url 'the-gardens' %}" class="linker">
-            <img src="{% static 'MEPKING/g2.png' %}" class="border rounded-3" alt="">
-            <div class="text">
-                The Gardens
-            </div>
-        </a>
-        <a href="{% url 'francis-artwork' %}" class="linker">
-            <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
-            <div class="text">
-                Fr. Francis Artwork
-            </div>
-        </a>
-        <a href="{% url 'the-brothers' %}" class="linker">
-            <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
-            <div class="text">
-                The Brothers
-            </div>
-        </a>
-        <a href="{% url 'vocation' %}" class="linker">
-            <img src="{% static 'MEPKING/vocation.png' %}" class="border rounded-3" alt="">
-            <div class="text">
-                Vocation
-            </div>
-        </a>
-        <a href="{% url 'retreat-center' %}" class="linker">
-            <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
-            <div class="text">
-                Retreat Center
-            </div>
-        </a>
-        <a href="{% url 'news-update' %}" class="linker">
-            <img src="{% static 'MEPKING/dummy.jpg' %}" class="border rounded-3" alt="">
-            <div class="text">
-                News Update
-            </div>
-        </a>
-    </div>
-    <br>
+<div class="home-wrapper">
+    <a href="{% url 'the-gardens' %}" class="linker">
+        <img src="{% static 'MEPKING/g2.png' %}" class="border rounded-3" alt="">
+        <div class="text">
+            The Gardens
+        </div>
+    </a>
+    <a href="{% url 'francis-artwork' %}" class="linker">
+        <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
+        <div class="text">
+            Fr. Francis Artwork
+        </div>
+    </a>
+    <a href="{% url 'the-brothers' %}" class="linker">
+        <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
+        <div class="text">
+            The Brothers
+        </div>
+    </a>
+    <a href="{% url 'vocation' %}" class="linker">
+        <img src="{% static 'MEPKING/vocation.png' %}" class="border rounded-3" alt="">
+        <div class="text">
+            Vocation
+        </div>
+    </a>
+    <a href="{% url 'retreat-center' %}" class="linker">
+        <img src="{% static 'MEPKING/brothers.png' %}" class="border rounded-3" alt="">
+        <div class="text">
+            Retreat Center
+        </div>
+    </a>
+    <a href="{% url 'news-update' %}" class="linker">
+        <img src="{% static 'MEPKING/dummy.jpg' %}" class="border rounded-3" alt="">
+        <div class="text">
+            News Update
+        </div>
+    </a>
+</div>
+
+<br>
 {% include 'navbar.html' %}
 {% endblock %}
