@@ -2,10 +2,203 @@
 {% block content %}
 {% load static %}
 
+<style>
+
+    .mepkinmap {
+        width: 100%;
+        position: relative;
+        overflow: hidden; /* Ensure pins stay within the container */
+        border-radius: 20px;
+    }
+
+    .mepkinmap img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .title {
+        text-align: center;
+        color: #fff;
+        margin: 2em 0;
+        padding: 0 1em;
+    }
+
+    .title p {
+        max-width: 500px;
+        margin: 1em auto;
+        line-height: 27px;
+    }
+
+    .pin {
+        background: #4362f8;
+        position: absolute;
+        width: 0.7em;
+        height: 0.7em;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .pin.Gold:before {
+        content: '';
+        background: #FFD700;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        animation: pulse 1.3s ease-in-out infinite;
+    }
+
+
+
+    .pin.Blue:before {
+        background: #3380FF; /* Blue color - spiritual */
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        animation: pulse 1.3s ease-in-out infinite;
+    }
+
+    .pin.Green:before {
+        background: #33FF57; /* Green color - historical and spiritual */
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        animation: pulse 1.3s ease-in-out infinite;
+    }
+
+    .pin.Red:before {
+        background: #FF5733; /* Red color - general */
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        animation: pulse 1.3s ease-in-out infinite;
+    }
+
+    .pin span {
+        display: inline-block;
+        white-space: nowrap;
+        position: absolute;
+        left: 1.5em;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #fff;
+        border-radius: 10px; /* Adjust border-radius for curved corners */
+        padding: 0.3em 0.6em;
+        font-size: 10px;
+        max-width: 150px; /* Adjust the maximum width as needed */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.2;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        text-transform: uppercase;
+    }
+
+
+
+    .AbbeyChurch {
+        top: 81%;
+        left: 43%;
+    }
+
+    .StClareWalkway {
+        top: 58%;
+        left: 55%;
+    }
+
+    .ReceptionCenterGiftShop {
+        top: 55%;
+        left: 61%;
+    }
+
+    .MemorialGarden {
+        top: 58%;
+        left: 68%;
+    }
+
+    .FiremansMemorial {
+        top: 35%;
+        left: 78%;
+    }
+
+    .Labyrinth {
+        top: 27%;
+        left: 68%;
+    }
+
+    .CrossroadsSacredHeart {
+        top: 30%;
+        left: 55%;
+    }
+
+    .LuceGardens {
+        top: 38%;
+        left: 33%;
+    }
+
+
+    .MepkinAbbeyColumbarium {
+        top: 43%;
+        left: 13%;
+    }
+
+    .JohnLaurensGraveCemetery {
+        top: 31%;
+        left: 5%;
+    }
+
+    .MeditationGarden {
+        top: 27%;
+        left: 15%;
+    }
+
+    .AfricanAmericanCemetery {
+        top: 88%;
+        left: 78%;
+    }
+
+    .OfficesPrivateRooms {
+        top: 78%;
+        left: 52%;
+    }
+
+    .FlighttoEgyptCrucifixion {
+        top: 33%;
+        left: 22%;
+    }
+</style>
+
 <div class="bg-secondary text-white">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
-            <h1>Virtual Tour</h1>
+            <h1>
+                <span class="me-4">
+                    <a href="{% url 'the-gardens' %}" class="text-decoration-none text-white">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </span>
+                Virtual Tour
+            </h1>
             <a href="{% url 'grounds-tour-map' %}">
                 <i class="fa-solid fa-map-location-dot fa-xl"></i>
             </a>
@@ -19,7 +212,67 @@
         Strict Observance popularly known as Trappist.
     </p>
 
-    <div class="row row-cols-1 row-cols-md-3 g-3">
+    <div class="mepkinmap">
+        <img src="{% static 'MEPKING/Mepkin Abbey Map.png' %}" alt="...">
+
+        <div class="pin Blue AbbeyChurch" onclick="window.location.href='{% url 'mepkin-abbey-church' %}';">
+            <span>Mepkin Abbey Church</span>
+        </div>
+
+        <div class="pin Gold StClareWalkway" onclick="window.location.href='{% url 'st-claire-walkway' %}';">
+            <span>St. Claire Walkway</span>
+        </div>
+
+        <div class="pin Red ReceptionCenterGiftShop" onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
+            <span>Reception Center / Gift Shop</span>
+        </div>
+
+        <div class="pin Spiritual MemorialGarden" onclick="window.location.href='{% url 'memorial-garden' %}';">
+            <span>Memorial Garden</span>
+        </div>
+
+        <div class="pin Green FiremansMemorial" onclick="window.location.href='{% url 'fireman-memorial' %}';">
+            <span>Fireman’s Memorial</span>
+        </div>
+
+        <div class="pin Blue Labyrinth" onclick="window.location.href='{% url 'labyrinth' %}';">
+            <span>Labyrinth</span>
+        </div>
+
+        <div class="pin Blue CrossroadsSacredHeart" onclick="window.location.href='{% url 'crossroads-or-sacred-heart-of-jesus-statue' %}';">
+            <span>Crossroads / Sacred Heart of Jesus Statue</span>
+        </div>
+
+        <div class="pin Gold LuceGardens" onclick="window.location.href='{% url 'luce-gardens' %}';">
+            <span>Luce Gardens</span>
+        </div>
+
+        <div class="pin Blue MepkinAbbeyColumbarium" onclick="window.location.href='{% url 'mepkin-abbey-columbarium' %}';">
+            <span>Mepkin Abbey Columbarium</span>
+        </div>
+
+        <div class="pin Green JohnLaurensGraveCemetery" onclick="window.location.href='{% url 'john-laurens-grave-or-cemetery' %}';">
+            <span>Laurens Cemetery</span>
+        </div>
+
+        <div class="pin Green MeditationGarden" onclick="window.location.href='{% url 'meditation-garden-of-truth-and-reconciliation' %}';">
+            <span>Meditation Garden of Truth & Reconciliation</span>
+        </div>
+
+        <div class="pin Gold AfricanAmericanCemetery" onclick="window.location.href='{% url 'african-american-cemetery' %}';">
+            <span>African-American Cemetery</span>
+        </div>
+
+        <div class="pin Red OfficesPrivateRooms" onclick="window.location.href='{% url 'offices-and-private-rooms' %}';">
+            <span>Offices and Private Rooms</span>
+        </div>
+
+        <div class="pin Blue FlighttoEgyptCrucifixion" onclick="window.location.href='#';">
+            <span>The Flight to Egypt Crucifixion</span>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
         <div class="col">
             <a href="{% url 'mepkin-abbey-church' %}" class="text-decoration-none">
                 <div class="card border-0">
