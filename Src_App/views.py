@@ -116,6 +116,10 @@ def Support(request):
     return render(request, 'support.html')
 
 
+def LuceGardens(request):
+    return render(request, 'luce-gardens.html')
+
+
 def MepkinAbbeyChurch(request):
     return render(request, 'mepkin-abbey-church.html')
 
@@ -142,10 +146,6 @@ def Labyrinth(request):
 
 def CrossroadsOrSacredHeartOfJesusStatue(request):
     return render(request, 'crossroads-or-sacred-heart-of-jesus-statue.html')
-
-
-def LuceGardens(request):
-    return render(request, 'luce-gardens.html')
 
 
 def MepkinAbbeyBotanicalGarden(request):

@@ -28,6 +28,7 @@ urlpatterns = [
     path('prayer-request-list/', views.PrayerRequestList, name="prayer-request-list"),
     path('support/', views.Support, name='support'),
 
+    path('luce-gardens/', views.LuceGardens, name="luce-gardens"),
     path('mepkin-abbey-church/', views.MepkinAbbeyChurch, name="mepkin-abbey-church"),
     path('st-claire-walkway/', views.StClaireWalkway, name="st-claire-walkway"),
     path('reception-center-or-gift-shop/', views.ReceptionCenterOrGiftShop, name="reception-center-or-gift-shop"),
@@ -37,7 +38,6 @@ urlpatterns = [
     path('labyrinth/', views.Labyrinth, name="labyrinth"),
     path('crossroads-or-sacred-heart-of-jesus-statue/', views.CrossroadsOrSacredHeartOfJesusStatue,
          name="crossroads-or-sacred-heart-of-jesus-statue"),
-    path('luce-gardens/', views.LuceGardens, name="luce-gardens"),
     path('mepkin-abbey-botanical-garden/', views.MepkinAbbeyBotanicalGarden, name="mepkin-abbey-botanical-garden"),
     path('mepkin-abbey-columbarium/', views.MepkinAbbeyColumbarium, name="mepkin-abbey-columbarium"),
     path('john-laurens-grave-or-cemetery/', views.JohnLaurensGraveOrCemetery, name="john-laurens-grave-or-cemetery"),

@@ -97,13 +97,13 @@
         display: inline-block;
         white-space: nowrap;
         position: absolute;
-        left: 1.5em;
+        left: 1.7em;
         top: 50%;
         transform: translateY(-50%);
         background: #fff;
         border-radius: 10px; /* Adjust border-radius for curved corners */
         padding: 0.3em 0.6em;
-        font-size: 9px;
+        font-size: 7px;
         max-width: 150px; /* Adjust the maximum width as needed */
         overflow: hidden;
         text-overflow: ellipsis;
@@ -114,7 +114,10 @@
         text-transform: uppercase;
     }
 
-
+    .LuceGardens {
+        top: 38%;
+        left: 33%;
+    }
 
     .AbbeyChurch {
         top: 83%;
@@ -149,11 +152,6 @@
     .CrossroadsSacredHeart {
         top: 29%;
         left: 55%;
-    }
-
-    .LuceGardens {
-        top: 38%;
-        left: 33%;
     }
 
 
@@ -233,7 +231,8 @@
             <span>Memorial Garden</span>
         </div>
 
-        <div class="pin Green FiremansMemorial" onclick="window.location.href='{% url 'charleston-firefighters-memorial' %}';">
+        <div class="pin Green FiremansMemorial"
+             onclick="window.location.href='{% url 'charleston-firefighters-memorial' %}';">
             <span>Charleston Firefighters Memorial</span>
         </div>
 
@@ -280,21 +279,36 @@
         </div>
     </div>
 
-        <ul class="my-3">
-            <li class="my-1">For the <span class="fw-bold">Historical Sites</span> click on the <span
-                    style="background-color: #FFD700;">Gold</span> pin
-            </li>
-            <li class="my-1">For the <span class="fw-bold">Spiritual Sites</span> click on the <span
-                    style="background-color: #0000FF;">Blue</span> pin
-            </li>
-            <li class="my-1">For the <span class="fw-bold">Historical and Spiritual Sites</span> click on the <span
-                    style="background-color: #00FF00;">Green</span> pin
-            </li>
-            <li class="my-1">For the <span class="fw-bold">General</span> click on the <span
-                    style="background-color: #FF0000;">Red</span> pin
-            </li>
+    <ul class="my-3">
+        <li class="my-1">For the <span class="fw-bold">Historical Sites</span> click on the <span
+                style="background-color: #FFD700;">Gold</span> pin
+        </li>
+        <li class="my-1">For the <span class="fw-bold">Spiritual Sites</span> click on the <span
+                style="background-color: #0000FF;">Blue</span> pin
+        </li>
+        <li class="my-1">For the <span class="fw-bold">Historical and Spiritual Sites</span> click on the <span
+                style="background-color: #00FF00;">Green</span> pin
+        </li>
+        <li class="my-1">For the <span class="fw-bold">General</span> click on the <span
+                style="background-color: #FF0000;">Red</span> pin
+        </li>
 
-        </ul>
+    </ul>
+
+    <div class="col">
+        <a href="{% url 'luce-gardens' %}" class="text-decoration-none">
+            <div class="card border-0">
+                <img src="{% static 'virtual-tour-images/LuceCemetery.jpeg' %}"
+                     class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                <div class="card-img-overlay">
+                    <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
+                        style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                        Luce Gardens
+                    </h6>
+                </div>
+            </div>
+        </a>
+    </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-3 mt-1">
         <div class="col">
@@ -396,21 +410,6 @@
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
                             Crossroads / Sacred Heart of Jesus Statue
-                        </h6>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="{% url 'luce-gardens' %}" class="text-decoration-none">
-                <div class="card border-0">
-                    <img src="{% static 'virtual-tour-images/LuceCemetery.jpeg' %}"
-                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
-                    <div class="card-img-overlay">
-                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
-                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Luce Gardens
                         </h6>
                     </div>
                 </div>
