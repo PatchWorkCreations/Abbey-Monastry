@@ -23,17 +23,17 @@
     <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
         <h5 class="fw-bold">Listen to Tour Audio:</h5>
         <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
+            <source src="{% static 'audio/Mepkin Abbey Church.mp3' %}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
 
-    <p>Mepkin Abbey Church, located within the Mepkin Abbey Trappist Monastery in Moncks Corner, South Carolina, is a
-        significant spiritual site. This church is part of a monastic community where Trappist monks live according to
-        the Rule of St. Benedict. Visitors are welcome to visit the church; however, access is through guided tours
-        only, as the church is in the monastic enclosure, considered the heart of the monastery. The tours provide an
-        opportunity to experience the serene and contemplative environment of the Mepkin Abbey Church.</p>
+    <p>Mepkin Abbey Church, situated within the Mepkin Abbey Trappist Monastery in Moncks Corner, South Carolina, holds
+        a significant place in the realm of spirituality. This church stands as a part of a monastic community where
+        Trappist monks adhere to the Rule of St. Benedict. While we welcome visitors to the church, please note that
+        access is granted through guided tours only, as the church resides within the monastic enclosure, which is
+        considered the heart of the monastery. These tours offer an invaluable chance to immerse oneself in the serene
+        and contemplative ambiance of the Mepkin Abbey Church.</p>
 
     <!-- Google Map and Street View -->
     <h2 class="mt-4">Location</h2>
@@ -45,11 +45,11 @@
 <script>
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
+            center: { lat: 7.0531, lng: 124.6193 },
             zoom: 17,
         });
 
-        var markerPosition = { lat: 33.114529, lng: -79.952697 };
+        var markerPosition = { lat: 7.109960, lng: 124.822320 };
 
         var marker = new google.maps.Marker({
             position: markerPosition,

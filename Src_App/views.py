@@ -13,6 +13,10 @@ def Home(request):
     return render(request, 'home.html')
 
 
+def VirtualTour(request):
+    return render(request, 'virtual-tour.html')
+
+
 def TheGardens(request):
     return render(request, 'the-gardens.html')
 
@@ -44,10 +48,6 @@ def RetreatCenter(request):
 
 def NewsUpdates(request):
     return render(request, 'news-updates.html')
-
-
-def VirtualTour(request):
-    return render(request, 'virtual-tour.html')
 
 
 def WhoWeAre(request):
@@ -132,8 +132,8 @@ def MemorialGarden(request):
     return render(request, 'memorial-garden.html')
 
 
-def FiremanMemorial(request):
-    return render(request, 'fireman-memorial.html')
+def CharlestonFirefightersMemorial(request):
+    return render(request, 'charleston-firefighters-memorial.html')
 
 
 def Labyrinth(request):

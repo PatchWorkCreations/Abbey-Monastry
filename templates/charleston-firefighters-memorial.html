@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container my-4">
+
+    <!-- Add your image here -->
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'virtual-tour-images/Firemans Memorial.jpg' %}" class="card-img"
+             style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <h1 class="mb-4">
+                <span class="me-4">
+                    <a href="{% url 'virtual-tour' %}" class="text-decoration-none text-dark">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </span>
+        Charleston Firefighters Memorial
+    </h1>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="{% static 'audio/Charleston Firefihghters.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>The Charleston Firefighters Memorial at Mepkin Abbey stands as a dedicated space, honoring the brave firefighters
+        who made the ultimate sacrifice in the 2007 Sofa Super Store fire. This memorial serves as a poignant symbol of
+        remembrance and respect, aligning with the Abbey's commitment to contemplation and spiritual reverence. Set
+        within the serene environment of Mepkin Abbey, rich in history and natural beauty, this tribute stands as a
+        testament to bravery and selflessness. For a deeper understanding of this memorial and its significance, don't
+        hesitate to explore it further.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 33.115200817339165, lng: -79.9444384477732 },
+            zoom: 17,
+        });
+
+        var markerPosition = { lat: 33.117114, lng: -79.949539 };
+
+        var marker = new google.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: "Charleston Firefighters Memorial",
+        });
+
+        var panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+            position: markerPosition,
+            pov: {
+                heading: 0,
+                pitch: 0,
+            },
+        });
+
+        // Set the Street View panorama as the default panorama for the map
+        map.setStreetView(panorama);
+    }
+
+    initMap();
+
+
+</script>
+
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

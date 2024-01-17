@@ -186,6 +186,7 @@
         top: 32.5%;
         left: 21%;
     }
+
 </style>
 
 <div class="bg-secondary text-white">
@@ -193,7 +194,7 @@
         <div class="d-flex justify-content-between align-items-center py-3">
             <h1>
                 <span class="me-4">
-                    <a href="{% url 'the-gardens' %}" class="text-decoration-none text-white">
+                    <a href="{% url 'home' %}" class="text-decoration-none text-white">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 </span>
@@ -223,7 +224,8 @@
             <span>St. Claire Walkway</span>
         </div>
 
-        <div class="pin Red ReceptionCenterGiftShop" onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
+        <div class="pin Red ReceptionCenterGiftShop"
+             onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
             <span>Reception Center / Gift Shop</span>
         </div>
 
@@ -231,15 +233,16 @@
             <span>Memorial Garden</span>
         </div>
 
-        <div class="pin Green FiremansMemorial" onclick="window.location.href='{% url 'fireman-memorial' %}';">
-            <span>Fireman’s Memorial</span>
+        <div class="pin Green FiremansMemorial" onclick="window.location.href='{% url 'charleston-firefighters-memorial' %}';">
+            <span>Charleston Firefighters Memorial</span>
         </div>
 
         <div class="pin Blue Labyrinth" onclick="window.location.href='{% url 'labyrinth' %}';">
             <span>Labyrinth</span>
         </div>
 
-        <div class="pin Blue CrossroadsSacredHeart" onclick="window.location.href='{% url 'crossroads-or-sacred-heart-of-jesus-statue' %}';">
+        <div class="pin Blue CrossroadsSacredHeart"
+             onclick="window.location.href='{% url 'crossroads-or-sacred-heart-of-jesus-statue' %}';">
             <span>Crossroads / Sacred Heart of Jesus Statue</span>
         </div>
 
@@ -247,23 +250,28 @@
             <span>Luce Gardens</span>
         </div>
 
-        <div class="pin Blue MepkinAbbeyColumbarium" onclick="window.location.href='{% url 'mepkin-abbey-columbarium' %}';">
+        <div class="pin Blue MepkinAbbeyColumbarium"
+             onclick="window.location.href='{% url 'mepkin-abbey-columbarium' %}';">
             <span>Mepkin Abbey Columbarium</span>
         </div>
 
-        <div class="pin Green JohnLaurensGraveCemetery" onclick="window.location.href='{% url 'john-laurens-grave-or-cemetery' %}';">
+        <div class="pin Green JohnLaurensGraveCemetery"
+             onclick="window.location.href='{% url 'john-laurens-grave-or-cemetery' %}';">
             <span>Laurens Cemetery</span>
         </div>
 
-        <div class="pin Green MeditationGarden" onclick="window.location.href='{% url 'meditation-garden-of-truth-and-reconciliation' %}';">
+        <div class="pin Green MeditationGarden"
+             onclick="window.location.href='{% url 'meditation-garden-of-truth-and-reconciliation' %}';">
             <span>Meditation Garden of Truth & Reconciliation</span>
         </div>
 
-        <div class="pin Gold AfricanAmericanCemetery" onclick="window.location.href='{% url 'african-american-cemetery' %}';">
+        <div class="pin Gold AfricanAmericanCemetery"
+             onclick="window.location.href='{% url 'african-american-cemetery' %}';">
             <span>African-American Cemetery</span>
         </div>
 
-        <div class="pin Red OfficesPrivateRooms" onclick="window.location.href='{% url 'offices-and-private-rooms' %}';">
+        <div class="pin Red OfficesPrivateRooms"
+             onclick="window.location.href='{% url 'offices-and-private-rooms' %}';">
             <span>Offices and Private Rooms</span>
         </div>
 
@@ -272,7 +280,23 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-3 mt-2">
+        <ul class="my-3">
+            <li class="my-1">For the <span class="fw-bold">Historical Sites</span> click on the <span
+                    style="background-color: #FFD700;">Gold</span> pin
+            </li>
+            <li class="my-1">For the <span class="fw-bold">Spiritual Sites</span> click on the <span
+                    style="background-color: #0000FF;">Blue</span> pin
+            </li>
+            <li class="my-1">For the <span class="fw-bold">Historical and Spiritual Sites</span> click on the <span
+                    style="background-color: #00FF00;">Green</span> pin
+            </li>
+            <li class="my-1">For the <span class="fw-bold">General</span> click on the <span
+                    style="background-color: #FF0000;">Red</span> pin
+            </li>
+
+        </ul>
+
+    <div class="row row-cols-1 row-cols-md-3 g-3 mt-1">
         <div class="col">
             <a href="{% url 'mepkin-abbey-church' %}" class="text-decoration-none">
                 <div class="card border-0">
@@ -334,14 +358,14 @@
         </div>
 
         <div class="col">
-            <a href="{% url 'fireman-memorial' %}" class="text-decoration-none">
+            <a href="{% url 'charleston-firefighters-memorial' %}" class="text-decoration-none">
                 <div class="card border-0">
                     <img src="{% static 'virtual-tour-images/Firemans Memorial.jpg' %}"
                          class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Fireman’s Memorial
+                            Charleston Firefighters Memorial
                         </h6>
                     </div>
                 </div>

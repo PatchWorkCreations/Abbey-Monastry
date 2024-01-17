@@ -6,14 +6,13 @@ urlpatterns = [
 
     path('home/', views.Home, name='home'),
 
+    path('virtual-tour/', views.VirtualTour, name='virtual-tour'),
     path('the-gardens/', views.TheGardens, name='the-gardens'),
     path('francis-artwork/', views.FrancisArtwork, name='francis-artwork'),
     path('the-brothers/', views.TheBrothers, name='the-brothers'),
     path('vocation/', views.Vocation, name='vocation'),
     path('retreat-center/', views.RetreatCenter, name='retreat-center'),
     path('news-updates/', views.NewsUpdates, name='news-updates'),
-
-    path('virtual-tour/', views.VirtualTour, name='virtual-tour'),
 
     path('who-we-are/', views.WhoWeAre, name='who-we-are'),
     path('our-daily-life/', views.OurDailyLife, name='our-daily-life'),
@@ -33,7 +32,8 @@ urlpatterns = [
     path('st-claire-walkway/', views.StClaireWalkway, name="st-claire-walkway"),
     path('reception-center-or-gift-shop/', views.ReceptionCenterOrGiftShop, name="reception-center-or-gift-shop"),
     path('memorial-garden/', views.MemorialGarden, name="memorial-garden"),
-    path('fireman-memorial/', views.FiremanMemorial, name="fireman-memorial"),
+    path('charleston-firefighters-memorial/', views.CharlestonFirefightersMemorial,
+         name="charleston-firefighters-memorial"),
     path('labyrinth/', views.Labyrinth, name="labyrinth"),
     path('crossroads-or-sacred-heart-of-jesus-statue/', views.CrossroadsOrSacredHeartOfJesusStatue,
          name="crossroads-or-sacred-heart-of-jesus-statue"),
