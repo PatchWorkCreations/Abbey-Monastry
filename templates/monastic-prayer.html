@@ -23,10 +23,9 @@
 
     <!-- Audio player with spacing -->
     <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
-        <h5 class="fw-bold">Listen to Monastic Prayer Audio:</h5> <!-- Updated label -->
+        <h5 class="fw-bold">Listen to Monastic Prayer Audio:</h5>
         <audio controls>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
+            <source src="{% static 'audio/monastic prayer.mp3' %}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
