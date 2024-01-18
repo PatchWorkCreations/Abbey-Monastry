@@ -23,7 +23,9 @@
         {% for image in image_paths %}
         <div class="col">
             <div class="card border-0">
-                <img src="{{ image }}" class="img-fluid" alt="..." style="border-radius: 10px;">
+                <a href="{{ image }}" data-lightbox="image-set" data-title="Francis Artwork">
+                    <img src="{{ image }}" class="img-fluid" alt="..." style="border-radius: 10px;">
+                </a>
             </div>
         </div>
         {% endfor %}
