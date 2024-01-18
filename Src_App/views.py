@@ -24,7 +24,7 @@ def TheGardens(request):
 def FrancisArtwork(request):
     base_path = '../static/francis-artwork/'
 
-    image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpeg') for i in range(1, 36)]
+    image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpg') for i in range(1, 36)]
     # If you need more paths, adjust the range accordingly
 
     context = {
