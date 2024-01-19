@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-@f1i073wl+l$*l-cb)t*ja+cjqynl#w#u3u6@^_^7u93xm_t3@
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://abbey-monastry-v2.up.railway.app', 'https://www.mepkinapp.org']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
