@@ -187,7 +187,7 @@
 
 </style>
 
-<div class="bg-secondary text-white">
+<div class="bg-secondary text-white sticky-top">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-3">
             <h1>
@@ -214,17 +214,17 @@
     <div class="mepkinmap">
         <img src="{% static 'MEPKING/Mepkin Abbey Map.png' %}" alt="...">
 
-        <div class="pin Blue AbbeyChurch" onclick="window.location.href='{% url 'mepkin-abbey-church' %}';">
-            <span>Mepkin Abbey Church</span>
+        <div class="pin Red ReceptionCenterGiftShop"
+             onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
+            <span>Reception Center / Gift Shop</span>
         </div>
 
         <div class="pin Gold StClareWalkway" onclick="window.location.href='{% url 'st-claire-walkway' %}';">
             <span>St. Claire Walkway</span>
         </div>
 
-        <div class="pin Red ReceptionCenterGiftShop"
-             onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
-            <span>Reception Center / Gift Shop</span>
+        <div class="pin Blue AbbeyChurch" onclick="window.location.href='{% url 'mepkin-abbey-church' %}';">
+            <span>Mepkin Abbey Church</span>
         </div>
 
         <div class="pin Spiritual MemorialGarden" onclick="window.location.href='{% url 'memorial-garden' %}';">
@@ -281,45 +281,33 @@
 
     <ul class="my-3">
         <li class="my-1">For the <span class="fw-bold">Historical Sites</span> click on the <span
-                style="background-color: #FFD700;">Gold</span> pin
+                style="padding: 2px; color: #000000; background-color: #FFD700;">Gold</span> pin
         </li>
         <li class="my-1">For the <span class="fw-bold">Spiritual Sites</span> click on the <span
-                style="background-color: #0000FF;">Blue</span> pin
+                style="padding: 2px; color: #FFFFFF; background-color: #0000FF;">Blue</span> pin
         </li>
         <li class="my-1">For the <span class="fw-bold">Historical and Spiritual Sites</span> click on the <span
-                style="background-color: #00FF00;">Green</span> pin
+                style="padding: 2px; color: #000000; background-color: #00FF00;">Green</span> pin
         </li>
         <li class="my-1">For the <span class="fw-bold">General</span> click on the <span
-                style="background-color: #FF0000;">Red</span> pin
+                style="padding: 2px; color: #FFFFFF; background-color: #800080;">Purple</span> pin
+        </li>
+        <li class="my-1">For the <span class="fw-bold">Limited Access</span> click on the <span
+                style="padding: 2px; color: #FFFFFF; background-color: #FF0000;">Red</span> pin
         </li>
     </ul>
 
     <div class="row row-cols-1 row-cols-md-3 g-3 mt-1">
 
         <div class="col">
-            <a href="{% url 'luce-gardens' %}" class="text-decoration-none">
+            <a href="{% url 'reception-center-or-gift-shop' %}" class="text-decoration-none">
                 <div class="card border-0">
-                    <img src="{% static 'virtual-tour-images/LuceCemetery.jpg' %}"
+                    <img src="{% static 'virtual-tour-images/Gift Shop.jpg' %}"
                          class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Luce Gardens
-                        </h6>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="{% url 'mepkin-abbey-church' %}" class="text-decoration-none">
-                <div class="card border-0">
-                    <img src="{% static 'virtual-tour-images/Mepkin Abbey Church.jpg' %}"
-                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
-                    <div class="card-img-overlay">
-                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
-                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Mepkin Abbey Church
+                            Reception Gift Center
                         </h6>
                     </div>
                 </div>
@@ -334,22 +322,7 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            St. Clare Walkway
-                        </h6>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="{% url 'reception-center-or-gift-shop' %}" class="text-decoration-none">
-                <div class="card border-0">
-                    <img src="{% static 'virtual-tour-images/Gift Shop.jpg' %}"
-                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
-                    <div class="card-img-overlay">
-                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
-                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Reception Center / Gift Shop
+                            St Clare Walkway
                         </h6>
                     </div>
                 </div>
@@ -364,7 +337,7 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Memorial Garden
+                            Memorial Arbor
                         </h6>
                     </div>
                 </div>
@@ -379,7 +352,7 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Charleston Firefighters Memorial
+                            Charleston Firefighters
                         </h6>
                     </div>
                 </div>
@@ -409,7 +382,22 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Crossroads / Sacred Heart of Jesus Statue
+                            Crossroads
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'luce-gardens' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/LuceCemetery.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
+                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Luce Garden
                         </h6>
                     </div>
                 </div>
@@ -424,7 +412,7 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Mepkin Abbey Botanical Garden
+                            Botanical Garden
                         </h6>
                     </div>
                 </div>
@@ -439,7 +427,7 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            Mepkin Abbey Columbarium
+                            Columbarium
                         </h6>
                     </div>
                 </div>
@@ -454,7 +442,7 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            John Laurens Grave / Cemetery
+                            Henry Laurence
                         </h6>
                     </div>
                 </div>
@@ -484,7 +472,37 @@
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                            African-American Cemetery
+                            African - American Cemetery
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'sacred-corridor' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'MEPKING/dummy.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
+                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Sacred Corridor - Spiritual & Historical
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'mepkin-abbey-church' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Mepkin Abbey Church.jpg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
+                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Mepkin Abbey Church
                         </h6>
                     </div>
                 </div>

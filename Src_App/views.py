@@ -50,16 +50,16 @@ def NewsUpdates(request):
     return render(request, 'news-updates.html')
 
 
+def PrayWithUs(request):
+    return render(request, 'pray-with-us.html')
+
+
 def WhoWeAre(request):
     return render(request, 'who-we-are.html')
 
 
 def OurDailyLife(request):
     return render(request, 'our-daily-life.html')
-
-
-def PrayWithUs(request):
-    return render(request, 'pray-with-us.html')
 
 
 def MonasticPrayer(request):
@@ -162,6 +162,10 @@ def JohnLaurensGraveOrCemetery(request):
 
 def MeditationGardenOfTruthAndReconciliation(request):
     return render(request, 'meditation-garden-of-truth-and-reconciliation.html')
+
+
+def SacredCorridor(request):
+    return render(request, 'sacred-corridor.html')
 
 
 def AfricanAmericanCemetery(request):

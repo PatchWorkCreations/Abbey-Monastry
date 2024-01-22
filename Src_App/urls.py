@@ -13,10 +13,10 @@ urlpatterns = [
     path('vocation/', views.Vocation, name='vocation'),
     path('retreat-center/', views.RetreatCenter, name='retreat-center'),
     path('news-updates/', views.NewsUpdates, name='news-updates'),
+    path('pray-with-us/', views.PrayWithUs, name='pray-with-us'),
 
     path('who-we-are/', views.WhoWeAre, name='who-we-are'),
     path('our-daily-life/', views.OurDailyLife, name='our-daily-life'),
-    path('pray-with-us/', views.PrayWithUs, name='pray-with-us'),
 
     path('monastic-prayer/', views.MonasticPrayer, name='monastic-prayer'),
 
@@ -43,6 +43,7 @@ urlpatterns = [
     path('john-laurens-grave-or-cemetery/', views.JohnLaurensGraveOrCemetery, name="john-laurens-grave-or-cemetery"),
     path('meditation-garden-of-truth-and-reconciliation/', views.MeditationGardenOfTruthAndReconciliation,
          name="meditation-garden-of-truth-and-reconciliation"),
+    path('sacred-corridor/', views.SacredCorridor, name="sacred-corridor"),
     path('african-american-cemetery/', views.AfricanAmericanCemetery, name="african-american-cemetery"),
     path('offices-and-private-rooms/', views.OfficesAndPrivateRooms, name="offices-and-private-rooms"),
 ]
