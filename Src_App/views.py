@@ -62,12 +62,12 @@ def OurDailyLife(request):
     return render(request, 'our-daily-life.html')
 
 
-def MonasticPrayer(request):
-    return render(request, 'monastic-prayer.html')
-
-
 def TwitterUpdates(request):
     return render(request, 'twitter-updates.html')
+
+
+def MonasticPrayer(request):
+    return render(request, 'monastic-prayer.html')
 
 
 def GroundsTourMap(request):
@@ -83,6 +83,7 @@ def PrayerRequests(request):
         if 'prayer_request' in request.POST:
             PrayerRequest.objects.create(
                 name=request.POST.get('name'),
+                type=request.POST.get('type'),
                 prayer_request=request.POST.get('prayer_req'),
             )
             message = "Prayer request submitted successfully."
@@ -114,6 +115,10 @@ def PrayerRequestList(request):
 
 def Support(request):
     return render(request, 'support.html')
+
+
+def Connect(request):
+    return render(request, 'connect.html')
 
 
 def LuceGardens(request):

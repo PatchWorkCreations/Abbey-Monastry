@@ -18,15 +18,16 @@ urlpatterns = [
     path('who-we-are/', views.WhoWeAre, name='who-we-are'),
     path('our-daily-life/', views.OurDailyLife, name='our-daily-life'),
 
-    path('monastic-prayer/', views.MonasticPrayer, name='monastic-prayer'),
-
     path('twitter-updates/', views.TwitterUpdates, name='twitter-updates'),
+
+    path('monastic-prayer/', views.MonasticPrayer, name='monastic-prayer'),
 
     path('grounds-tour-map/', views.GroundsTourMap, name='grounds-tour-map'),
     path('virtual-tour-street-view/', views.VirtualTourStreetView, name='virtual-tour-street-view'),
     path('prayer-request/', views.PrayerRequests, name="prayer-request"),
     path('prayer-request-list/', views.PrayerRequestList, name="prayer-request-list"),
     path('support/', views.Support, name='support'),
+    path('connect/', views.Connect, name='connect'),
 
     path('luce-gardens/', views.LuceGardens, name="luce-gardens"),
     path('mepkin-abbey-church/', views.MepkinAbbeyChurch, name="mepkin-abbey-church"),
