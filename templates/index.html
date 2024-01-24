@@ -2,73 +2,41 @@
 {% block content %}
 {% load static %}
 
-<style>
-  /* Added CSS for the loading screen */
-  #loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Make sure the loading screen is on top of everything */
-  }
-</style>
-
-<!-- Loading screen -->
-<div id="loading-screen" style="height: 100%;">
-    <img src="{% static 'MEPKING/logo.gif' %}" alt="Loading..." style="max-width: 400px;">
+<div class="d-flex flex-column" style="height: 100vh;">
+    <img src="{% static 'MEPKING/monastry.png' %}"
+         class="img-fluid" style="height: 60%; object-fit: cover;" alt="">
+    <div class="text-center">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Get Started!
+        </button>
+        <h3 class="mx-3">We share our spiritual journey and contemplative life, sacred and serene.</h3>
+        <h3>With all seekers...</h3>
+        <img src="{% static 'MEPKING/logo.png' %}" class="img-fluid mx-auto d-block mt-3" style="max-width: 12rem;"
+             alt="">
+    </div>
 </div>
 
-<!-- Main content (hidden initially) -->
-<div id="main-content" style="opacity: 0; transition: opacity 1s ease-in-out;">
-    <div class="d-flex flex-column" style="height: 100vh;">
-        <img src="{% static 'MEPKING/monastry.png' %}"
-             class="img-fluid" style="height: 60%; object-fit: cover;" alt="">
-        <div class="text-center">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Get Started!
-            </button>
-            <h3 class="mx-3">We share our spiritual journey and contemplative life, sacred and serene.</h3>
-            <h3>With all seekers...</h3>
-            <img src="{% static 'MEPKING/logo.png' %}" class="img-fluid mx-auto d-block mt-3" style="max-width: 12rem;"
-                 alt="">
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content" style="background-color: rgba(165, 131, 88, 0.96);">
-                <div class="modal-body text-center text-white">
-                    <h1 class="my-5">Are you currently on site visiting Mepkin?</h1>
-                    <div class="my-5">
-                        If YES, <a href="{% url 'virtual-tour' %}" class="btn btn-secondary">Click Here</a> to join us on a
-                        self-guided tour of the grounds
-                    </div>
-                    <div class="my-5">
-                        If NO, <a href="{% url 'home' %}" class="btn btn-secondary">Click Here</a> to find out general
-                        information
-                        about MEPKIN
-                    </div>
-                    <img src="{% static 'MEPKING/logo.png' %}" class="img-fluid" style="max-width: 10rem;" alt="">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background-color: rgba(165, 131, 88, 0.96);">
+            <div class="modal-body text-center text-white">
+                <h1 class="my-5">Are you currently on site visiting Mepkin?</h1>
+                <div class="my-5">
+                    If YES, <a href="{% url 'virtual-tour' %}" class="btn btn-secondary">Click Here</a> to join us on a
+                    self-guided tour of the grounds
                 </div>
+                <div class="my-5">
+                    If NO, <a href="{% url 'home' %}" class="btn btn-secondary">Click Here</a> to find out general
+                    information
+                    about MEPKIN
+                </div>
+                <img src="{% static 'MEPKING/logo.png' %}" class="img-fluid" style="max-width: 10rem;" alt="">
             </div>
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(function() {
-        document.getElementById("loading-screen").style.display = "none";
-        document.getElementById("main-content").style.opacity = "1";
-    }, 24100); // (16 seconds)
-});
-</script>
+</div>
 
 {% endblock %}

@@ -5,6 +5,19 @@ from .models import Prayer
 import os
 
 
+def FrancisArtwork(request):
+    base_path = '../static/francis-artwork/'
+
+    image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpg') for i in range(1, 36)]
+    # If you need more paths, adjust the range accordingly
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'francis-artwork.html', context)
+
+
 def Index(request):
     return render(request, 'index.html')
 
@@ -19,19 +32,6 @@ def VirtualTour(request):
 
 def TheGardens(request):
     return render(request, 'the-gardens.html')
-
-
-def FrancisArtwork(request):
-    base_path = '../static/francis-artwork/'
-
-    image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpg') for i in range(1, 36)]
-    # If you need more paths, adjust the range accordingly
-
-    context = {
-        'image_paths': image_paths,
-    }
-
-    return render(request, 'francis-artwork.html', context)
 
 
 def TheBrothers(request):
@@ -116,7 +116,7 @@ def Support(request):
 
 
 def Connect(request):
-    return render(request, 'connect.html') @ login_required(login_url='pray')
+    return render(request, 'connect.html')
 
 
 @login_required(login_url='pray')
@@ -136,7 +136,7 @@ def GratitudePrayer(request):
 def LuceGardens(request):
     base_path = '../static/luce-gardens-images/'
 
-    image_paths = [os.path.join(base_path, f'{i}.jpg') for i in range(1, 13)]
+    image_paths = [os.path.join(base_path, f'{i}.jpg') for i in range(1, 16)]
     # If you need more paths, adjust the range accordingly
 
     print(image_paths)
