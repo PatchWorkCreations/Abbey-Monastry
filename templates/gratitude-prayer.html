@@ -11,7 +11,7 @@
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 </span>
-                Prayer Request
+                Gratitude Prayer
             </h1>
             <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
         </div>
@@ -31,7 +31,7 @@
             </thead>
             <tbody>
             {% for prayer in list_of_prayers %}
-            {% if prayer.type == "Prayer Request" %}
+            {% if prayer.type == "Gratitude Prayer" %}
             <tr>
                 <td>{{prayer.name}}</td>
                 <td>{{prayer.created}}</td>

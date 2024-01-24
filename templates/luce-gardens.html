@@ -54,6 +54,23 @@
         in honor of Henry's daughter-in-law.
     </p>
 
+    <div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            {% for image in image_paths %}
+            <div class="col">
+                <div class="card border-0">
+                    <a href="{{ image }}" data-lightbox="image-set" data-title=".">
+                        <img src="{{ image }}" class="img-fluid" alt="..."
+                             style="width: 100%; height: 15rem; object-fit: cover; border-radius: 10px;">
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
     <!-- Google Map and Street View -->
     <h2 class="mt-4">Location</h2>
     <div id="map" style="width: 100%; height: 400px;"></div>

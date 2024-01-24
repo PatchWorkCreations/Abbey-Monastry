@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import PrayerRequest
+from .models import Prayer
 import os
 
 
@@ -78,15 +78,15 @@ def VirtualTourStreetView(request):
     return render(request, 'virtual-tour-street-view.html')
 
 
-def PrayerRequests(request):
+def Pray(request):
     if request.method == 'POST':
-        if 'prayer_request' in request.POST:
-            PrayerRequest.objects.create(
+        if 'pray' in request.POST:
+            Prayer.objects.create(
                 name=request.POST.get('name'),
                 type=request.POST.get('type'),
-                prayer_request=request.POST.get('prayer_req'),
+                prayer_msg=request.POST.get('prayer_msg'),
             )
-            message = "Prayer request submitted successfully."
+            message = "Request submitted successfully."
 
         elif 'admin_login' in request.POST:
             username = request.POST.get('username')
@@ -97,20 +97,18 @@ def PrayerRequests(request):
             if user is not None:
                 login(request, user)
                 if user.is_superuser:
-                    return redirect('prayer-request-list')
+                    return redirect('list-of-prayers')
             else:
                 message = "Invalid username or password."
 
-        return render(request, 'prayer-request.html', {'message': message})
+        return render(request, 'pray.html', {'message': message})
 
-    return render(request, 'prayer-request.html')
+    return render(request, 'pray.html')
 
 
-@login_required(login_url='prayer-request')
-def PrayerRequestList(request):
-    prayer_requests = PrayerRequest.objects.all()
-
-    return render(request, 'prayer-request-list.html', {'prayer_requests': prayer_requests})
+@login_required(login_url='pray')
+def ListOfPrayers(request):
+    return render(request, 'list-of-prayers.html')
 
 
 def Support(request):
@@ -118,11 +116,36 @@ def Support(request):
 
 
 def Connect(request):
-    return render(request, 'connect.html')
+    return render(request, 'connect.html') @ login_required(login_url='pray')
+
+
+@login_required(login_url='pray')
+def PrayerRequest(request):
+    list_of_prayers = Prayer.objects.all()
+
+    return render(request, 'prayer-request.html', {'list_of_prayers': list_of_prayers})
+
+
+@login_required(login_url='pray')
+def GratitudePrayer(request):
+    list_of_prayers = Prayer.objects.all()
+
+    return render(request, 'gratitude-prayer.html', {'list_of_prayers': list_of_prayers})
 
 
 def LuceGardens(request):
-    return render(request, 'luce-gardens.html')
+    base_path = '../static/luce-gardens-images/'
+
+    image_paths = [os.path.join(base_path, f'{i}.jpg') for i in range(1, 13)]
+    # If you need more paths, adjust the range accordingly
+
+    print(image_paths)
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'luce-gardens.html', context)
 
 
 def MepkinAbbeyChurch(request):
