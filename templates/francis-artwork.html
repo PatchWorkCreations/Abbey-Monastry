@@ -16,7 +16,6 @@
     align-items: center;
     z-index: 9999; /* Make sure the loading screen is on top of everything */
   }
-
 </style>
 
 <!-- Loading screen -->
@@ -27,17 +26,11 @@
 <!--Main content-->
 <div id="main-content" class="container d-flex flex-column justify-content-center align-items-center gap-2"
      style="height: 100%; opacity: 0; transition: opacity 1s ease-in-out;">
-    <div class="card mb-3" style="width: 18rem;">
+    <div class="card mb-3" style="width: 15rem;">
         <img src="{% static 'francis-artwork/thumbnail_IMG (1).jpg' %}" class="card-img-top" alt="...">
         <div class="card-body text-center">
             <h5 class="card-title">Daily Wisdom Art - "January 24, 2024"</h5>
-            <div class="card-text">
-                <p class="fst-italic">
-                    - art work for the day-
-                    <br>
-                    <span class="fst-normal">Growing Hope</span>
-                </p>
-            </div>
+            <p>Growing Hope</p>
         </div>
         <div class="card-footer text-center">
             <a href="{% url 'index' %}" class="text-decoration-none">Proceed</a>
@@ -52,7 +45,5 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("main-content").style.opacity = "1";
     }, 29000); // (29 seconds)
 });
-
-
 </script>
 {% endblock %}
