@@ -17,8 +17,6 @@
     z-index: 9999; /* Make sure the loading screen is on top of everything */
   }
 
-
-
 </style>
 
 <!-- Loading screen -->
@@ -26,24 +24,23 @@
     <img src="{% static 'MEPKING/logo.gif' %}" alt="Loading..." style="max-width: 400px;">
 </div>
 
-<!-- Main content (hidden initially) -->
-<div id="main-content" style="opacity: 0; transition: opacity 1s ease-in-out;">
-    <div class="container d-flex flex-column justify-content-center align-items-center gap-2" style="height: 100%;">
-        <div class="card mb-3" style="width: 25rem;">
-            <img src="{% static 'francis-artwork/thumbnail_IMG (1).jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body text-center">
-                <h5 class="card-title">Daily Wisdom Art - "January 24, 2024"</h5>
-                <div class="card-text">
-                    <p class="fst-italic">
-                        - art work for the day-
-                        <br>
-                        <span class="fst-normal">Growing Hope</span>
-                    </p>
-                </div>
+<!--Main content-->
+<div id="main-content" class="container d-flex flex-column justify-content-center align-items-center gap-2"
+     style="height: 100%; opacity: 0; transition: opacity 1s ease-in-out;">
+    <div class="card mb-3" style="width: 25rem;">
+        <img src="{% static 'francis-artwork/thumbnail_IMG (1).jpg' %}" class="card-img-top" alt="...">
+        <div class="card-body text-center">
+            <h5 class="card-title">Daily Wisdom Art - "January 24, 2024"</h5>
+            <div class="card-text">
+                <p class="fst-italic">
+                    - art work for the day-
+                    <br>
+                    <span class="fst-normal">Growing Hope</span>
+                </p>
             </div>
-            <div class="card-footer text-center">
-                <a href="{% url 'index' %}" class="text-decoration-none">Proceed</a>
-            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'index' %}" class="text-decoration-none">Proceed</a>
         </div>
     </div>
 </div>
@@ -53,8 +50,9 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
         document.getElementById("loading-screen").style.display = "none";
         document.getElementById("main-content").style.opacity = "1";
-    }, 27000); // (27 seconds)
+    }, 2000); // (27 seconds)
 });
+
 
 </script>
 {% endblock %}
