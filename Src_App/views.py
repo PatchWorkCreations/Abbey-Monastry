@@ -136,7 +136,7 @@ def GratitudePrayer(request):
 def LuceGardens(request):
     base_path = '../static/luce-gardens-images/'
 
-    image_paths = [os.path.join(base_path, f'{i}.jpg') for i in range(1, 16)]
+    image_paths = [os.path.join(base_path, f'luce gardens ({i}).jpg') for i in range(1, 15)]
     # If you need more paths, adjust the range accordingly
 
     print(image_paths)

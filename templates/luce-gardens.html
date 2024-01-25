@@ -56,18 +56,36 @@
 
     <div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-3">
-            {% for image in image_paths %}
-            <div class="col">
-                <div class="card border-0">
-                    <a href="{{ image }}" data-lightbox="image-set" data-title=".">
-                        <img src="{{ image }}" class="img-fluid" alt="..."
-                             style="width: 100%; height: 15rem; object-fit: cover; border-radius: 10px;">
-                    </a>
-                </div>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                {% for image in image_paths %}
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" {% endif %}
+                        aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                        aria-label="Slide {{ forloop.counter }}">
+                </button>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <div class="carousel-inner">
+                {% for image in image_paths %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="2000">
+                    <img src="{{ image }}" class="d-block w-100" alt="...">
+                </div>
+                {% endfor %}
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+
 
     </div>
 
@@ -144,9 +162,9 @@
     }
 
     initMap();
-
 </script>
-
+<br>
+<br>
 <br>
 {% include 'navbar.html' %}
 {% endblock %}
