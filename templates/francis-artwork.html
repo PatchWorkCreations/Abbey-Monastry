@@ -16,6 +16,7 @@
     align-items: center;
     z-index: 9999; /* Make sure the loading screen is on top of everything */
   }
+
 </style>
 
 <!-- Loading screen -->
@@ -29,8 +30,12 @@
     <div class="card mb-3" style="width: 15rem;">
         <img src="{% static 'francis-artwork/thumbnail_IMG (8).jpg' %}" class="card-img-top" alt="...">
         <div class="card-body text-center">
-            <h5 class="card-title">Daily Wisdom Art - "January 26, 2024"</h5>
-            <p>Growing Hope</p>
+            <h5 class="card-title text-end fst-italic mb-3">
+                    Adam should have been guarding
+                    the Garden when his negligence let
+                    the serpent in..
+            </h5>
+            <p class="text-center mb-0"><span class="h5">"January 26, 2024"</span> <br> Growing Hope</p>
         </div>
         <div class="card-footer text-center">
             <a href="{% url 'index' %}" class="text-decoration-none">Proceed</a>
@@ -43,7 +48,8 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
         document.getElementById("loading-screen").style.display = "none";
         document.getElementById("main-content").style.opacity = "1";
-    }, 37000); // (37 seconds)
+    }, 41000); // (41 seconds)
 });
+
 </script>
 {% endblock %}
