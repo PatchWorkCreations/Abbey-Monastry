@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #sideButton {
+      position: fixed;
+      bottom: 4.5rem; /* Adjust this value as needed */
+      right: 1rem; /* Adjust this value as needed */
+      background-color: #3498db; /* Blue color */
+      color: #fff;
+      padding: 10px;
+      border: 2px solid #2980b9; /* Border color */
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #sideButton:hover {
+      background-color: #2980b9; /* Darker blue color on hover */
+    }
+
+
+    #sideButton:hover {
+      background-color: #2980b9; /* Darker blue color on hover */
+    }
+
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #modalContent {
+      background-color: #3498db; /* Blue color */
+      max-width: 80%;
+      max-height: 80%;
+      overflow: auto;
+      position: relative;
+      text-align: center;
+      border-radius: 10px; /* Rounded corners */
+      padding: 20px;
+    }
+
+    #closeButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    #instruction {
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    #iframeContainer {
+      width: 100%;
+      height: 100%;
+    }
+
+    #myIframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    </style>
+</head>
+<body>
+
+<button id="sideButton" onclick="showIframe()">Click here to give feedback</button>
+
+<div id="modalOverlay">
+    <div id="modalContent">
+        <span id="closeButton" onclick="hideIframe()">&#10006;</span>
+        <div id="instruction">Please click the button below to open the form:</div>
+        <script src="https://form.jotform.com/static/feedback2.js" type="text/javascript"></script>
+        <script type="text/javascript">
+      var JFL_240164624615452 = new JotformFeedback({
+        formId: '240164624615452',
+        base: 'https://form.jotform.com/',
+        windowTitle: 'Beta Test Feedback From',
+        backgroundColor: '#3498db', /* Blue color */
+        fontColor: '#FFFFFF',
+        type: 'false',
+        height: 500,
+        width: 700,
+        openOnLoad: false
+      });
+
+        </script>
+        <a class="btn lightbox-240164624615452"
+           style="
+    margin-top: 16px;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    font-family: inherit;
+    text-shadow: none;
+    user-select: none;
+    transition: all,.1s,ease-in;
+    background-color: #3498db; /* Blue color */
+    border: 2px solid #2980b9; /* Border color */
+    color: #FFFFFF;
+    ">
+            Beta Test Feedback From
+        </a>
+    </div>
+</div>
+
+<script>
+  function showIframe() {
+    var modalOverlay = document.getElementById("modalOverlay");
+    modalOverlay.style.display = "flex";
+  }
+
+  function hideIframe() {
+    var modalOverlay = document.getElementById("modalOverlay");
+    modalOverlay.style.display = "none";
+  }
+
+</script>
+
+</body>
+</html>
