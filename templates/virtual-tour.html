@@ -175,14 +175,14 @@
         left: 84%;
     }
 
-    .OfficesPrivateRooms {
-        top: 80%;
-        left: 52.2%;
+    .SacredCorridor {
+        top: 49.1%;
+        left: 98.9%;
     }
 
-    .FlighttoEgyptCrucifixion {
-        top: 32.5%;
-        left: 21%;
+    .RetreatCenter {
+        top: 48.3%;
+        left: 45.7%;
     }
 
 </style>
@@ -212,7 +212,7 @@
     </p>
 
     <div class="mepkinmap">
-        <img src="{% static 'MEPKING/vtm.jpg' %}" alt="...">
+        <img src="{% static 'map/This is for plotting only.png' %}" alt="...">
 
         <div class="pin Red ReceptionCenterGiftShop"
              onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
@@ -269,13 +269,14 @@
             <span>African-American Cemetery</span>
         </div>
 
-        <div class="pin Red OfficesPrivateRooms"
-             onclick="window.location.href='{% url 'offices-and-private-rooms' %}';">
-            <span>Offices and Private Rooms</span>
+        <div class="pin Green SacredCorridor"
+             onclick="window.location.href='{% url 'sacred-corridor' %}';">
+            <span>Sacred Corridor</span>
         </div>
 
-        <div class="pin Blue FlighttoEgyptCrucifixion" onclick="window.location.href='#';">
-            <span>The Flight to Egypt Crucifixion</span>
+        <div class="pin Blue RetreatCenter"
+             onclick="window.location.href='{% url 'retreat-center' %}';">
+            <span>Retreat Center</span>
         </div>
     </div>
 
@@ -488,6 +489,21 @@
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
                             Mepkin Abbey Church
+                        </h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col">
+            <a href="{% url 'retreat-center' %}" class="text-decoration-none">
+                <div class="card border-0">
+                    <img src="{% static 'virtual-tour-images/Retreat Center.jpeg' %}"
+                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                    <div class="card-img-overlay">
+                        <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
+                            style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
+                            Retreat Center
                         </h6>
                     </div>
                 </div>
