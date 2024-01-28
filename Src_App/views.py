@@ -202,3 +202,7 @@ def AfricanAmericanCemetery(request):
 
 def OfficesAndPrivateRooms(request):
     return render(request, 'offices-and-private-rooms.html')
+
+
+def FlightToEgypt(request):
+    return render(request, 'flight-to-egypt.html')

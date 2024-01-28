@@ -51,4 +51,5 @@ urlpatterns = [
     path('sacred-corridor/', views.SacredCorridor, name="sacred-corridor"),
     path('african-american-cemetery/', views.AfricanAmericanCemetery, name="african-american-cemetery"),
     path('offices-and-private-rooms/', views.OfficesAndPrivateRooms, name="offices-and-private-rooms"),
+    path('flight-to-egypt/', views.FlightToEgypt, name="flight-to-egypt"),
 ]

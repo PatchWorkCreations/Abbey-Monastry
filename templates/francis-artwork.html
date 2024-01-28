@@ -22,6 +22,7 @@
 <!-- Loading screen -->
 <div id="loading-screen" style="height: 100%;">
     <img src="{% static 'MEPKING/logo.gif' %}" alt="Loading..." style="max-width: 400px;">
+    <button id="skip-button" class="btn btn-sm btn-secondary px-3" style="position: absolute; top: 10px; right: 10px; display: none;" onclick="skipLoading()">Skip</button>
 </div>
 
 <!--Main content-->
@@ -30,12 +31,10 @@
     <div class="card mb-3" style="width: 15rem;">
         <img src="{% static 'francis-artwork/thumbnail_IMG (36).jpg' %}" class="card-img-top" alt="...">
         <div class="card-body text-center">
-            <h5 class="card-title text-end fst-italic mb-3">
-                    Adam should have been guarding
-                    the Garden when his negligence let
-                    the serpent in..
-            </h5>
-            <p class="text-center mb-0"><span class="h5">"January 28, 2024"</span> <br> Growing Hope</p>
+            <div class="card-title">
+                  Daily Wisdom Art - "January 28, 2024"
+            </div>
+            <p class="text-center">---artwork of the day---<br>Growing Hope</p>
         </div>
         <div class="card-footer text-center">
             <a href="{% url 'index' %}" class="text-decoration-none">Proceed</a>
@@ -44,12 +43,20 @@
 </div>
 
 <script>
+function skipLoading() {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("main-content").style.opacity = "1";
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
         document.getElementById("loading-screen").style.display = "none";
         document.getElementById("main-content").style.opacity = "1";
-    }, 1000); // (41 seconds)
-});
+    }, 41000); // 41 seconds
 
+    setTimeout(function() {
+        document.getElementById("skip-button").style.display = "block";
+    }, 5000); // Show skip button after 1 second
+});
 </script>
 {% endblock %}
