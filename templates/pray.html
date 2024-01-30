@@ -20,21 +20,48 @@
 
 <div class="container mt-3">
 
-
-    <div class="d-flex justify-content-center mb-3">
-        <a href="{% url 'monastic-prayer' %}" class="text-decoration-none">
-            <div class="card border-0">
-                <img src="{% static 'MEPKING/Monastic Vocation.jpg' %}"
-                     class="card-img rounded-3" alt="..." style="width: 25rem; object-fit: cover;">
-                <div class="card-img-overlay">
-                    <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
-                        style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
-                        Prayer for Monastic Vocations
-                    </h6>
-                </div>
-            </div>
-        </a>
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Prayer for Monastic Vocations Audio:</h5>
+        <audio controls>
+            <source src="{% static 'audio/monastic prayer.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </div>
+
+    <p class="text-center">
+
+        <i>(Please join us in prayer for monastic vocations.)</i><br>
+        <br>
+        Gracious and Loving God<br>
+        In every generation you call men and women<br>
+        To leave everything<br>
+        <br>
+        Following Christ into the desert<br>
+        Being of one heart and one mind in peace, humility, and simplicity<br>
+        <br>
+        We come before you now asking for the grace<br>
+        To be faithful to our vocation<br>
+        Striving to live in the communion of Love which surpasses all other gifts<br>
+        <br>
+        May men and women of our time<br>
+        Hear the call to live the Gospel in the monastic way<br>
+        In service of the Church’s mission<br>
+        By constantly seeking your face in prayer, work, and community life<br>
+        <br>
+        Remember our Cistercian communities<br>
+        Those aging and those newly born<br>
+        Throughout the world, north and south, east and west<br>
+        <br>
+        As you have done from the days of our founders<br>
+        Bless us once again<br>
+        May our brotherhood at Mepkin grow in numbers, in grace, and in wisdom<br>
+        So that we might continue to live for your glory with greater vigor<br>
+        And with joy never ending. Amen.<br>
+    </p>
+
+    <br>
+    <br>
 
     <div class="d-flex justify-content-center align-items-center">
         <div class="card" style="width: 25rem; border-radius: 1rem; background-color: #E0C8A180;">
@@ -155,6 +182,7 @@
 
 
 
+
 </script>
 
 <script>
@@ -177,6 +205,7 @@
         var remainingWords = 50 - wordCount;
         wordCountDisplay.textContent = remainingWords + (remainingWords === 1 ? ' word' : ' words') + ' remaining';
     });
+
 
 
 </script>
