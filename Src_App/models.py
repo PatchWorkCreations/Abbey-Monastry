@@ -17,3 +17,6 @@ class MepkinDailyWord(models.Model):
 
     def __str__(self):
         return self.post
+
+    class Meta:
+        ordering = ['-created']
