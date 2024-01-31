@@ -3,7 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.FrancisArtwork, name='francis-artwork'),
+    path('mepkin-daily-word/', views.ViewMepkinDailyWord, name='mepkin-daily-word'),
+    path('create-mepkin-daily-word/', views.CreateMepkinDailyWord, name='create-mepkin-daily-word'),
     path('index/', views.Index, name='index'),
+
 
     path('home/', views.Home, name='home'),
 

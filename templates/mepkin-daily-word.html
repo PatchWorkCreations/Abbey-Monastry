@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+      #sideButton {
+      position: fixed;
+      bottom: 4.5rem; /* Adjust this value as needed */
+      right: 1rem; /* Adjust this value as needed */
+      background-color: #3498db; /* Blue color */
+      color: #fff;
+      font-size: 15px;
+      padding: 5px;
+      border: 2px solid #2980b9; /* Border color */
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    #sideButton:hover {
+      background-color: #2980b9; /* Darker blue color on hover */
+    }
+</style>
+
+
+<div class="container mt-3">
+    <div class="card border-0 rounded-3 mb-3 position-relative" style="height: 20rem;">
+        <img src="{% static 'MEPKING/9.jpeg' %}" class="card-img" style="height: 100%; object-fit: cover;" alt="...">
+
+        <div class="position-absolute bottom-0 start-50 translate-middle-x" style="margin-bottom: -4rem;">
+            <img src="{% static 'MEPKING/Homilies.jpg' %}" class="rounded-circle" alt="Profile Image"
+                 style="width: 8rem; height: 8rem; border: 4px solid #FFF2E0C8;">
+        </div>
+    </div>
+
+<!--    <h5 class="fw-bold text-center" style="margin-top: 4.5rem;">Mepkin Daily Word</h5>-->
+    <div class="h5 fw-bold text-center" style="margin-top: 4.5rem;">
+        <a href="{% url 'create-mepkin-daily-word' %}" class="text-decoration-none text-dark">Mepkin Daily Word</a>
+    </div>
+    <p class="text-center">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
+        ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</p>
+
+    <h6 class="fw-bold text-center py-1" style="background-color: #AC9362;">Daily Word</h6>
+
+    <div class="list-group" style="font-size: 0.8rem;">
+        {% for mepkin_daily_word in mepkin_daily_words %}
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'MEPKING/Homilies.jpg' %}" class="rounded-circle" alt="Profile Image"
+                             style="width: 2.5rem; height: 2.5rem;">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="fw-bold mb-1">Mepkin Daily Word</h6>
+                        <p class="mb-1" style="text-align: justify;">{{ mepkin_daily_word.post }}</p>
+                    </div>
+                </div>
+                <div class="text-muted" style="white-space: nowrap;">
+                    {{ mepkin_daily_word.created|date:"M d" }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'index' %}" id="sideButton">Click here to proceed</a>
+</div>
+
+<br>
+<br>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import Prayer
+from .models import *
 import os
 
 
@@ -16,6 +16,25 @@ def FrancisArtwork(request):
     }
 
     return render(request, 'francis-artwork.html', context)
+
+
+def ViewMepkinDailyWord(request):
+
+    mepkin_daily_words = MepkinDailyWord.objects.all()
+
+    return render(request, 'mepkin-daily-word.html', {'mepkin_daily_words': mepkin_daily_words})
+
+
+def CreateMepkinDailyWord(request):
+
+    message = ""
+
+    if request.method == 'POST':
+        MepkinDailyWord.objects.create(
+            post=request.POST.get('post'),
+        )
+        message = "Post created successfully."
+    return render(request, 'create-mepkin-daily-word.html', {'message': message})
 
 
 def Index(request):
