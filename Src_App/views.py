@@ -42,8 +42,6 @@ def ViewMepkinDailyWord(request):
         'mepkin_daily_words': mepkin_daily_words,
         'bio': bio,
         'message': message,
-        'homilies_image_url': 'MEPKING/Homilies.jpg',
-        'profile_image_url': 'MEPKING/9.jpeg',
     }
 
     return render(request, 'mepkin-daily-word.html', context)
