@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from .models import *
 import os
 
@@ -49,23 +50,19 @@ def ViewMepkinDailyWord(request):
 
 def CreateMepkinDailyWord(request):
     mepkin_daily_words = MepkinDailyWord.objects.all()
-    bio = Bio.objects.first()
+    bio = get_object_or_404(Bio, pk=1)
 
     bioMessage = ""
     postMessage = ""
 
     if request.method == 'POST':
         if 'bioButton' in request.POST:
-            bio_instance, created = Bio.objects.get_or_create(pk=1)  # Ensure only one Bio instance exists
-
-            bio_instance.content = request.POST.get('content')
-            bio_instance.save()
+            bio.content = request.POST.get('content')
+            bio.save()
             bioMessage = "Bio updated successfully."
 
         elif 'postButton' in request.POST:
-            MepkinDailyWord.objects.create(
-                post=request.POST.get('post'),
-            )
+            MepkinDailyWord.objects.create(post=request.POST.get('post'))
             postMessage = "Post created successfully."
 
     context = {
