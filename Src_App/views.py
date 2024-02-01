@@ -18,23 +18,70 @@ def FrancisArtwork(request):
     return render(request, 'francis-artwork.html', context)
 
 
+@login_required(login_url='mepkin-daily-word')
 def ViewMepkinDailyWord(request):
 
     mepkin_daily_words = MepkinDailyWord.objects.all()
-
-    return render(request, 'mepkin-daily-word.html', {'mepkin_daily_words': mepkin_daily_words})
-
-
-def CreateMepkinDailyWord(request):
+    bio = Bio.objects.first()
 
     message = ""
 
     if request.method == 'POST':
-        MepkinDailyWord.objects.create(
-            post=request.POST.get('post'),
-        )
-        message = "Post created successfully."
-    return render(request, 'create-mepkin-daily-word.html', {'message': message})
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            if user.is_superuser:
+                return redirect('create-mepkin-daily-word')
+        else:
+            message = "Invalid username or password."
+
+    context = {
+        'mepkin_daily_words': mepkin_daily_words,
+        'bio': bio,
+        'message': message,
+    }
+
+    return render(request, 'mepkin-daily-word.html', context)
+
+
+def CreateMepkinDailyWord(request):
+    mepkin_daily_words = MepkinDailyWord.objects.all()
+    bio = Bio.objects.first()
+
+    bioMessage = ""
+    postMessage = ""
+
+    if request.method == 'POST':
+        if 'bioButton' in request.POST:
+            bio_instance, created = Bio.objects.get_or_create(pk=1)  # Ensure only one Bio instance exists
+
+            bio_instance.content = request.POST.get('content')
+            bio_instance.save()
+            bioMessage = "Bio updated successfully."
+
+        elif 'postButton' in request.POST:
+            MepkinDailyWord.objects.create(
+                post=request.POST.get('post'),
+            )
+            postMessage = "Post created successfully."
+
+    context = {
+        'mepkin_daily_words': mepkin_daily_words,
+        'bio': bio,
+        'bioMessage': bioMessage,
+        'postMessage': postMessage,
+    }
+    return render(request, 'create-mepkin-daily-word.html', context)
+
+
+def DeleteMepkinDailyWord(request, pk):
+    mepkin_daily_word = MepkinDailyWord.objects.get(id=pk)
+    mepkin_daily_word.delete()
+    return redirect('create-mepkin-daily-word')
 
 
 def Index(request):
@@ -99,6 +146,9 @@ def VirtualTourStreetView(request):
 
 def Pray(request):
     if request.method == 'POST':
+
+        message = ""
+
         if 'pray' in request.POST:
             Prayer.objects.create(
                 name=request.POST.get('name'),

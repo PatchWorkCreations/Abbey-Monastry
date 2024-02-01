@@ -20,3 +20,10 @@ class MepkinDailyWord(models.Model):
 
     class Meta:
         ordering = ['-created']
+
+
+class Bio(models.Model):
+    content = models.CharField(max_length=200, default='Add Bio')
+
+    def __str__(self):
+        return self.content
