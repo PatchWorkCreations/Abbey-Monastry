@@ -3,16 +3,21 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import *
 import os
+from datetime import datetime
 
 
 def FrancisArtwork(request):
     base_path = '../static/francis-artwork/'
 
-    image_paths = [os.path.join(base_path, f'thumbnail_IMG ({i}).jpg') for i in range(1, 36)]
-    # If you need more paths, adjust the range accordingly
+    # Calculate today's date
+    today = datetime.now().strftime("%B %d, %Y")
+
+    # Generate image path for today
+    today_image_path = os.path.join(base_path, f'thumbnail_IMG ({today}).jpg')
 
     context = {
-        'image_paths': image_paths,
+        'today_image_path': today_image_path,
+        'today_date': today,
     }
 
     return render(request, 'francis-artwork.html', context)
@@ -200,7 +205,7 @@ def GratitudePrayer(request):
 def LuceGardens(request):
     base_path = '../static/luce-gardens-images/'
 
-    image_paths = [os.path.join(base_path, f'luce gardens ({i}).jpg') for i in range(1, 15)]
+    image_paths = [os.path.join(base_path, f'luce gardens ({i}).jpg') for i in range(1, 19)]
     # If you need more paths, adjust the range accordingly
 
     print(image_paths)
@@ -270,3 +275,7 @@ def OfficesAndPrivateRooms(request):
 
 def FlightToEgypt(request):
     return render(request, 'flight-to-egypt.html')
+
+
+def OurLadyOfMepkin(request):
+    return render(request, 'our-lady-of-mepkin.html')

@@ -67,7 +67,104 @@
             </a>
         </div>
     </div>
+
+    <h2 class="mt-4 mb-2">How to Reach Mepkin Abbey</h2>
+
+    <p><span class="fw-bold">From Moncks Corner, SC</span> – Drive north out of Moncks Corner on US 52/17A. Cross the
+        Tail Race Canal Bridge. At the
+        bottom of the bridge, turn right at the traffic light onto SC 402. Travel two miles and cross a small bridge
+        over
+        Wadboo Creek. Immediately after the bridge turn right onto Dr. Evans Road. Mepkin Abbey is six miles down this
+        road
+        on your right. Turn onto the oak-lined lane and drive about 1/4 mile until you come to the log Reception Center
+        where you can check in.</p>
+    <p><span class="fw-bold">From Charleston, SC</span> – Drive west on I-26. Take Exit 209B. Travel US 52 to Moncks
+        Corner. Then follow the directions
+        from Moncks Corner as above.</p>
+    <p><span class="fw-bold">From Columbia, SC</span> – Drive east on I-26. Take Exit 199B onto Alt 17 all the way to
+        Moncks Corner. Then follow the
+        directions from Moncks Corner as above.</p>
+    <p><span class="fw-bold">From Savannah, GA</span> – Drive north on I-95. Take Exit 53 onto SC 63 to Walterboro. Pick
+        up Alt 17 and drive all the way
+        to Moncks Corner. Then follow the directions from Moncks Corner as above.</p>
+    <p><span class="fw-bold">From Florence, SC </span> – From I-95, take US 52 South. Just before you get to Moncks
+        Corner, turn left onto SC-402. Turn
+        right onto Dr. Evans Road. Turn right onto Mepkin Abbey Rd.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
 </div>
+
+<script>
+    function initMap() {
+        // Initialize the map centered at the user's current location
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 0, lng: 0 }, // Initial placeholder, will be updated with the user's location
+            zoom: 17,
+        });
+
+        // Get the user's current location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userPosition = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                // Update the map center to the user's current location
+                map.setCenter(userPosition);
+
+                // Create a marker for the user's current location
+                var userMarker = new google.maps.Marker({
+                    position: userPosition,
+                    map: map,
+                    title: 'Your Location'
+                });
+
+                // Create a marker
+                var markerPosition = { lat: 33.1152, lng: 79.9443 };
+                var marker = new google.maps.Marker({
+                    position: markerPosition,
+                    map: map,
+                    title: 'Mepkin Abbey',
+                });
+
+                // Display directions from the user's location to Mepkin Abbey
+                var directionsService = new google.maps.DirectionsService();
+                var directionsRenderer = new google.maps.DirectionsRenderer({
+                    map: map,
+                    suppressMarkers: true  // Do not display default markers
+                });
+
+                var request = {
+                    origin: userPosition,
+                    destination: new google.maps.LatLng(markerPosition.lat, markerPosition.lng),
+                    travelMode: 'DRIVING'
+                };
+
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        directionsRenderer.setDirections(result);
+                    } else {
+                        console.error('Directions request failed with status: ' + status);
+                    }
+                });
+            }, function () {
+                // Handle geolocation error
+                console.error('Error: The Geolocation service failed.');
+                alert('Please enable location services to use this feature.');
+            });
+        } else {
+            // Browser doesn't support geolocation
+            console.error('Error: Your browser doesn't support geolocation.');
+            alert('Your browser does not support geolocation. Please use a different browser or enable location services.');
+        }
+    }
+
+    initMap();
+</script>
 <br>
 <br>
 <br>

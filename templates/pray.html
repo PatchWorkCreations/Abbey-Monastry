@@ -21,6 +21,12 @@
       background-color: #2980b9; /* Darker blue color on hover */
     }
 
+
+    body {
+        background-image: url('{% static 'MEPKING/request prayer bg.jpg' %}');
+        background-size: cover;
+    }
+
 </style>
 
 <div class="bg-secondary text-white sticky-top">
@@ -38,6 +44,7 @@
         </div>
     </div>
 </div>
+
 
 <div class="container mt-3">
 
@@ -183,7 +190,7 @@
     </div>
 </div>
 <button type="button" id="sideButton" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Click to make a Prayer Request
+    Click to Submit a Prayer
 </button>
 
 <script>

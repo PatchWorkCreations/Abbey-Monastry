@@ -27,3 +27,14 @@ class Bio(models.Model):
 
     def __str__(self):
         return self.content
+
+    def save(self, *args, **kwargs):
+        # Check if there is an existing instance
+        existing_instance = Bio.objects.first()
+
+        # If an instance exists, update the content instead of creating a new instance
+        if existing_instance:
+            existing_instance.content = self.content
+            existing_instance.save()
+        else:
+            super().save(*args, **kwargs)
