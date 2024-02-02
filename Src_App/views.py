@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from .models import *
 import os
 
@@ -22,7 +21,7 @@ def FrancisArtwork(request):
 @login_required(login_url='mepkin-daily-word')
 def ViewMepkinDailyWord(request):
     mepkin_daily_words = MepkinDailyWord.objects.all()
-    bio = get_object_or_404(Bio)
+    bio = Bio.objects.first()
 
     message = ""
 
@@ -50,7 +49,7 @@ def ViewMepkinDailyWord(request):
 
 def CreateMepkinDailyWord(request):
     mepkin_daily_words = MepkinDailyWord.objects.all()
-    bio = get_object_or_404(Bio, pk=1)
+    bio = Bio.objects.first()
 
     bioMessage = ""
     postMessage = ""
