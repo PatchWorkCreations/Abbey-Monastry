@@ -18,7 +18,6 @@ def FrancisArtwork(request):
     return render(request, 'francis-artwork.html', context)
 
 
-@login_required(login_url='mepkin-daily-word')
 def ViewMepkinDailyWord(request):
     mepkin_daily_words = MepkinDailyWord.objects.all()
     bio = Bio.objects.first()
@@ -47,6 +46,7 @@ def ViewMepkinDailyWord(request):
     return render(request, 'mepkin-daily-word.html', context)
 
 
+@login_required(login_url='mepkin-daily-word')
 def CreateMepkinDailyWord(request):
     mepkin_daily_words = MepkinDailyWord.objects.all()
     bio = Bio.objects.first()
