@@ -13,10 +13,10 @@ def FrancisArtwork(request):
     today = datetime.now().strftime("%B %d, %Y")
 
     # Generate image path for today
-    today_image_path = os.path.join(base_path, f'thumbnail_IMG ({today}).jpg')
+    # today_image_path = os.path.join(base_path, f'{today}.jpeg')
 
     context = {
-        'today_image_path': today_image_path,
+        'today_image_path': '../static/francis-artwork/February 3, 2024.jpeg',
         'today_date': today,
     }
 

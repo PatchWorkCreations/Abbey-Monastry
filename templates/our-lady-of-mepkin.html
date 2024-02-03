@@ -1,1 +1,139 @@
-<h1>WAITING FOR CONTENTS</h1>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="bg-secondary text-white sticky-top">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>
+                <span class="me-4">
+                    <a href="{% url 'virtual-tour' %}" class="text-decoration-none text-white">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </span>
+                Our Lady of Mepkin
+            </h1>
+            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'virtual-tour-images/OLOM1.jpg' %}" class="card-img"
+             style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="{% static 'audio/Our Lady of Mepkin.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>Nestled on the grounds of the historic Mepkin Abbey in Moncks Corner, South Carolina stands the iconic statue of
+        Our Lady of Mepkin.</p>
+    <p>This serene 13-foot tall marble sculpture of the Virgin Mary cradling infant Jesus captures the essence of
+        Motherly love and protection. Her graceful flowing robes cascading down complement the sense of quiet strength.
+        The milky white Italian Carrara marble lends an air of purity and nobility.</p>
+    <p>Upon its unveiling in 1953, Our Lady of Mepkin was the tallest Virgin Mary sculpture in the Western Hemisphere.
+        It was commissioned by newspaper publisher Henry Luce and his wife Clare Boothe Luce and intended as a gift to
+        the Trappist Mepkin Abbey.</p>
+    <p>Hand-carved by distinguished sculptor Walker Hancock based on the style of 14th century European art, the statue
+        has a timeless, inviting quality. Visitors comment on feeling an inner sense of peace in her gentle
+        presence.</p>
+    <p>Flanked by live oak trees near the monastery gardens fountain, Our Lady of Mepkin remains an iconic cultural and
+        religious symbol. Her beauty echoes the natural serenity surrounding Mepkin Abbey—a testament to the holy ground
+        she occupies.</p>
+
+    <div class="ratio ratio-16x9 mt-2">
+        <iframe src="https://momento360.com/e/u/255c0df662a5436d853a7ed5defc17bb?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
+                title="Image" allowfullscreen></iframe>
+    </div>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+<script>
+    function initMap() {
+        // Initialize the map centered at the user's current location
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 0, lng: 0 }, // Initial placeholder, will be updated with the user's location
+            zoom: 17,
+        });
+
+        // Get the user's current location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userPosition = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                // Update the map center to the user's current location
+                map.setCenter(userPosition);
+
+                // Create a marker for the user's current location
+                var userMarker = new google.maps.Marker({
+                    position: userPosition,
+                    map: map,
+                    title: 'Your Location'
+                });
+
+                // Create a marker
+                var markerPosition = { lat: 33.114861, lng: -79.951531 };
+                var marker = new google.maps.Marker({
+                    position: markerPosition,
+                    map: map,
+                    title: 'Offices and Private Rooms',
+                });
+
+                // Display directions from the user's location to Mepkin Abbey
+                var directionsService = new google.maps.DirectionsService();
+                var directionsRenderer = new google.maps.DirectionsRenderer({
+                    map: map,
+                    suppressMarkers: true  // Do not display default markers
+                });
+
+                var request = {
+                    origin: userPosition,
+                    destination: new google.maps.LatLng(markerPosition.lat, markerPosition.lng),
+                    travelMode: 'DRIVING'
+                };
+
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        directionsRenderer.setDirections(result);
+                    } else {
+                        console.error('Directions request failed with status: ' + status);
+                    }
+                });
+            }, function () {
+                // Handle geolocation error
+                console.error('Error: The Geolocation service failed.');
+                alert('Please enable location services to use this feature.');
+            });
+        } else {
+            // Browser doesn't support geolocation
+            console.error('Error: Your browser doesn\'t support geolocation.');
+            alert('Your browser does not support geolocation. Please use a different browser or enable location services.');
+        }
+    }
+
+    initMap();
+
+
+
+
+</script>
+<br>
+<br>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}
