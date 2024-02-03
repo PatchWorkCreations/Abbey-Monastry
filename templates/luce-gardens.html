@@ -29,68 +29,58 @@
     <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
         <h5 class="fw-bold">Listen to Tour Audio:</h5>
         <audio controls>
-            <source src="{% static 'audio/Luce Garden _ Cemetery.mp3' %}" type="audio/mpeg">
+            <source src="{% static 'audio/FINAL LUCE GARDENS.mp3' %}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
 
-    <p>
-        The Nancy Bryan Luce Gardens are considered the heart of Mepkin.
-    </p>
-    <p>
-        Clare Boothe Luce was a journalist, playwright, politician and the first female to a major embassy. In 1936, her
-        husband Henry Luce, founder and publisher of Time, Life, Fortune and Sports Illustrated Magazines, purchased
-        Mepkin Plantation, along with neighboring Clermont and Washington plantations, to serve as their winter retreat.
-    </p>
-    <p>
-        In 1937, Clare Boothe Luce commissioned noted garden landscape architect Loutrell Briggs to design the garden.
-        His work is featured in gardens throughout Charleston and the Lowcountry. Briggs called this the "Camellia
-        Garden." An extensive tree canopy shades azaleas and camellias in a series of terraces.
-    </p>
-    <p>
-        In 1948, Luce sold parts of their plantation and, according to Clare's wishes, donated 3,200 acres to the
-        Trappist monks of the Abbey of Our Lady of Gethsemani, who would found Mepkin Abbey the following year in 1949.
-        Beneath a tall white cross in the gardens is a white tombstone that marks the double grave of Henry and Clare
-        Boothe Luce, surrounded by other members of the Luce family
-    </p>
-    <p>
-        In 1984, the Camellia Garden was rehabilitated by Morgan Wheelock of Boston and named the Nancy Bryan Luce
-        Gardens in honor of Henry's daughter-in-law.
-    </p>
+    <p>The Nancy Bryan Luce Gardens are considered the heart of Mepkin.</p>
+    <p>Clare Boothe Luce was a journalist, playwright, politician and the first female to the Embassy of Italy. In 1936,
+        her husband Henry Luce, founder and publisher of Time, Life, Fortune and Sports Illustrated Magazines, purchased
+        Mepkin Plantation, along with neighboring Clermont and Washington plantations, to serve as their winter
+        retreat.</p>
+    <p>In 1937, Clare Boothe Luce commissioned noted garden landscape architect Loutrell Briggs to design the garden.
+        His
+        work is featured in gardens throughout Charleston and the Lowcountry. Briggs called this the "Camellia Garden."
+        An
+        extensive tree canopy shades azaleas and camellias in a series of terraces.</p>
+    <p>In 1948, Luce sold parts of their plantation and, according to Clare's wishes, donated 3,200 acres to the
+        Trappist
+        monks of the Abbey of Our Lady of Gethsemani, who would found Mepkin Abbey the following year in 1949. Beneath a
+        tall white cross in the gardens is a white tombstone that marks the double grave of Henry and Clare Boothe Luce,
+        surrounded by other members of the Luce family.</p>
+    <p>In 1984, the Camellia Garden was rehabilitated by Morgan Wheelock of Boston and named the Nancy Bryan Luce
+        Gardens
+        in honor of Henry's daughter-in-law.</p>
 
-    <div>
-
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                {% for image in image_paths %}
-                <button type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" {% endif %}
-                        aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
-                        aria-label="Slide {{ forloop.counter }}">
-                </button>
-                {% endfor %}
-            </div>
-            <div class="carousel-inner">
-                {% for image in image_paths %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="2000">
-                    <img src="{{ image }}" class="d-block w-100" alt="...">
-                </div>
-                {% endfor %}
-
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for image in image_paths %}
+            <button type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" {% endif %}
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                    aria-label="Slide {{ forloop.counter }}">
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            {% endfor %}
         </div>
+        <div class="carousel-inner">
+            {% for image in image_paths %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="2000">
+                <img src="{{ image }}" class="d-block w-100" alt="...">
+            </div>
+            {% endfor %}
 
-
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
     <!-- Google Map and Street View -->
@@ -160,12 +150,16 @@
             });
         } else {
             // Browser doesn't support geolocation
-            console.error('Error: Your browser doesn\'t support geolocation.');
+            console.error('Error: Your browser doesn't support geolocation.');
             alert('Your browser does not support geolocation. Please use a different browser or enable location services.');
         }
     }
 
     initMap();
+
+
+
+
 
 </script>
 <br>

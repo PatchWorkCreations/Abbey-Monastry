@@ -63,7 +63,7 @@
         <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Mepkin
             Daily Word</a>
     </div>
-    <p class="text-center">{{ bio.content }}</p>
+    <p class="text-center" style="font-family: 'Times New Roman', Times, serif; font-style: italic;">{{ bio.content }}</p>
 
     <h6 class="fw-bold text-center py-1" style="background-color: #AC9362;">Daily Word</h6>
 
@@ -78,10 +78,10 @@
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <h6 class="fw-bold mb-1">Mepkin Daily Word</h6>
-                        <p class="mb-1" style="text-align: justify;">{{ mepkin_daily_word.post }}</p>
+                        <p class="mb-1 {% if forloop.first %}fw-bold{% endif %}" style="text-align: justify;">{{ mepkin_daily_word.post }}</p>
                     </div>
                 </div>
-                <div class="text-muted" style="white-space: nowrap;">
+                <div class="text-muted {% if forloop.first %}fw-bold{% endif %}" style="white-space: nowrap;">
                     {{ mepkin_daily_word.created|date:"M d" }}
                 </div>
             </div>
