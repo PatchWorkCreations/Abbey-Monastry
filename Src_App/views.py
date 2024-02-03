@@ -7,16 +7,16 @@ from datetime import datetime
 
 
 def FrancisArtwork(request):
-    base_path = '../static/francis-artwork/'
 
     # Calculate today's date
     today = datetime.now().strftime("%B %d, %Y")
 
     # Generate image path for today
-    # today_image_path = os.path.join(base_path, f'{today}.jpeg')
+    today_image_path = f'{today}.jpeg'
+    print(today_image_path)
 
     context = {
-        'today_image_path': '../static/francis-artwork/February 3, 2024.jpeg',
+        'today_image_path': today_image_path,
         'today_date': today,
     }
 
