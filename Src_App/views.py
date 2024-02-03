@@ -4,16 +4,21 @@ from django.shortcuts import render, redirect
 from .models import *
 import os
 from datetime import datetime
+from pytz import timezone
 
 
 def FrancisArtwork(request):
+    # Set the time zone to 'US/Eastern'
+    eastern = timezone('US/Eastern')
 
-    # Calculate today's date
-    today = datetime.now().strftime("%B %d, %Y")
+    # Get the current time in the 'US/Eastern' time zone
+    now_eastern = datetime.now(eastern)
+
+    # Format today's date
+    today = now_eastern.strftime("%B %d, %Y")
 
     # Generate image path for today
     today_image_path = f'{today}.jpeg'
-    print(today_image_path)
 
     context = {
         'today_image_path': today_image_path,
