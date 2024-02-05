@@ -20,8 +20,12 @@
 
 <div class="container mt-3">
 
-    <div class="mx-auto table-responsive">
-        <table class="table table-hover">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-info" onclick="printTable()"><i class="fa-solid fa-print"></i> Print</button>
+    </div>
+
+    <div class="mx-auto table-responsive mt-2">
+        <table class="table table-hover" id="prayerTable">
             <thead class="table-light">
             <tr>
                 <th scope="col">NAME/PSEUDONYN</th>
@@ -43,8 +47,18 @@
         </table>
     </div>
 </div>
-<br>
-<br>
-<br>
+
 {% include 'navbar.html' %}
+
+<script>
+    function printTable() {
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Prayer Requests</title></head><body>');
+        printWindow.document.write('<h1>Prayer Requests</h1>');
+        printWindow.document.write(document.getElementById('prayerTable').outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>
 {% endblock %}

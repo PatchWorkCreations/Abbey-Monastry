@@ -248,7 +248,16 @@ def CharlestonFirefightersMemorial(request):
 
 
 def Labyrinth(request):
-    return render(request, 'labyrinth.html')
+    base_path = 'static/gallery/Labyrinth/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'labyrinth.html', context)
 
 
 def CrossroadsOrSacredHeartOfJesusStatue(request):
