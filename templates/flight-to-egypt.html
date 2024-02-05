@@ -38,6 +38,35 @@
         large carved statues were installed at Mepkin They were created by David Drake, nephew of the late Brother
         Laurence, and are carved from large oak trees that fell during Hurricane Hugo in 1989.</p>
 
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for image in image_paths %}
+            <button type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" {% endif %}
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                    aria-label="Slide {{ forloop.counter }}">
+            </button>
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            {% for image in image_paths %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="2000">
+                <img src="{% static 'gallery/Sculptures/' %}{{ image }}" class="d-block w-100" alt="...">
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
     <!-- Google Map and Street View -->
     <h2 class="mt-4">Location</h2>
     <div id="map" style="width: 100%; height: 400px;"></div>

@@ -66,10 +66,9 @@
         <div class="carousel-inner">
             {% for image in image_paths %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="2000">
-                <img src="{{ image }}" class="d-block w-100" alt="...">
+                <img src="{% static 'gallery/Luce Garden/' %}{{ image }}" class="d-block w-100" alt="...">
             </div>
             {% endfor %}
-
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev">
@@ -171,6 +170,7 @@
     }
 
     initMap();
+
 
 
 

@@ -160,7 +160,14 @@ def Pray(request):
                 type=request.POST.get('type'),
                 prayer_msg=request.POST.get('prayer_msg'),
             )
-            message = "Request submitted successfully."
+            message = """
+                Your prayer request has been received and thoughtfully added to Mepkin Abbey’s Prayer List.<br><br>
+
+                “May God grant you your heart’s desire and fulfill all your plans.” - Psalms 20:4.<br>
+                We hold you in our prayers, trusting in the Lord’s guidance and comfort for you and your loved ones during this time.<br>
+                May you feel His presence and peace more profoundly each day.
+            """
+
 
         elif 'admin_login' in request.POST:
             username = request.POST.get('username')
@@ -208,12 +215,10 @@ def GratitudePrayer(request):
 
 
 def LuceGardens(request):
-    base_path = '../static/luce-gardens-images/'
+    base_path = 'static/gallery/Luce Garden/'
 
-    image_paths = [os.path.join(base_path, f'luce gardens ({i}).jpg') for i in range(1, 19)]
-    # If you need more paths, adjust the range accordingly
-
-    print(image_paths)
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -255,15 +260,42 @@ def MepkinAbbeyBotanicalGarden(request):
 
 
 def MepkinAbbeyColumbarium(request):
-    return render(request, 'mepkin-abbey-columbarium.html')
+    base_path = 'static/gallery/Columbarium/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'mepkin-abbey-columbarium.html', context)
 
 
 def JohnLaurensGraveOrCemetery(request):
-    return render(request, 'john-laurens-grave-or-cemetery.html')
+    base_path = 'static/gallery/Laurens Cemetery/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'john-laurens-grave-or-cemetery.html', context)
 
 
 def MeditationGardenOfTruthAndReconciliation(request):
-    return render(request, 'meditation-garden-of-truth-and-reconciliation.html')
+    base_path = 'static/gallery/Meditation Garden/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'meditation-garden-of-truth-and-reconciliation.html', context)
 
 
 def SacredCorridor(request):
@@ -279,8 +311,25 @@ def OfficesAndPrivateRooms(request):
 
 
 def FlightToEgypt(request):
-    return render(request, 'flight-to-egypt.html')
+    base_path = 'static/gallery/Sculptures/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+    return render(request, 'flight-to-egypt.html', context)
 
 
 def OurLadyOfMepkin(request):
-    return render(request, 'our-lady-of-mepkin.html')
+    base_path = 'static/gallery/Our Lady of Mepkin/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'our-lady-of-mepkin.html', context)

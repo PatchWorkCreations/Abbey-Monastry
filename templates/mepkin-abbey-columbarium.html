@@ -40,9 +40,38 @@
         reverence for the life and beauty found at Mepkin, and who are looking for a sacred and dignified resting place
         for themelves or their loved ones.
     </p>
-    For more information about niches in the Columbarium Wall, please visit Mepkin's website, click <a
-        class="text-decoration-none" href="https://mepkinabbey.org/columbarium-at-mepkin-abbey/" target="_blank">HERE</a>.
+    <p>For more information about niches in the Columbarium Wall, please visit Mepkin's website, click <a
+            class="text-decoration-none" href="https://mepkinabbey.org/columbarium-at-mepkin-abbey/" target="_blank">HERE</a>.
     </p>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for image in image_paths %}
+            <button type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" {% endif %}
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                    aria-label="Slide {{ forloop.counter }}">
+            </button>
+            {% endfor %}
+        </div>
+        <div class="carousel-inner">
+            {% for image in image_paths %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="2000">
+                <img src="{% static 'gallery/Columbarium/' %}{{ image }}" class="d-block w-100" alt="...">
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
     <div class="ratio ratio-16x9 mt-2">
         <iframe src="https://momento360.com/e/u/e7f434b5d3e946e092550ed6c0d08d4a?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
@@ -137,6 +166,7 @@
     }
 
     initMap();
+
 </script>
 <br>
 <br>
