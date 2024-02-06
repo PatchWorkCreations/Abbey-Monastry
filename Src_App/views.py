@@ -218,7 +218,8 @@ def LuceGardens(request):
     base_path = 'static/gallery/Luce Garden/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -251,7 +252,8 @@ def Labyrinth(request):
     base_path = 'static/gallery/Labyrinth/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -272,7 +274,8 @@ def MepkinAbbeyColumbarium(request):
     base_path = 'static/gallery/Columbarium/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -285,7 +288,8 @@ def JohnLaurensGraveOrCemetery(request):
     base_path = 'static/gallery/Laurens Cemetery/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -298,7 +302,8 @@ def MeditationGardenOfTruthAndReconciliation(request):
     base_path = 'static/gallery/Meditation Garden/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -323,7 +328,8 @@ def FlightToEgypt(request):
     base_path = 'static/gallery/Sculptures/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
@@ -335,7 +341,8 @@ def OurLadyOfMepkin(request):
     base_path = 'static/gallery/Our Lady of Mepkin/'
 
     # Filter only image files (you can add more image extensions if needed)
-    image_paths = [file for file in os.listdir(base_path) if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
     context = {
         'image_paths': image_paths,
