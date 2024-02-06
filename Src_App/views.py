@@ -305,8 +305,6 @@ def MeditationGardenOfTruthAndReconciliation(request):
     image_paths = [file for file in os.listdir(base_path) if
                    file.lower().endswith(('.png', '.jpg', '.JPG', '.jpeg', '.gif', '.bmp'))]
 
-    print(image_paths)
-
     context = {
         'image_paths': image_paths,
     }
