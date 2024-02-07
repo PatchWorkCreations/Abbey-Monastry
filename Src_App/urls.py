@@ -35,6 +35,8 @@ urlpatterns = [
     path('list-of-prayers/', views.ListOfPrayers, name="list-of-prayers"),
     path('prayer-request/', views.PrayerRequest, name="prayer-request"),
     path('gratitude-prayer/', views.GratitudePrayer, name="gratitude-prayer"),
+    path('delete-prayer-request/<int:pk>/', views.DeletePrayerRequest, name="delete-prayer-request"),
+    path('delete-gratitude-prayer/<int:pk>/', views.DeleteGratitudePrayer, name="delete-gratitude-prayer"),
 
     path('luce-gardens/', views.LuceGardens, name="luce-gardens"),
     path('mepkin-abbey-church/', views.MepkinAbbeyChurch, name="mepkin-abbey-church"),

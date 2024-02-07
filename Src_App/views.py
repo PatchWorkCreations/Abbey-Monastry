@@ -213,6 +213,16 @@ def GratitudePrayer(request):
 
     return render(request, 'gratitude-prayer.html', {'list_of_prayers': list_of_prayers})
 
+def DeletePrayerRequest(request, pk):
+    prayer_request = Prayer.objects.get(id=pk)
+    prayer_request.delete()
+    return redirect('prayer-request')
+
+def DeleteGratitudePrayer(request, pk):
+    gratitude_prayer = Prayer.objects.get(id=pk)
+    gratitude_prayer.delete()
+    return redirect('gratitude-prayer')
+
 
 def LuceGardens(request):
     base_path = 'static/gallery/Luce Garden/'
@@ -304,6 +314,8 @@ def MeditationGardenOfTruthAndReconciliation(request):
     # Filter only image files (you can add more image extensions if needed)
     image_paths = [file for file in os.listdir(base_path) if
                    file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    print(image_paths)
 
     context = {
         'image_paths': image_paths,

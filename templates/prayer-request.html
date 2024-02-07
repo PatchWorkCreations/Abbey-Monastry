@@ -31,6 +31,7 @@
                 <th scope="col">NAME/PSEUDONYN</th>
                 <th scope="col">DATE & TIME</th>
                 <th scope="col">PRAYER REQUEST</th>
+                <th scope="col">ACTION</th>
             </tr>
             </thead>
             <tbody>
@@ -40,6 +41,9 @@
                 <td>{{prayer.name}}</td>
                 <td>{{prayer.created}}</td>
                 <td>{{prayer.prayer_msg}}</td>
+                <td>
+                    <a href="{% url 'delete-prayer-request' prayer.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
             </tr>
             {% endif %}
             {% endfor %}
