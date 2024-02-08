@@ -1,8 +1,5 @@
-# Ignore the env folder
-env/
+# Ignore the myenv folder
+myenv/
 
 # Ignore the SQLite database file
 db.sqlite3
-
-# Ignore the env folder
-env/
