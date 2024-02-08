@@ -17,12 +17,17 @@
     z-index: 9999; /* Make sure the loading screen is on top of everything */
   }
 
+
+
+
 </style>
 
 <!-- Loading screen -->
 <div id="loading-screen" style="height: 100%;">
     <img src="{% static 'MEPKING/logo.gif' %}" alt="Loading..." style="max-width: 400px;">
-    <button id="skip-button" class="btn btn-sm btn-secondary px-3" style="position: absolute; top: 10px; right: 10px; display: none;" onclick="skipLoading()">SKIP</button>
+    <button id="skip-button" class="btn btn-sm btn-secondary px-3"
+            style="position: absolute; top: 10px; right: 10px; display: none;" onclick="skipLoading()">SKIP
+    </button>
 </div>
 
 <!--Main content-->
@@ -32,15 +37,19 @@
         <img src="{% static 'gallery/Francis Artwork/' %}{{ today_image_path }}" class="card-img-top" alt="...">
         <div class="card-body text-center">
             <div class="card-title">
-                  Daily Wisdom Art
+                Daily Wisdom Art
                 <br class="mt-5">
                 <span class="mt-5">{{ today_date }}</span>
                 <br>
                 Growing Hope
             </div>
+            <p class="text-muted mb-0" style="font-size: 0.8rem;">@ 2024 Our Lady of Mepkin Abbey </p>
         </div>
-        <div class="card-footer text-center">
-            <a href="{% url 'mepkin-daily-word' %}" class="text-decoration-none text-success">Proceed</a>
+        <div class="card-footer">
+            <div class="d-flex gap-2 justify-content-center align-items-center">
+                <button type="button" class="btn btn-sm btn-danger">Re</button>
+                <a href="{% url 'mepkin-daily-word' %}" class="btn btn-sm btn-success">Proceed</a>
+            </div>
         </div>
     </div>
 </div>
@@ -55,11 +64,14 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
         document.getElementById("loading-screen").style.display = "none";
         document.getElementById("main-content").style.opacity = "1";
-    }, 32000); // 32 seconds
+    }, 2000); // 32 seconds
 
     setTimeout(function() {
         document.getElementById("skip-button").style.display = "block";
     }, 5000); // Show skip button after 1 second
 });
+
+
+
 </script>
 {% endblock %}
