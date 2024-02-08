@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-@f1i073wl+l$*l-cb)t*ja+cjqynl#w#u3u6@^_^7u93xm_t3@'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://mepkin-monastery.up.railway.app', 'https://www.mepkinapp.org']
