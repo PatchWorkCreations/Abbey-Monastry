@@ -1,0 +1,17 @@
+{
+    "name": "Mepkin Abbey",
+    "short_name": "Mepkin Abbey",
+    "start_url": ".",
+    "description":"Mepkin Abbey Monastry",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+      {
+        "src": "/media/logo.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  

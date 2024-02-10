@@ -77,8 +77,12 @@
                              style="width: 2.5rem; height: 2.5rem;">
                     </div>
                     <div class="flex-grow-1 ms-3">
+                        {% if forloop.first %}
+                        <h4 class="fw-bold mb-1">Mepkin Daily Word</h4>
+                        {% else %}
                         <h6 class="fw-bold mb-1">Mepkin Daily Word</h6>
-                        <p class="mb-1 {% if forloop.first %}fw-bold{% endif %}" style="text-align: justify;">{{ mepkin_daily_word.post }}</p>
+                        {% endif %}
+                        <p class="mb-1 {% if forloop.first %}d-5 fw-bold{% endif %}" style="text-align: justify;">{{ mepkin_daily_word.post }}</p>
                     </div>
                 </div>
                 <div class="text-muted {% if forloop.first %}fw-bold{% endif %}" style="white-space: nowrap;">

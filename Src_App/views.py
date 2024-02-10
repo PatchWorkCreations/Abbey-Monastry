@@ -239,7 +239,17 @@ def LuceGardens(request):
 
 
 def MepkinAbbeyChurch(request):
-    return render(request, 'mepkin-abbey-church.html')
+    base_path = 'static/gallery/Mepkin Church/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'mepkin-abbey-church.html', context)
 
 
 def StClaireWalkway(request):
