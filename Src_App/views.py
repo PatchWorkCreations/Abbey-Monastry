@@ -7,6 +7,10 @@ from datetime import datetime
 from pytz import timezone
 
 
+def Intro(request):
+    return render(request, 'intro.html')
+
+
 def FrancisArtwork(request):
     # Set the time zone to 'US/Eastern'
     eastern = timezone('US/Eastern')
@@ -213,10 +217,12 @@ def GratitudePrayer(request):
 
     return render(request, 'gratitude-prayer.html', {'list_of_prayers': list_of_prayers})
 
+
 def DeletePrayerRequest(request, pk):
     prayer_request = Prayer.objects.get(id=pk)
     prayer_request.delete()
     return redirect('prayer-request')
+
 
 def DeleteGratitudePrayer(request, pk):
     gratitude_prayer = Prayer.objects.get(id=pk)
@@ -371,3 +377,7 @@ def OurLadyOfMepkin(request):
     }
 
     return render(request, 'our-lady-of-mepkin.html', context)
+
+
+def MepkinVideoContent(request):
+    return render(request, 'mepkin-video-content.html')

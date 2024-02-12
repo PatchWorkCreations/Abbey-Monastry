@@ -2,76 +2,56 @@
 {% block content %}
 {% load static %}
 
-<style>
-  /* Added CSS for the loading screen */
-  #loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Make sure the loading screen is on top of everything */
-  }
+<div class="container d-flex flex-column justify-content-center align-items-center gap-2"
+     style="height: 100%; opacity: 0; transition: opacity 3s ease-in-out;">
 
-
-
-
-</style>
-
-<!-- Loading screen -->
-<div id="loading-screen" style="height: 100%;">
-    <img src="{% static 'MEPKING/logo.gif' %}" alt="Loading..." style="max-width: 400px;">
-    <button id="skip-button" class="btn btn-sm btn-secondary px-3"
-            style="position: absolute; top: 10px; right: 10px; display: none;" onclick="skipLoading()">SKIP
-    </button>
-</div>
-
-<!--Main content-->
-<div id="main-content" class="container d-flex flex-column justify-content-center align-items-center gap-2"
-     style="height: 100%; opacity: 0; transition: opacity 1s ease-in-out;">
     <div class="card mb-3" style="width: 20rem;">
-        <img src="{% static 'gallery/Francis Artwork/' %}{{ today_image_path }}" class="card-img-top" alt="...">
+        <img id="artwork-image" src="{% static 'gallery/Francis Artwork/' %}{{ today_image_path }}" class="card-img-top" alt="...">
         <div class="card-body text-center">
             <div class="card-title">
                 Daily Wisdom Art
                 <br class="mt-5">
-                <span class="mt-5">{{ today_date }}</span>
+                <span class="mt-5" id="today-date">{{ today_date }}</span>
                 <br>
                 Growing Hope
             </div>
-            <p class="text-muted mb-0" style="font-size: 0.8rem;">@ 2024 Our Lady of Mepkin Abbey </p>
+            <p class="text-muted mb-0" style="font-size: 0.8rem;">@ 2024 Our Lady of Mepkin Abbey</p>
         </div>
         <div class="card-footer">
             <div class="d-flex gap-2 justify-content-center align-items-center">
-                <button type="button" class="btn btn-sm btn-danger">Re</button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="loadPreviousArtwork()">Previous</button>
                 <a href="{% url 'mepkin-daily-word' %}" class="btn btn-sm btn-success">Proceed</a>
             </div>
         </div>
     </div>
+
 </div>
 
 <script>
-function skipLoading() {
-    document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("main-content").style.opacity = "1";
-}
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.container').style.opacity = 1;
+    });
 
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(function() {
-        document.getElementById("loading-screen").style.display = "none";
-        document.getElementById("main-content").style.opacity = "1";
-    }, 2000); // 32 seconds
+    function loadPreviousArtwork() {
+        // Get the current date from the span element
+        var currentDate = document.getElementById('today-date').innerText;
 
-    setTimeout(function() {
-        document.getElementById("skip-button").style.display = "block";
-    }, 5000); // Show skip button after 1 second
-});
+        // Convert the current date to a JavaScript Date object
+        var currentDateObject = new Date(currentDate);
 
+        // Decrease the date by one day
+        currentDateObject.setDate(currentDateObject.getDate() - 1);
 
+        // Format the new date in the desired format
+        var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
+        // Generate the new image path based on the new date
+        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpeg';
+
+        // Update the image source and date in the HTML dynamically
+        document.getElementById('artwork-image').src = newImagePath;
+        document.getElementById('today-date').innerText = newDate;
+    }
 </script>
+
 {% endblock %}

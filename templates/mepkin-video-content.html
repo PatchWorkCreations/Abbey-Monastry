@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="bg-secondary text-white sticky-top">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-2">
+            <h1>
+                <span class="me-4">
+                    <a href="{% url 'virtual-tour' %}" class="text-decoration-none text-white">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </span>
+                Mepkin Video Content
+            </h1>
+            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+
+    <div class="card border-0 rounded-3 mb-3">
+        <img src="{% static 'MEPKING/dummy.jpg' %}" class="card-img"
+             style="height: 20rem; object-fit: cover;" alt="...">
+    </div>
+
+    <!-- Audio player with spacing -->
+    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
+        <h5 class="fw-bold">Listen to Tour Audio:</h5>
+        <audio controls>
+            <source src="{% static 'audio/Flight to Egypt and Crucifixion Statues.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <p>Mepkin Abbey is a community of Roman Catholic monks established in 1949 on the site of the historic Mepkin
+        Plantation located on the Cooper River, north of Charleston, South Carolina. Founded by the monks of Gethsemani
+        in Kentucky, the brothers of Mepkin belong to the worldwide Order of Cistercians of the Strict Observance
+        popularly known as Trappist. Following The Rule of St. Benedict, the monks at Mepkin Abbey devote their lives to
+        prayer, spiritual study, work and hospitality. Living by the work of their hands, the monks provide a livelihood
+        for themselves and the poor.</p>
+
+    <div class="ratio ratio-21x9">
+        <iframe src="https://www.youtube.com/embed/07Q9TtRka34?start=6" title="YouTube video" allowfullscreen></iframe>
+    </div>
+
+    <h3 class="fw-bold mt-2">DO YOU FIND YOURSELF CALLED TO A CONTEMPLATIVE LIFE?</h3>
+    <p>View this documentary to discover more about the mission, the call, the work, the people, and the facility here
+        at Mepkin Abbey.</p>
+
+    <!-- Google Map and Street View -->
+    <h2 class="mt-4">Location</h2>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+
+</div>
+
+<script>
+    function initMap() {
+        // Initialize the map centered at the user's current location
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 0, lng: 0 }, // Initial placeholder, will be updated with the user's location
+            zoom: 17,
+        });
+
+        // Get the user's current location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userPosition = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                // Update the map center to the user's current location
+                map.setCenter(userPosition);
+
+                // Create a marker for the user's current location
+                var userMarker = new google.maps.Marker({
+                    position: userPosition,
+                    map: map,
+                    title: 'Your Location'
+                });
+
+                // Create a marker
+                var markerPosition = { lat: 33.117415, lng: -79.950553 };
+                var marker = new google.maps.Marker({
+                    position: markerPosition,
+                    map: map,
+                    title: 'Labyrinth',
+                });
+
+                // Display directions from the user's location to Mepkin Abbey
+                var directionsService = new google.maps.DirectionsService();
+                var directionsRenderer = new google.maps.DirectionsRenderer({
+                    map: map,
+                    suppressMarkers: true  // Do not display default markers
+                });
+
+                var request = {
+                    origin: userPosition,
+                    destination: new google.maps.LatLng(markerPosition.lat, markerPosition.lng),
+                    travelMode: 'DRIVING'
+                };
+
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
+                        directionsRenderer.setDirections(result);
+                    } else {
+                        console.error('Directions request failed with status: ' + status);
+                    }
+                });
+            }, function () {
+                // Handle geolocation error
+                console.error('Error: The Geolocation service failed.');
+                alert('Please enable location services to use this feature.');
+            });
+        } else {
+            // Browser doesn't support geolocation
+            console.error('Error: Your browser doesn\'t support geolocation.');
+            alert('Your browser does not support geolocation. Please use a different browser or enable location services.');
+        }
+    }
+
+    initMap();
+
+
+
+</script>
+<br>
+<br>
+<br>
+{% include 'navbar.html' %}
+{% endblock %}
