@@ -20,6 +20,7 @@
         <div class="card-footer">
             <div class="d-flex gap-2 justify-content-center align-items-center">
                 <button type="button" class="btn btn-sm btn-danger" onclick="loadPreviousArtwork()">Previous</button>
+                <button type="button" class="btn btn-sm btn-primary" onclick="loadNextArtwork()">Next</button>
                 <a href="{% url 'mepkin-daily-word' %}" class="btn btn-sm btn-success">Proceed</a>
             </div>
         </div>
@@ -41,6 +42,27 @@
 
         // Decrease the date by one day
         currentDateObject.setDate(currentDateObject.getDate() - 1);
+
+        // Format the new date in the desired format
+        var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+
+        // Generate the new image path based on the new date
+        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpeg';
+
+        // Update the image source and date in the HTML dynamically
+        document.getElementById('artwork-image').src = newImagePath;
+        document.getElementById('today-date').innerText = newDate;
+    }
+
+    function loadNextArtwork() {
+        // Get the current date from the span element
+        var currentDate = document.getElementById('today-date').innerText;
+
+        // Convert the current date to a JavaScript Date object
+        var currentDateObject = new Date(currentDate);
+
+        // Increase the date by one day
+        currentDateObject.setDate(currentDateObject.getDate() + 1);
 
         // Format the new date in the desired format
         var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });

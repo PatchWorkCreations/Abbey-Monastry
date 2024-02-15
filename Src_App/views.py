@@ -230,6 +230,10 @@ def DeleteGratitudePrayer(request, pk):
     return redirect('gratitude-prayer')
 
 
+def Resources(request):
+    return render(request, 'resources.html')
+
+
 def LuceGardens(request):
     base_path = 'static/gallery/Luce Garden/'
 
