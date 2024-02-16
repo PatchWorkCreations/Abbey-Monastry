@@ -234,6 +234,10 @@ def Resources(request):
     return render(request, 'resources.html')
 
 
+def AboutApp(request):
+    return render(request, 'about-app.html')
+
+
 def LuceGardens(request):
     base_path = 'static/gallery/Luce Garden/'
 

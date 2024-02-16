@@ -6,7 +6,8 @@
      style="height: 100%; opacity: 0; transition: opacity 3s ease-in-out;">
 
     <div class="card mb-3" style="width: 20rem;">
-        <img id="artwork-image" src="{% static 'gallery/Francis Artwork/' %}{{ today_image_path }}" class="card-img-top" alt="...">
+        <img id="artwork-image" src="{% static 'gallery/Francis Artwork/' %}{{ today_image_path }}" class="card-img-top"
+             alt="...">
         <div class="card-body text-center">
             <div class="card-title">
                 Daily Wisdom Art
@@ -19,8 +20,8 @@
         </div>
         <div class="card-footer">
             <div class="d-flex gap-2 justify-content-center align-items-center">
-                <button type="button" class="btn btn-sm btn-danger" onclick="loadPreviousArtwork()">Previous</button>
-                <button type="button" class="btn btn-sm btn-primary" onclick="loadNextArtwork()">Next</button>
+                <button type="button" class="btn btn-sm btn-danger" id="previousButton">Previous</button>
+                <button type="button" class="btn btn-sm btn-primary" id="nextButton">Next</button>
                 <a href="{% url 'mepkin-daily-word' %}" class="btn btn-sm btn-success">Proceed</a>
             </div>
         </div>
@@ -31,6 +32,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.container').style.opacity = 1;
+
+        // Disable the "Next" button if the artwork is in the current date on page load
+        disableNextButtonIfToday();
+
+        // Add event listeners to the buttons
+        document.getElementById('previousButton').addEventListener('click', loadPreviousArtwork);
+        document.getElementById('nextButton').addEventListener('click', loadNextArtwork);
     });
 
     function loadPreviousArtwork() {
@@ -52,6 +60,9 @@
         // Update the image source and date in the HTML dynamically
         document.getElementById('artwork-image').src = newImagePath;
         document.getElementById('today-date').innerText = newDate;
+
+        // Enable/Disable the "Next" button
+        disableNextButtonIfToday();
     }
 
     function loadNextArtwork() {
@@ -73,7 +84,24 @@
         // Update the image source and date in the HTML dynamically
         document.getElementById('artwork-image').src = newImagePath;
         document.getElementById('today-date').innerText = newDate;
+
+        // Enable/Disable the "Next" button
+        disableNextButtonIfToday();
+
     }
+
+    function disableNextButtonIfToday() {
+        var nextButton = document.getElementById('nextButton');
+        var today = new Date();
+        var currentDate = new Date(document.getElementById('today-date').innerText);
+
+        if (currentDate.toDateString() === today.toDateString()) {
+            nextButton.disabled = true;
+        } else {
+            nextButton.disabled = false;
+        }
+    }
+
 </script>
 
 {% endblock %}

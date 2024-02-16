@@ -3,36 +3,15 @@
 {% load static %}
 
 <style>
-    #sideButton {
-        position: fixed;
-        bottom: 4.5rem; /* Adjust this value as needed */
-        right: 1rem; /* Adjust this value as needed */
-        background-color: #3498db; /* Blue color */
-        color: #fff;
-        font-size: 15px;
-        padding: 5px;
-        border: 2px solid #2980b9; /* Border color */
-        cursor: pointer;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-
-    #sideButton:hover {
-        background-color: #2980b9; /* Darker blue color on hover */
+    body {
+        background-image: url('{% static 'MEPKING/Prayer Request.jpg' %}');
+        background-size: contain;
     }
 
      /* Adjust the opacity value as needed */
     .form-control, .form-select {
         background-color: rgba(255, 255, 255, 0.7); /* Adjust the last value (0.7) for opacity */
     }
-
-
-    body {
-        background-image: url('{% static 'MEPKING/pray-bg.png' %}');
-        background-size: cover;
-    }
-
-
 </style>
 
 <div class="bg-secondary text-white sticky-top">
@@ -81,117 +60,68 @@
     </div>
     {% endif %}
 
-    <!-- Audio player with spacing -->
-    <div class="d-flex justify-content-center align-items-center gap-1 mb-3">
-        <h5 class="fw-bold">Listen to Prayer for Monastic Vocations Audio:</h5>
-        <audio controls>
-            <source src="{% static 'audio/Prayer for Monastic Vocation.mp3' %}" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
-
-    <p class="text-center" style="font-family: 'Times New Roman', Times, serif; font-style: italic;">
-
-        <i>(Please join us in prayer for monastic vocations.)</i><br>
-        <br>
-        Gracious and Loving God<br>
-        In every generation you call men and women<br>
-        To leave everything<br>
-        Following Christ into the desert<br>
-        Being of one heart and one mind in peace, humility, and simplicity<br>
-        We come before you now asking for the grace<br>
-        To be faithful to our vocation<br>
-        Striving to live in the communion of Love which surpasses all other gifts<br>
-        May men and women of our time<br>
-        Hear the call to live the Gospel in the monastic way<br>
-        In service of the Church’s mission<br>
-        By constantly seeking your face in prayer, work, and community life<br>
-        Remember our Cistercian communities<br>
-        Those aging and those newly born<br>
-        Throughout the world, north and south, east and west<br>
-        As you have done from the days of our founders<br>
-        Bless us once again<br>
-        May our brotherhood at Mepkin grow in numbers, in grace, and in wisdom<br>
-        So that we might continue to live for your glory with greater vigor<br>
-        And with joy never ending. Amen.<br>
-    </p>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body text-white"
-                     style="background-image: url('{% static 'MEPKING/Prayer Request.jpg' %}'); background-size: contain;">
-
-                    <div class="d-flex justify-content-center align-items-center">
-                        <!--            Send Prayer Message Card-->
-                        <div class="w-100 p-2 send-prayer-card">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label class="form-label">Name/Pseudonym:</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Enter name..."
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Petition - Gratitude:</label>
-                                    <select class="form-select" name="type" required>
-                                        <option value="">---</option>
-                                        <option value="Prayer Request">Prayer Request</option>
-                                        <option value="Gratitude Prayer">Gratitude Prayer</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Prayer Message:</label>
-                                    <textarea class="form-control" name="prayer_msg" id="prayer_msg" rows="3"
-                                              placeholder="Type here..."
-                                              required></textarea>
-                                    <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">50 words</p>
-                                </div>
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-secondary" type="submit" name="pray">Submit
-                                    </button>
-                                    <a href="#" class="text-center text-decoration-none login-as-administrator-btn">
-                                        Login as Administrator
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!--            Login card-->
-                        <div class="w-100 p-2 d-none login-card">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label class="form-label">Username:</label>
-                                    <input type="text" class="form-control" name="username"
-                                           placeholder="Enter username..."
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Password:</label>
-                                    <input type="password" class="form-control" name="password"
-                                           placeholder="Enter password..."
-                                           required>
-                                </div>
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-secondary" type="submit" name="admin_login">Login
-                                    </button>
-                                    <a href="#" class="text-center text-decoration-none send-prayer-btn">
-                                        Go back to Prayer Request
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <!--            Send Prayer Message Card-->
+        <div class="w-100 text-white p-2 send-prayer-card">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Name/Pseudonym:</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter name..."
+                           required>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Petition - Gratitude:</label>
+                    <select class="form-select" name="type" required>
+                        <option value="">---</option>
+                        <option value="Prayer Request">Prayer Request</option>
+                        <option value="Gratitude Prayer">Gratitude Prayer</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Prayer Message:</label>
+                    <textarea class="form-control" name="prayer_msg" id="prayer_msg" rows="3"
+                              placeholder="Type here..."
+                              required></textarea>
+                    <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">50 words</p>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-secondary" type="submit" name="pray">Submit
+                    </button>
+                    <a href="#" class="text-center text-decoration-none login-as-administrator-btn">
+                        Login as Administrator
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!--            Login card-->
+        <div class="w-100 p-2 d-none login-card">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Username:</label>
+                    <input type="text" class="form-control" name="username"
+                           placeholder="Enter username..."
+                           required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password:</label>
+                    <input type="password" class="form-control" name="password"
+                           placeholder="Enter password..."
+                           required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-secondary" type="submit" name="admin_login">Login
+                    </button>
+                    <a href="#" class="text-center text-decoration-none send-prayer-btn">
+                        Go back to Prayer Request
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<button type="button" id="sideButton" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Click to Submit a Prayer
-</button>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -221,7 +151,6 @@
             event.preventDefault();
         });
     });
-
 </script>
 
 <script>
@@ -244,7 +173,6 @@
         var remainingWords = 50 - wordCount;
         wordCountDisplay.textContent = remainingWords + (remainingWords === 1 ? ' word' : ' words') + ' remaining';
     });
-
 </script>
 <br>
 <br>

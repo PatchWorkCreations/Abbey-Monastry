@@ -40,6 +40,7 @@ urlpatterns = [
     path('delete-gratitude-prayer/<int:pk>/', views.DeleteGratitudePrayer, name="delete-gratitude-prayer"),
 
     path('resources/', views.Resources, name='resources'),
+    path('about-app/', views.AboutApp, name='about-app'),
 
     path('luce-gardens/', views.LuceGardens, name="luce-gardens"),
     path('mepkin-abbey-church/', views.MepkinAbbeyChurch, name="mepkin-abbey-church"),

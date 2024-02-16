@@ -3,7 +3,7 @@
 {% load static %}
 
 <style>
-      #sideButton {
+    #proceedButton {
       position: fixed;
       bottom: 1rem; /* Adjust this value as needed */
       right: 1rem; /* Adjust this value as needed */
@@ -17,7 +17,25 @@
       text-decoration: none;
     }
 
-    #sideButton:hover {
+    #proceedButton:hover {
+      background-color: #2980b9; /* Darker blue color on hover */
+    }
+
+    #prayButton {
+      position: fixed;
+      bottom: 1rem; /* Adjust this value as needed */
+      left: 1rem; /* Adjust this value as needed */
+      background-color: #3498db; /* Blue color */
+      color: #fff;
+      font-size: 15px;
+      padding: 5px;
+      border: 2px solid #2980b9; /* Border color */
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    #prayButton:hover {
       background-color: #2980b9; /* Darker blue color on hover */
     }
 </style>
@@ -123,7 +141,8 @@
         </div>
     </div>
 
-    <a href="{% url 'index' %}" id="sideButton">Click here to proceed</a>
+    <a href="{% url 'pray' %}" id="prayButton">Click to Submit a Prayer</a>
+    <a href="{% url 'index' %}" id="proceedButton">Click here to proceed</a>
 </div>
 
 <br>
