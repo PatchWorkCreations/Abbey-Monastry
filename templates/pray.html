@@ -83,7 +83,7 @@
                     <textarea class="form-control" name="prayer_msg" id="prayer_msg" rows="3"
                               placeholder="Type here..."
                               required></textarea>
-                    <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">50 words</p>
+                    <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">80 words</p>
                 </div>
                 <div class="d-grid gap-2">
                     <button class="btn btn-secondary" type="submit" name="pray">Submit
@@ -163,14 +163,14 @@
         });
         var wordCount = words.length;
 
-        if (wordCount > 50) {
+        if (wordCount > 80) {
             // Truncate the excess words
-            var truncatedWords = words.slice(0, 50);
+            var truncatedWords = words.slice(0, 80);
             textarea.value = truncatedWords.join(' ');
-            wordCount = 50;
+            wordCount = 80;
         }
 
-        var remainingWords = 50 - wordCount;
+        var remainingWords = 80 - wordCount;
         wordCountDisplay.textContent = remainingWords + (remainingWords === 1 ? ' word' : ' words') + ' remaining';
     });
 </script>
