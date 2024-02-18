@@ -33,8 +33,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.container').style.opacity = 1;
 
-        // Disable the "Next" button if the artwork is in the current date on page load
-        disableNextButtonIfToday();
+        // Hide the "Next" button if the artwork is in the current date on page load
+        hideNextButtonIfToday();
 
         // Add event listeners to the buttons
         document.getElementById('previousButton').addEventListener('click', loadPreviousArtwork);
@@ -61,8 +61,8 @@
         document.getElementById('artwork-image').src = newImagePath;
         document.getElementById('today-date').innerText = newDate;
 
-        // Enable/Disable the "Next" button
-        disableNextButtonIfToday();
+        // Enable/Hide the "Next" button
+        hideNextButtonIfToday();
     }
 
     function loadNextArtwork() {
@@ -85,20 +85,24 @@
         document.getElementById('artwork-image').src = newImagePath;
         document.getElementById('today-date').innerText = newDate;
 
-        // Enable/Disable the "Next" button
-        disableNextButtonIfToday();
+        // Enable/Hide the "Next" button
+        hideNextButtonIfToday();
 
     }
 
-    function disableNextButtonIfToday() {
+    function hideNextButtonIfToday() {
         var nextButton = document.getElementById('nextButton');
-        var today = new Date();
+
+        // Set the timezone to Ohio
+        var options = { timeZone: 'America/New_York' };
+        var today = new Date().toLocaleString('en-US', options);
+
         var currentDate = new Date(document.getElementById('today-date').innerText);
 
-        if (currentDate.toDateString() === today.toDateString()) {
-            nextButton.disabled = true;
+        if (currentDate.toDateString() === new Date(today).toDateString()) {
+            nextButton.style.display = 'none';
         } else {
-            nextButton.disabled = false;
+            nextButton.style.display = 'block';
         }
     }
 

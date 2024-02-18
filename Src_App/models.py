@@ -12,7 +12,7 @@ class Prayer(models.Model):
 
 
 class MepkinDailyWord(models.Model):
-    post = models.CharField(max_length=200)
+    post = models.TextField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -101,7 +101,7 @@
                         {% else %}
                         <h6 class="fw-bold mb-1">Mepkin Daily Word</h6>
                         {% endif %}
-                        <p class="mb-1 {% if forloop.first %}d-5 fw-bold{% endif %}" style="text-align: justify;">{{ mepkin_daily_word.post }}</p>   
+                        <p class="mb-1 {% if forloop.first %}d-5 fw-bold{% endif %}" style="text-align: justify;">{{ mepkin_daily_word.post|linebreaks }}</p>
                     </div>
                 </div>
                 <div class="text-muted {% if forloop.first %}fw-bold{% endif %}" style="white-space: nowrap;">
