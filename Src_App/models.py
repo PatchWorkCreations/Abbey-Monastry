@@ -38,3 +38,8 @@ class Bio(models.Model):
             existing_instance.save()
         else:
             super().save(*args, **kwargs)
+
+
+class Visitor(models.Model):
+    ip_address = models.GenericIPAddressField()
+    timestamp = models.DateTimeField(auto_now_add=True)

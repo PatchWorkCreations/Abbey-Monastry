@@ -235,7 +235,10 @@ def Resources(request):
 
 
 def AboutApp(request):
-    return render(request, 'about-app.html')
+
+    unique_visitors_count = Visitor.objects.count()
+    return render(request, 'about-app.html', {'unique_visitors_count': unique_visitors_count})
+    # return render(request, 'about-app.html')
 
 
 def LuceGardens(request):
@@ -389,3 +392,4 @@ def OurLadyOfMepkin(request):
 
 def MepkinVideoContent(request):
     return render(request, 'mepkin-video-content.html')
+

@@ -23,11 +23,11 @@
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <h5 class="fw-bold">Live Views</h5>
-            <span class="badge bg-primary rounded-pill">4</span>
+            <span class="badge bg-primary rounded-pill">0</span>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center mt-1">
             <h5 class="fw-bold">Overall Views</h5>
-            <span class="badge bg-primary rounded-pill">50</span>
+            <span class="badge bg-primary rounded-pill">{{ unique_visitors_count }}</span>
         </li>
     </ul>
 
@@ -168,5 +168,15 @@
 <br>
 <br>
 <br>
+
+<script>
+    const socket = new WebSocket('ws://' + window.location.host + '/ws/unique_visitors/');
+
+    socket.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        document.getElementById('unique-visitors-count').innerText = data.count;
+    };
+</script>
+
 {% include 'navbar.html' %}
 {% endblock %}
