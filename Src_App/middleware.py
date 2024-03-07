@@ -1,20 +1,18 @@
 # middleware.py
-from django.utils import timezone
-from datetime import timedelta
 from .models import Visitor
 
-class UniqueVisitorMiddleware:
+class VisitorMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        ip_address = request.META['REMOTE_ADDR']
-        last_hour = timezone.now() - timedelta(hours=1)
+        # Get relevant information from the request
+        ip_address = request.META.get('REMOTE_ADDR', None)
+        user_agent = request.META.get('HTTP_USER_AGENT', None)
 
-        # Check if this IP address has visited in the last hour
-        if not Visitor.objects.filter(ip_address=ip_address, timestamp__gte=last_hour).exists():
-            # If not, count it as a unique visitor
-            Visitor.objects.create(ip_address=ip_address)
+        # Save visitor information to the database
+        if ip_address and user_agent:
+            Visitor.objects.create(ip_address=ip_address, user_agent=user_agent)
 
         response = self.get_response(request)
         return response
