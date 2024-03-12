@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Src_App',
-    'channels',
 ]
 
 MIDDLEWARE = [
@@ -32,15 +31,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Abbey_Monastry.middleware.VisitorMiddleware',
 ]
-
-# Use channels layer as the default backend for Django's ASGI interface
-ASGI_APPLICATION = 'Abbey_Monastry.asgi.application'
-
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-    },
-}
 
 ROOT_URLCONF = 'Abbey_Monastry.urls'
 
