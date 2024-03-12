@@ -23,7 +23,7 @@
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <h5 class="fw-bold">Live Views</h5>
-            <span class="badge bg-primary rounded-pill">0</span>
+            <span class="badge bg-primary rounded-pill" id="liveCount">Loading...</span>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center mt-1">
             <h5 class="fw-bold">Overall Views</h5>
@@ -170,13 +170,21 @@
 <br>
 
 <script>
-    const socket = new WebSocket('ws://' + window.location.host + '/ws/unique_visitors/');
+    function updateVisitorCount() {
+        fetch('/live-visitor-count/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('liveCount').innerText = data.count;
+            });
+    }
 
-    socket.onmessage = function (event) {
-        const data = JSON.parse(event.data);
-        document.getElementById('unique-visitors-count').innerText = data.count;
-    };
+    // Update the count every 5 seconds (adjust as needed)
+    setInterval(updateVisitorCount, 5000);
+
+    // Initial update
+    updateVisitorCount();
 </script>
+
 
 {% include 'navbar.html' %}
 {% endblock %}

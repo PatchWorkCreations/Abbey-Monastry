@@ -235,10 +235,8 @@ def Resources(request):
 
 
 def AboutApp(request):
-
     unique_visitors_count = Visitor.objects.values('ip_address').distinct().count()
     return render(request, 'about-app.html', {'unique_visitors_count': unique_visitors_count})
-    # return render(request, 'about-app.html')
 
 
 def LuceGardens(request):

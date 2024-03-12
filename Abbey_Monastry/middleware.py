@@ -1,5 +1,5 @@
-# middleware.py
-from .models import Visitor
+from Src_App.models import Visitor
+
 
 class VisitorMiddleware:
     def __init__(self, get_response):
@@ -12,7 +12,8 @@ class VisitorMiddleware:
 
         # Save visitor information to the database
         if ip_address and user_agent:
-            Visitor.objects.create(ip_address=ip_address, user_agent=user_agent)
+            visitor = Visitor.objects.create(ip_address=ip_address, user_agent=user_agent)
+            request.session['visitor_id'] = visitor.id
 
         response = self.get_response(request)
         return response
