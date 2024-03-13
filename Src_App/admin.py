@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(Prayer)
 admin.site.register(MepkinDailyWord)
 admin.site.register(Bio)
+admin.site.register(Visitor)

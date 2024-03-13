@@ -22,8 +22,8 @@
 
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <h5 class="fw-bold">Live Views</h5>
-            <span class="badge bg-primary rounded-pill" id="liveCount">Loading...</span>
+            <h5 class="fw-bold">Current User Count</h5>
+            <span class="badge bg-primary rounded-pill" id="activeUserCount"></span>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center mt-1">
             <h5 class="fw-bold">Overall Views</h5>
@@ -170,20 +170,60 @@
 <br>
 
 <script>
-    function updateVisitorCount() {
-        fetch('/live-visitor-count/')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('liveCount').innerText = data.count;
-            });
-    }
+function fetchActiveVisitorsCount() {
+    fetch('/active-visitors/')  // Make sure this matches your URL pattern
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('activeUserCount').innerText = data.active_visitors_count;
+        })
+        .catch(error => console.error('Error fetching active visitors count:', error));
+}
 
-    // Update the count every 5 seconds (adjust as needed)
-    setInterval(updateVisitorCount, 5000);
+// Fetch the active visitor count every 10 seconds
+setInterval(fetchActiveVisitorsCount, 10000); // 10000 milliseconds = 10 seconds
 
-    // Initial update
-    updateVisitorCount();
+// Also fetch once immediately on page load
+fetchActiveVisitorsCount();
 </script>
+
+<script>
+function sendActivityPing() {
+    fetch('/update-activity/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is sent with POST requests
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin', // Include cookies
+    }).then(response => {
+        if (response.ok) {
+            console.log('Activity ping sent successfully.');
+        } else {
+            console.error('Error sending activity ping.');
+        }
+    }).catch(error => console.error('Error sending activity ping:', error));
+}
+
+// Helper function to get the CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Send an activity ping every 1 minute
+setInterval(sendActivityPing, 60000); // 60000 milliseconds = 1 minute
+</script>
+
 
 
 {% include 'navbar.html' %}

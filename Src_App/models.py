@@ -42,4 +42,10 @@ class Bio(models.Model):
 
 class Visitor(models.Model):
     ip_address = models.GenericIPAddressField()
+    session_key = models.CharField(max_length=40)  # Django's default session key length
     timestamp = models.DateTimeField(auto_now_add=True)
+    last_active = models.DateTimeField(auto_now=True)
+    current_page = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"{self.ip_address} - Session {self.session_key} on {self.current_page} at {self.last_active}"

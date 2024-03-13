@@ -41,6 +41,8 @@ urlpatterns = [
 
     path('resources/', views.Resources, name='resources'),
     path('about-app/', views.AboutApp, name='about-app'),
+    path('active-visitors/', views.get_active_visitors, name='active-visitors'),
+    path('update-activity/', views.update_activity, name='update-activity'),
 
     path('luce-gardens/', views.LuceGardens, name="luce-gardens"),
     path('mepkin-abbey-church/', views.MepkinAbbeyChurch, name="mepkin-abbey-church"),

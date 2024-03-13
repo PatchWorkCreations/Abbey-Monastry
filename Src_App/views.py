@@ -1,10 +1,15 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
 import os
 from datetime import datetime
 from pytz import timezone
+from django.utils import timezone as tz
+from datetime import timedelta
+from django.views.decorators.csrf import csrf_exempt
 
 
 def Intro(request):
@@ -235,9 +240,40 @@ def Resources(request):
 
 
 def AboutApp(request):
-    unique_visitors_count = Visitor.objects.count()
-    # return render(request, 'your_template.html', {'unique_visitors_count': unique_visitors_count})
-    return render(request, 'about-app.html', {'unique_visitors_count': unique_visitors_count})
+    # Calculate unique visitor count based on distinct session keys
+    unique_visitors_count = Visitor.objects.aggregate(unique_visitors=Count('session_key', distinct=True))['unique_visitors']
+
+    # Active visitors in the last 1 minute
+    active_threshold = tz.now() - timedelta(minutes=1)
+    active_visitors_count = Visitor.objects.filter(last_active__gte=active_threshold).count()
+
+    return render(request, 'about-app.html', {
+        'unique_visitors_count': unique_visitors_count,
+        'active_visitors_count': active_visitors_count,
+    })
+
+
+def get_active_visitors(request):
+    active_threshold = tz.now() - timedelta(minutes=1)  # Match your polling interval
+    active_visitors_count = Visitor.objects.filter(last_active__gte=active_threshold).count()
+    return JsonResponse({"active_visitors_count": active_visitors_count})
+
+
+@csrf_exempt
+def update_activity(request):
+    if request.method == 'POST':
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.save()
+            session_key = request.session.session_key
+        ip_address = request.META.get('REMOTE_ADDR', '')
+
+        Visitor.objects.update_or_create(
+            session_key=session_key,
+            defaults={'last_active': tz.now(), 'ip_address': ip_address}
+        )
+        return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "error"}, status=400)
 
 
 def LuceGardens(request):
