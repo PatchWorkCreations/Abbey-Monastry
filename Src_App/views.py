@@ -27,7 +27,7 @@ def FrancisArtwork(request):
     today = now_eastern.strftime("%B %d, %Y")
 
     # Generate image path for today
-    today_image_path = f'{today}.jpeg'
+    today_image_path = f'{today}.jpg'
 
     context = {
         'today_image_path': today_image_path,
