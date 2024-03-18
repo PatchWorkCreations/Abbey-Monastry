@@ -377,8 +377,6 @@ def MeditationGardenOfTruthAndReconciliation(request):
     image_paths = [file for file in os.listdir(base_path) if
                    file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
 
-    print(image_paths)
-
     context = {
         'image_paths': image_paths,
     }
@@ -387,7 +385,17 @@ def MeditationGardenOfTruthAndReconciliation(request):
 
 
 def SacredCorridor(request):
-    return render(request, 'sacred-corridor.html')
+    base_path = 'static/gallery/Sacred Corridor/'
+
+    # Filter only image files (you can add more image extensions if needed)
+    image_paths = [file for file in os.listdir(base_path) if
+                   file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
+
+    context = {
+        'image_paths': image_paths,
+    }
+
+    return render(request, 'sacred-corridor.html', context)
 
 
 def AfricanAmericanCemetery(request):
