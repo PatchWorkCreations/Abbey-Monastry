@@ -211,14 +211,14 @@ def Connect(request):
 
 @login_required(login_url='pray')
 def PrayerRequest(request):
-    list_of_prayers = Prayer.objects.all()
+    list_of_prayers = Prayer.objects.all().order_by("-created")
 
     return render(request, 'prayer-request.html', {'list_of_prayers': list_of_prayers})
 
 
 @login_required(login_url='pray')
 def GratitudePrayer(request):
-    list_of_prayers = Prayer.objects.all()
+    list_of_prayers = Prayer.objects.all().order_by("-created").values()
 
     return render(request, 'gratitude-prayer.html', {'list_of_prayers': list_of_prayers})
 
