@@ -65,4 +65,6 @@ urlpatterns = [
     path('flight-to-egypt/', views.FlightToEgypt, name="flight-to-egypt"),
     path('our-lady-of-mepkin/', views.OurLadyOfMepkin, name="our-lady-of-mepkin"),
     path('mepkin-video-content/', views.MepkinVideoContent, name="mepkin-video-content"),
+    path('mepkinabbeyfacebook/', views.Mepkinabbeyfacebook, name="mepkinabbeyfacebook"),
+
 ]

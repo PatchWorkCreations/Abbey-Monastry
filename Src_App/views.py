@@ -436,3 +436,6 @@ def OurLadyOfMepkin(request):
 def MepkinVideoContent(request):
     return render(request, 'mepkin-video-content.html')
 
+def Mepkinabbeyfacebook(request):
+    return render(request, 'mepkinabbeyfacebook.html')
+

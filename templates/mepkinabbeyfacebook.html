@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+  .fb-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height */
+    overflow: hidden; /* Hide overflow outside the container */
+    padding-top: 8px;
+  }
+
+  .fb-page-container .fb-page {
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 800px; /* Increased height */
+    width: 500px; /* Adjust as needed */
+  }
+</style>
+
+{% include 'navbar.html' %}
+
+<div class="fb-page-container">
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0" nonce="7pFPr6yp"></script>
+
+  <div class="fb-page" data-href="https://www.facebook.com/mepkinabbey" data-tabs="timeline" data-width="500" data-height="800" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+    <blockquote cite="https://www.facebook.com/mepkinabbey" class="fb-xfbml-parse-ignore">
+      <a href="https://www.facebook.com/mepkinabbey">Mepkin Abbey</a>
+    </blockquote>
+  </div>
+</div>
+
+{% endblock %}
