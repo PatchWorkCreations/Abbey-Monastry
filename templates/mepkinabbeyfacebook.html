@@ -14,8 +14,16 @@
 
   .fb-page-container .fb-page {
     overflow-y: auto; /* Enable vertical scrolling */
-    height: 800px; /* Increased height */
-    width: 500px; /* Adjust as needed */
+    height: 800px; /* Default height */
+    width: 500px; /* Default width */
+  }
+
+  /* Responsive design for smaller screens */
+  @media (max-width: 600px) {
+    .fb-page-container .fb-page {
+      height: 600px; /* Adjust height for mobile */
+      width: 100%; /* Full width on mobile */
+    }
   }
 </style>
 
