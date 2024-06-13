@@ -13,9 +13,26 @@ body {
 h1 {
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 5px; /* Reduced margin-bottom to bring h1 and h2 closer */
     color: #333;
+    padding-bottom: 0;
 }
 
+h2{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px; /* Optional: Add margin-bottom if needed */
+    color: #333;
+    padding-top: 0;
+}
+
+h4{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 0.8em; /* Smaller font size */
+    color: #333;
+}
 .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -76,7 +93,8 @@ h1 {
 
 </style>
 
-<h1>Artwork Gallery</h1>
+<h1>Daily Wisdom Art</h1>
+<h2>Growing Hope</h2>
 <a href="javascript:history.back()" class="back-button">Go Back</a>
 <div class="gallery">
     {% for image in images %}
@@ -88,5 +106,6 @@ h1 {
         </div>
     {% endfor %}
 </div>
+<h4>@ 2024 Our Lady of Mepkin Abbey</h4>
 
 {% endblock %}
