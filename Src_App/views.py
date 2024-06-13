@@ -37,10 +37,16 @@ def FrancisArtwork(request):
     return render(request, 'francis-artwork.html', context)
 
 
-def ViewMepkinDailyWord(request):
-    mepkin_daily_words = MepkinDailyWord.objects.all()
-    bio = Bio.objects.first()
+from django.core.paginator import Paginator
 
+def ViewMepkinDailyWord(request):
+    mepkin_daily_words_list = MepkinDailyWord.objects.all()
+    paginator = Paginator(mepkin_daily_words_list, 10)  # Show 10 posts per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    bio = Bio.objects.first()
     message = ""
 
     if request.method == 'POST':
@@ -57,12 +63,13 @@ def ViewMepkinDailyWord(request):
             message = "Invalid username or password."
 
     context = {
-        'mepkin_daily_words': mepkin_daily_words,
+        'page_obj': page_obj,
         'bio': bio,
         'message': message,
     }
 
     return render(request, 'mepkin-daily-word.html', context)
+
 
 
 @login_required(login_url='mepkin-daily-word')
