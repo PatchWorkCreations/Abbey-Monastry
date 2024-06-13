@@ -446,3 +446,18 @@ def MepkinVideoContent(request):
 def Mepkinabbeyfacebook(request):
     return render(request, 'mepkinabbeyfacebook.html')
 
+# Src_App/views.py
+
+import os
+from django.conf import settings
+from django.shortcuts import render
+
+def gallery(request):
+    gallery_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+    images = []
+
+    for filename in os.listdir(gallery_path):
+        if filename.endswith('.jpg') or filename.endswith('.png'):
+            images.append(f'gallery/Francis Artwork/{filename}')
+
+    return render(request, 'gallery.html', {'images': images})
