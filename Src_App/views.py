@@ -216,18 +216,34 @@ def Connect(request):
     return render(request, 'connect.html')
 
 
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 @login_required(login_url='pray')
 def PrayerRequest(request):
-    list_of_prayers = Prayer.objects.all().order_by("-created")
+    list_of_prayers = Prayer.objects.filter(type="Prayer Request").order_by("-created")
+    paginator = Paginator(list_of_prayers, 10)  # Show 10 prayers per page
 
-    return render(request, 'prayer-request.html', {'list_of_prayers': list_of_prayers})
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
+    return render(request, 'prayer-request.html', {'page_obj': page_obj})
+
+
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='pray')
 def GratitudePrayer(request):
-    list_of_prayers = Prayer.objects.all().order_by("-created").values()
+    list_of_prayers = Prayer.objects.filter(type="Gratitude Prayer").order_by("-created")
+    paginator = Paginator(list_of_prayers, 10)  # Show 10 prayers per page
 
-    return render(request, 'gratitude-prayer.html', {'list_of_prayers': list_of_prayers})
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'gratitude-prayer.html', {'page_obj': page_obj})
 
 
 def DeletePrayerRequest(request, pk):
