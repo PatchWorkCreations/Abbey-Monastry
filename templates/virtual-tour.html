@@ -7,8 +7,9 @@
     .mepkinmap {
         width: 100%;
         position: relative;
-        overflow: hidden; /* Ensure pins stay within the container */
+        overflow: hidden;
         border-radius: 20px;
+        animation: moveBackground 30s linear infinite;
     }
 
     .mepkinmap img {
@@ -31,12 +32,13 @@
     }
 
     .pin {
-        background: #4362f8;
+        background: #4361f800;
         position: absolute;
         width: 0.7em;
         height: 0.7em;
         border-radius: 50%;
         transform: translate(-50%, -50%);
+        animation: bounce 2s infinite;
     }
 
     .pin.Gold:before {
@@ -52,10 +54,8 @@
         animation: pulse 1.3s ease-in-out infinite;
     }
 
-
-
     .pin.Blue:before {
-        background: #3380FF; /* Blue color - spiritual */
+        background: #3380FF;
         content: '';
         position: absolute;
         top: 50%;
@@ -68,7 +68,7 @@
     }
 
     .pin.Green:before {
-        background: #33FF57; /* Green color - historical and spiritual */
+        background: #33FF57;
         content: '';
         position: absolute;
         top: 50%;
@@ -81,7 +81,7 @@
     }
 
     .pin.Red:before {
-        background: #FF5733; /* Red color - general */
+        background: #FF5733;
         content: '';
         position: absolute;
         top: 50%;
@@ -94,7 +94,7 @@
     }
 
     .pin.Purple:before {
-        background: #800080; /* Purple color - general */
+        background: #800080;
         content: '';
         position: absolute;
         top: 50%;
@@ -114,10 +114,10 @@
         top: 50%;
         transform: translateY(-50%);
         background: #fff;
-        border-radius: 10px; /* Adjust border-radius for curved corners */
+        border-radius: 10px;
         padding: 0.3em 0.6em;
         font-size: 5px;
-        max-width: 150px; /* Adjust the maximum width as needed */
+        max-width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: normal;
@@ -167,7 +167,6 @@
         left: 63.7%;
     }
 
-
     .MepkinAbbeyColumbarium {
         top: 41.4%;
         left: 5.5%;
@@ -197,6 +196,23 @@
         top: 48.3%;
         left: 45.7%;
     }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+        50% { transform: translate(-50%, -50%) translateY(-10px); }
+    }
+
+    @keyframes moveBackground {
+        0% { background-position: 0 0; }
+        100% { background-position: -100% -100%; }
+    }
+
 </style>
 
 <div class="bg-secondary text-white sticky-top">
@@ -239,7 +255,7 @@
             <span>Mepkin Abbey Church</span>
         </div>
 
-        <div class="pin Spiritual MemorialGarden" onclick="window.location.href='{% url 'memorial-garden' %}';">
+        <div class="pin Blue MemorialGarden" onclick="window.location.href='{% url 'memorial-garden' %}';">
             <span>Memorial Garden</span>
         </div>
 
