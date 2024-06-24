@@ -59,6 +59,7 @@ h4{
     width: 100%;
     display: block;
     border-bottom: 1px solid #ddd;
+    cursor: pointer;
 }
 
 .gallery-item .card-body {
@@ -90,6 +91,14 @@ h4{
     background-color: #158820dc;
 }
 
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important; /* Semi-transparent background */
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.67);
+    border: none;
+}
 
 </style>
 
@@ -99,7 +108,7 @@ h4{
 <div class="gallery">
     {% for image in images %}
         <div class="gallery-item">
-            <img src="{% static image %}" alt="{{ image }}">
+            <img src="{% static image %}" alt="{{ image }}" onclick="openModal(this.src)">
             <div class="card-body">
                
             </div>
@@ -107,5 +116,27 @@ h4{
     {% endfor %}
 </div>
 <h4>@ 2024 Our Lady of Mepkin Abbey</h4>
+
+<!-- Modal -->
+<div id="imageModal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <img id="modalImage" src="" class="img-fluid" alt="Zoomed Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(src) {
+        document.getElementById('modalImage').src = src;
+        var modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        modal.show();
+    }
+</script>
 
 {% endblock %}
