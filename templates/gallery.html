@@ -100,21 +100,70 @@ h4{
     border: none;
 }
 
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center the pagination */
+}
+
+.pagination .step-links {
+    display: inline-block; /* Make sure step-links are inline */
+}
+
+.pagination .step-links a, .pagination .step-links span {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #158820;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.pagination .step-links a:hover {
+    background-color: #158820dc;
+}
+
+.pagination .current {
+    background-color: #ddd;
+    border-radius: 5px;
+    color: black; /* Optional: Make the current page number color black */
+}
+
 </style>
 
 <h1>Daily Wisdom Art</h1>
 <h2>Growing Hope</h2>
 <a href="javascript:history.back()" class="back-button">Go Back</a>
 <div class="gallery">
-    {% for image in images %}
+    {% for image in page_obj %}
         <div class="gallery-item">
             <img src="{% static image %}" alt="{{ image }}" onclick="openModal(this.src)">
             <div class="card-body">
-               
             </div>
         </div>
     {% endfor %}
 </div>
+
+<!-- Pagination Controls -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 <h4>@ 2024 Our Lady of Mepkin Abbey</h4>
 
 <!-- Modal -->

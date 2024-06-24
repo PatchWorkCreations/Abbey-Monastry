@@ -467,6 +467,7 @@ def Mepkinabbeyfacebook(request):
 import os
 from django.conf import settings
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 def gallery(request):
     gallery_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
@@ -476,4 +477,8 @@ def gallery(request):
         if filename.endswith('.jpg') or filename.endswith('.png'):
             images.append(f'gallery/Francis Artwork/{filename}')
 
-    return render(request, 'gallery.html', {'images': images})
+    paginator = Paginator(images, 9)  # Show 9 images per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'gallery.html', {'page_obj': page_obj})
