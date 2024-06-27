@@ -67,4 +67,5 @@ urlpatterns = [
     path('mepkin-video-content/', views.MepkinVideoContent, name="mepkin-video-content"),
     path('mepkinabbeyfacebook/', views.Mepkinabbeyfacebook, name="mepkinabbeyfacebook"),
      path('gallery/', views.gallery, name='gallery'),
+     path('accesibility/', views.accesibility, name='accesibility'),
 ]

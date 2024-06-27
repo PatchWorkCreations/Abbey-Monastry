@@ -482,3 +482,6 @@ def gallery(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'gallery.html', {'page_obj': page_obj})
+
+def accesibility(request):
+    return render(request, 'accesibility.html')
