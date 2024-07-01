@@ -1,0 +1,10 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+
+{% block content %}
+<h1>Edit Content</h1>
+<form method="post">
+    {% csrf_token %}
+    <!-- Your form fields for editing content -->
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

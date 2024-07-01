@@ -1,0 +1,25 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+
+{% block content %}
+<h1>Upload or Change Photos</h1>
+<p>Use this form to upload new photos for different sections.</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="section">Select Section:</label>
+    <select id="section" name="section" required>
+        <option value="francis_artwork">Francis Artwork</option>
+        <option value="other_section">Other Section</option>
+        <!-- Add more options as needed -->
+    </select>
+    <br><br>
+    <label for="start_date">Start Date:</label>
+    <input type="date" id="start_date" name="start_date" required>
+    <br><br>
+    <label for="num_days">Number of Days:</label>
+    <input type="number" id="num_days" name="num_days" min="1" max="365" required>
+    <br><br>
+    <label for="photos">Choose photos:</label>
+    <input type="file" id="photos" name="photos" accept="image/*" multiple required>
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

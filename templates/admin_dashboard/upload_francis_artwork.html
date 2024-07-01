@@ -1,0 +1,11 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+
+{% block content %}
+<h1>Upload New Francis Artwork</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="artwork">Choose artwork file:</label>
+    <input type="file" id="artwork" name="artwork" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

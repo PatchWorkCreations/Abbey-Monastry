@@ -37,7 +37,6 @@
         hideNextButtonIfToday();
 
         // Add event listeners to the buttons
-        document.getElementById('previousButton').addEventListener('click', loadPreviousArtwork);
         document.getElementById('nextButton').addEventListener('click', loadNextArtwork);
     });
 
@@ -55,7 +54,7 @@
         var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
         // Generate the new image path based on the new date
-        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpeg';
+        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpg';
 
         // Update the image source and date in the HTML dynamically
         document.getElementById('artwork-image').src = newImagePath;
@@ -79,7 +78,7 @@
         var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
 
         // Generate the new image path based on the new date
-        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpeg';
+        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpg';
 
         // Update the image source and date in the HTML dynamically
         document.getElementById('artwork-image').src = newImagePath;
@@ -87,7 +86,6 @@
 
         // Enable/Hide the "Next" button
         hideNextButtonIfToday();
-
     }
 
     function hideNextButtonIfToday() {
@@ -105,7 +103,6 @@
             nextButton.style.display = 'block';
         }
     }
-
 </script>
 
 {% endblock %}

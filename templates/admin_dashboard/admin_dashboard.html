@@ -1,0 +1,26 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+
+<style>
+    /* Add your existing styles here */
+
+
+</style>
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome to the admin dashboard. Use the links on the left to manage different sections of the site.</p>
+
+<div class="dashboard-info-box">
+    <h2>Francis Artwork</h2>
+    <p>Future photos left: {{ photos_left }}</p>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

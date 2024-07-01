@@ -68,4 +68,9 @@ urlpatterns = [
     path('mepkinabbeyfacebook/', views.Mepkinabbeyfacebook, name="mepkinabbeyfacebook"),
      path('gallery/', views.gallery, name='gallery'),
      path('accesibility/', views.accesibility, name='accesibility'),
-]
+     path('login/', views.login_view, name='login'),
+    path('login/', views.login_view, name='login'),
+    path('custom_admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('custom_admin/edit/', views.admin_edit, name='admin_edit'),
+    path('custom_admin/upload-photo/', views.upload_photos, name='admin_upload_photo'),  # Ensure this name is correct
+    ]

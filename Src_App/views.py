@@ -485,3 +485,131 @@ def gallery(request):
 
 def accesibility(request):
     return render(request, 'accesibility.html')
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('admin_dashboard')
+        else:
+            return render(request, 'login.html', {'error': 'Invalid username or password'})
+    return render(request, 'login.html')
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+import os
+from django.conf import settings
+from datetime import datetime
+from pytz import timezone
+
+@login_required
+def admin_dashboard(request):
+    # Set the time zone to 'US/Eastern'
+    eastern = timezone('US/Eastern')
+
+    # Get the current time in the 'US/Eastern' time zone
+    now_eastern = datetime.now(eastern)
+
+    artwork_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+    photos = [f for f in os.listdir(artwork_path) if os.path.isfile(os.path.join(artwork_path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
+
+    # Filter photos with future dates
+    future_photos = []
+    for photo in photos:
+        try:
+            photo_date = datetime.strptime(photo.split('.')[0], "%B %d, %Y")
+            photo_date = eastern.localize(photo_date)  # Make the datetime timezone-aware
+            if photo_date > now_eastern:
+                future_photos.append(photo)
+        except ValueError:
+            # Handle the case where the filename doesn't match the expected date format
+            pass
+
+    if len(future_photos) <= 3:
+        messages.warning(request, 'Only 3 or fewer future photos are left in the Francis Artwork section. Please upload more photos.')
+
+    return render(request, 'admin_dashboard/admin_dashboard.html', {'photos_left': len(future_photos)})
+
+@login_required
+def admin_edit(request):
+    if request.method == 'POST':
+        # Handle the form submission
+        pass
+    return render(request, 'admin_dashboard/edit.html')
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages  # Ensure this import is present
+from django.core.files.storage import FileSystemStorage
+import os
+from django.conf import settings
+from datetime import datetime, timedelta
+from pytz import timezone
+
+@login_required
+def upload_photos(request):
+    if request.method == 'POST':
+        section = request.POST.get('section')
+        start_date = request.POST.get('start_date')
+        num_days = int(request.POST.get('num_days'))
+        files = request.FILES.getlist('photos')  # Ensure this matches the form field name
+
+        if section == 'francis_artwork':
+            fs = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork'))
+            eastern = timezone('US/Eastern')
+            start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
+
+            for i, file in enumerate(files):
+                if i < num_days:
+                    current_date = start_date + timedelta(days=i)
+                    current_date_str = current_date.strftime("%B %d, %Y")
+                    filename = fs.save(current_date_str + '.jpg', file)
+                else:
+                    break
+
+            messages.success(request, 'Photos uploaded successfully for Francis Artwork.')
+
+        # Add handling for other sections as needed
+
+        return redirect('admin_dashboard')
+
+    return render(request, 'admin_dashboard/upload_photo.html')
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+import os
+from django.conf import settings
+from datetime import datetime
+from pytz import timezone
+
+@login_required
+def upload_francis_artwork(request):
+    if request.method == 'POST' and request.FILES['photo']:
+        artwork = request.FILES['photo']
+        fs = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork'))
+        
+        # Set the time zone to 'US/Eastern'
+        eastern = timezone('US/Eastern')
+
+        # Get the current time in the 'US/Eastern' time zone
+        now_eastern = datetime.now(eastern)
+
+        # Format today's date
+        today_date = now_eastern.strftime("%B %d, %Y")
+
+        # Use today's date as the file name
+        filename = fs.save(today_date + '.jpg', artwork)
+        
+        return redirect('admin_dashboard')
+    
+    return render(request, 'admin_dashboard/upload_photo.html')
