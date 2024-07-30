@@ -128,8 +128,8 @@
     }
 
     .LuceGardens {
-        top: 35.9%;
-        left: 30.7%;
+        top: 49.7%;
+        left: 22.7%;
     }
 
     .AbbeyChurch {
@@ -138,13 +138,13 @@
     }
 
     .StClareWalkway {
-        top: 57.3%;
-        left: 56.3%;
+        top: 70.5%;
+        left: 45%;
     }
 
     .ReceptionCenterGiftShop {
-        top: 56.5%;
-        left: 63%;
+        top: 61.5%;
+        left: 45%;
     }
 
     .MemorialGarden {
@@ -153,13 +153,13 @@
     }
 
     .FiremansMemorial {
-        top: 32.7%;
-        left: 85.1%;
+        top: 45.7%;
+        left: 55.1%;
     }
 
     .Labyrinth {
-        top: 24.3%;
-        left: 72.6%;
+        top: 40.3%;
+        left: 47.6%;
     }
 
     .CrossroadsSacredHeart {
@@ -168,23 +168,23 @@
     }
 
     .MepkinAbbeyColumbarium {
-        top: 41.4%;
-        left: 5.5%;
+        top: 52.7%;
+        left: 10.7%;
     }
 
     .JohnLaurensGraveCemetery {
-        top: 30.7%;
-        left: 0.7%;
+        top: 41.4%;
+        left: 8%;
     }
 
     .MeditationGarden {
-        top: 27.2%;
+        top: 32.2%;
         left: 8.8%;
     }
 
     .AfricanAmericanCemetery {
         top: 94.5%;
-        left: 84%;
+        left: 57%;
     }
 
     .SacredCorridor {
@@ -240,72 +240,81 @@
     </p>
 
     <div class="mepkinmap">
-        <img src="{% static 'map/map.png' %}" alt="...">
+        <img src="{% static 'map/map2.png' %}" alt="...">
 
         <div class="pin Purple ReceptionCenterGiftShop"
              onclick="window.location.href='{% url 'reception-center-or-gift-shop' %}';">
-            <span>Reception Center / Gift Shop</span>
+            <!--<span>Reception Center / Gift Shop</span>-->
         </div>
 
         <div class="pin Gold StClareWalkway" onclick="window.location.href='{% url 'st-claire-walkway' %}';">
-            <span>St. Clare</span>
+           <!-- <span>St. Clare</span> -->
         </div>
-
+        <!--
         <div class="pin Blue AbbeyChurch" onclick="window.location.href='{% url 'mepkin-abbey-church' %}';">
             <span>Mepkin Abbey Church</span>
         </div>
-
+        -->
+        <!--
         <div class="pin Blue MemorialGarden" onclick="window.location.href='{% url 'memorial-garden' %}';">
             <span>Memorial Garden</span>
         </div>
+        -->
 
         <div class="pin Green FiremansMemorial"
              onclick="window.location.href='{% url 'charleston-firefighters-memorial' %}';">
-            <span>Charleston Firefighters Memorial</span>
+           <!-- <span>Charleston Firefighters Memorial</span> -->
         </div>
 
         <div class="pin Blue Labyrinth" onclick="window.location.href='{% url 'labyrinth' %}';">
-            <span>Labyrinth</span>
+           <!-- <span>Labyrinth</span>-->
         </div>
-
+        <!--
         <div class="pin Blue CrossroadsSacredHeart"
              onclick="window.location.href='{% url 'crossroads-or-sacred-heart-of-jesus-statue' %}';">
             <span>Crossroads / Sacred Heart of Jesus Statue</span>
         </div>
+        -->
 
         <div class="pin Gold LuceGardens" onclick="window.location.href='{% url 'luce-gardens' %}';">
-            <span>Luce Gardens</span>
+           <!-- <span>Luce Gardens</span> -->
         </div>
 
         <div class="pin Blue MepkinAbbeyColumbarium"
              onclick="window.location.href='{% url 'mepkin-abbey-columbarium' %}';">
-            <span>Mepkin Abbey Columbarium</span>
+         <!--   <span>Mepkin Abbey Columbarium</span> -->
         </div>
 
         <div class="pin Green JohnLaurensGraveCemetery"
              onclick="window.location.href='{% url 'john-laurens-grave-or-cemetery' %}';">
-            <span>Laurens Cemetery</span>
+           <!-- <span>Laurens Cemetery</span> -->
         </div>
 
+        <!--
         <div class="pin Green MeditationGarden"
              onclick="window.location.href='{% url 'meditation-garden-of-truth-and-reconciliation' %}';">
             <span>Meditation Garden of Truth & Reconciliation</span>
         </div>
+        -->
 
         <div class="pin Gold AfricanAmericanCemetery"
              onclick="window.location.href='{% url 'african-american-cemetery' %}';">
-            <span>African-American Cemetery</span>
+           <!-- <span>African-American Cemetery</span>-->
         </div>
 
+        <!--
         <div class="pin Green SacredCorridor"
              onclick="window.location.href='{% url 'sacred-corridor' %}';">
             <span>Sacred Corridor</span>
         </div>
+        -->
 
+        <!--
         <div class="pin Blue RetreatCenter"
              onclick="window.location.href='{% url 'retreat-center' %}';">
             <span>Retreat Center</span>
         </div>
+        -->
     </div>
 
     <div class="d-flex justify-content-center">
