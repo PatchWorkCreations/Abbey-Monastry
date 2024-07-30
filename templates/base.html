@@ -3,20 +3,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Mepkin Abbey Monastery App</title>
+    <meta name="description" content="Explore the rich history and spiritual sites of Mepkin Abbey through our virtual tour. Discover Luce Gardens, Memorial Bricks, Columbarium, and more.">
+    <meta name="keywords" content="Mepkin Abbey, virtual tour, Luce Gardens, Memorial Bricks, Columbarium, John Laurens, Henry Laurens, Shiitake mushrooms, Oyster mushrooms, Charleston">
+    <meta name="author" content="Mepkin Abbey">
     <link rel="manifest" href="{% static 'manifest.json' %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMRY9i91HSgEAJZUr3Vxx3HrztXRJQueM&callback=initMap"></script>
-    <script src="https://kit.fontawesome.com/18ee09c425.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMRY9i91HSgEAJZUr3Vxx3HrztXRJQueM&callback=initMap" defer></script>
+    <script src="https://kit.fontawesome.com/18ee09c425.js" crossorigin="anonymous" defer></script>
 
     <!-- Include Lightbox CSS and JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" defer></script>
 
     <link rel="shortcut icon" type="image/png" href="{% static 'MEPKING/logo.png' %}">
 
@@ -37,6 +38,21 @@
             display: none;
         }
     </style>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mepkin Abbey",
+        "url": "https://www.mepkinabbey.org",
+        "logo": "{% static 'MEPKING/logo.png' %}",
+        "sameAs": [
+            "https://www.facebook.com/mepkinabbey",
+            "https://twitter.com/mepkinabbey"
+        ]
+    }
+    </script>
 
 </head>
 <body>

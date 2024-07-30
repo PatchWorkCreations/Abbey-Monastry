@@ -7,7 +7,7 @@
     .home-wrapper {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Center the items horizontally */
+        align-items: center;
         width: 100%;
         margin-top: 2vh;
     }
@@ -19,8 +19,8 @@
         margin: 1rem 0;
         border-radius: 0.75rem;
         overflow: hidden;
-        width: 90%; /* Set width to 90% of the parent container */
-        max-width: 600px; /* Set a max-width for larger screens */
+        width: 90%;
+        max-width: 600px;
     }
 
     .linker img {
@@ -35,7 +35,7 @@
         bottom: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.7);
-        color: antiquewhite;
+        color: #f8f9fa;
         padding: 0.75rem;
         box-sizing: border-box;
         font-size: 1rem;
@@ -47,57 +47,38 @@
 
 <div class="home-wrapper">
     <a href="{% url 'virtual-tour' %}" class="linker">
-        <img src="{% static 'MEPKING/g3.png' %}" class="border rounded-3" alt="">
-        <div class="text">
-            Virtual Tour
-        </div>
+        <img src="{% static 'MEPKING/g3.png' %}" class="border rounded-3" alt="Virtual Tour">
+        <div class="text">Virtual Tour</div>
     </a>
     <a href="{% url 'the-gardens' %}" class="linker">
-        <img src="{% static 'MEPKING/The Gardens.jpeg' %}" class="border rounded-3" alt="">
-        <div class="text">
-            The Gardens
-        </div>
+        <img src="{% static 'MEPKING/The Gardens.jpeg' %}" class="border rounded-3" alt="The Gardens">
+        <div class="text">The Gardens</div>
     </a>
     <a href="{% url 'the-brothers' %}" class="linker">
-        <img src="{% static 'MEPKING/Vocation.jpeg' %}" class="border rounded-3" alt="">
-        <div class="text">
-            The Brothers
-        </div>
+        <img src="{% static 'MEPKING/Vocation.jpeg' %}" class="border rounded-3" alt="The Brothers">
+        <div class="text">The Brothers</div>
     </a>
     <a href="{% url 'vocation' %}" class="linker">
-        <img src="{% static 'MEPKING/The Brothers.jpg' %}" class="border rounded-3" alt="">
-        <div class="text">
-            Vocation
-        </div>
+        <img src="{% static 'MEPKING/The Brothers.jpg' %}" class="border rounded-3" alt="Vocation">
+        <div class="text">Vocation</div>
     </a>
     <a href="{% url 'retreat-center' %}" class="linker">
-        <img src="{% static 'MEPKING/Retreat Center.jpeg' %}" class="border rounded-3" alt="">
-        <div class="text">
-            Retreat Center
-        </div>
+        <img src="{% static 'MEPKING/Retreat Center.jpeg' %}" class="border rounded-3" alt="Retreat Center">
+        <div class="text">Retreat Center</div>
     </a>
     <a href="{% url 'news-updates' %}" class="linker">
-        <img src="{% static 'MEPKING/News Updates.jpeg' %}" class="border rounded-3" alt="">
-        <div class="text">
-            News Updates
-        </div>
+        <img src="{% static 'MEPKING/News Updates.jpeg' %}" class="border rounded-3" alt="News Updates">
+        <div class="text">News Updates</div>
     </a>
     <a href="{% url 'pray-with-us' %}" class="linker">
-        <img src="{% static 'MEPKING/Pray with us.jpg' %}" class="border rounded-3" alt="">
-        <div class="text">
-            Pray With Us
-        </div>
+        <img src="{% static 'MEPKING/Pray with us.jpg' %}" class="border rounded-3" alt="Pray With Us">
+        <div class="text">Pray With Us</div>
     </a>
     <a href="{% url 'mepkinabbeyfacebook' %}" class="linker">
-        <img src="{% static 'MEPKING/Screen Shot 2024-06-03 at 6.36.44 PM.png' %}" class="border rounded-3" alt="">
-        <div class="text">
-            Mepkin Abbey Facebook
-        </div>
+        <img src="{% static 'MEPKING/Screen Shot 2024-06-03 at 6.36.44 PM.png' %}" class="border rounded-3" alt="Mepkin Abbey Facebook">
+        <div class="text">Mepkin Abbey Facebook</div>
     </a>
 </div>
-<br>
-<br>
-<br>
 
 {% include 'navbar.html' %}
 {% endblock %}

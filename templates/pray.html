@@ -8,9 +8,26 @@
         background-size: cover;
     }
 
-     /* Adjust the opacity value as needed */
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
     .form-control, .form-select {
-        background-color: rgba(255, 255, 255, 0.7); /* Adjust the last value (0.7) for opacity */
+        background-color: rgba(255, 255, 255, 0.9); /* Adjusted opacity */
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Full viewport height */
+    }
+
+    .form-content {
+        width: 100%;
+        max-width: 500px; /* Maximum width for the form */
     }
 </style>
 
@@ -23,100 +40,74 @@
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 </span>
-                Pray
+                Submit a Prayer Request
             </h1>
-            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
+            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="Mepkin Abbey Logo">
         </div>
     </div>
 </div>
 
+<div class="container form-container">
+    <div class="form-content overlay text-white">
+        <p>At Mepkin Abbey, we believe in the power of prayer. Share your petitions and gratitude with us, and let us join you in your spiritual journey. Submit your prayer requests below and know that we are here to support you.</p>
 
-<div class="container mt-3">
-
-    {% if message %}
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-        </symbol>
-        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-        </symbol>
-        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-        </symbol>
-    </svg>
-
-    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show"
-         role="alert">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                aria-label="Close"></button>
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
-             aria-label="Success:">
-            <use xlink:href="#check-circle-fill"/>
+        {% if message %}
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </symbol>
         </svg>
-        <div>
-            {{ message|safe }}
-        </div>
-    </div>
-    {% endif %}
 
-    <div class="d-flex justify-content-center align-items-center">
-        <!--            Send Prayer Message Card-->
-        <div class="w-100 text-white p-2 send-prayer-card">
-            <form method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label class="form-label">Name/Pseudonym:</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter name..."
-                           required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Petition - Gratitude:</label>
-                    <select class="form-select" name="type" required>
-                        <option value="">---</option>
-                        <option value="Prayer Request">Petition</option>
-                        <option value="Gratitude Prayer">Gratitude</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Prayer Message:</label>
-                    <textarea class="form-control" name="prayer_msg" id="prayer_msg" rows="3"
-                              placeholder="Type here..."
-                              required></textarea>
-                    <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">200 words</p>
-                </div>
-                <div class="d-grid gap-2">
-                    <button class="btn btn-secondary" type="submit" name="pray">Submit
-                    </button>
-                    <a href="#" class="text-center text-decoration-none login-as-administrator-btn">
-                        Login as Administrator
-                    </a>
-                </div>
-            </form>
+        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                <use xlink:href="#check-circle-fill"/>
+            </svg>
+            <div>
+                {{ message|safe }}
+            </div>
         </div>
+        {% endif %}
 
-        <!--            Login card-->
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Name/Pseudonym:</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter name..." required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Petition or Gratitude:</label>
+                <select class="form-select" name="type" required>
+                    <option value="">---</option>
+                    <option value="Prayer Request">Petition</option>
+                    <option value="Gratitude Prayer">Gratitude</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Prayer Message:</label>
+                <textarea class="form-control" name="prayer_msg" id="prayer_msg" rows="3" placeholder="Type your prayer here..." required></textarea>
+                <p class="text-end mt-1" id="wordCount" style="font-size: 12px;">200 words remaining</p>
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-secondary" type="submit" name="pray">Submit</button>
+                <a href="#" class="text-center text-decoration-none login-as-administrator-btn">Login as Administrator</a>
+            </div>
+        </form>
+
         <div class="w-100 p-2 d-none login-card">
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label class="form-label">Username:</label>
-                    <input type="text" class="form-control" name="username"
-                           placeholder="Enter username..."
-                           required>
+                    <input type="text" class="form-control" name="username" placeholder="Enter username..." required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password:</label>
-                    <input type="password" class="form-control" name="password"
-                           placeholder="Enter password..."
-                           required>
+                    <input type="password" class="form-control" name="password" placeholder="Enter password..." required>
                 </div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-secondary" type="submit" name="admin_login">Login
-                    </button>
-                    <a href="#" class="text-center text-decoration-none send-prayer-btn">
-                        Go back to Prayer Request
-                    </a>
+                    <button class="btn btn-secondary" type="submit" name="admin_login">Login</button>
+                    <a href="#" class="text-center text-decoration-none send-prayer-btn">Go back to Prayer Request</a>
                 </div>
             </form>
         </div>
@@ -125,35 +116,24 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Get the elements for the send prayer card and login card
         var sendPrayerCard = document.querySelector(".send-prayer-card");
         var loginCard = document.querySelector(".login-card");
-
-        // Get the button for "Login as Administrator"
         var loginButton = document.querySelector(".login-as-administrator-btn");
-        // Get the link for "Go Back to Send Prayer"
         var sendPrayerButton = document.querySelector(".send-prayer-btn");
 
-        // Add click event listener to the login button
-        loginButton.addEventListener("click", function() {
-            // Toggle the 'd-none' class to hide/show the respective cards
+        loginButton.addEventListener("click", function(event) {
             sendPrayerCard.classList.toggle("d-none");
             loginCard.classList.toggle("d-none");
+            event.preventDefault();
         });
 
-        // Add click event listener to the send prayer button
         sendPrayerButton.addEventListener("click", function(event) {
-            // Toggle the 'd-none' class to hide/show the respective cards
             loginCard.classList.toggle("d-none");
             sendPrayerCard.classList.toggle("d-none");
-
-            // Prevent the default action of the link
             event.preventDefault();
         });
     });
-</script>
 
-<script>
     var textarea = document.getElementById('prayer_msg');
     var wordCountDisplay = document.getElementById('wordCount');
 
@@ -164,7 +144,6 @@
         var wordCount = words.length;
 
         if (wordCount > 200) {
-            // Truncate the excess words
             var truncatedWords = words.slice(0, 200);
             textarea.value = truncatedWords.join(' ');
             wordCount = 200;
