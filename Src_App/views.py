@@ -165,11 +165,13 @@ def VirtualTourStreetView(request):
     return render(request, 'virtual-tour-street-view.html')
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
 def Pray(request):
     if request.method == 'POST':
-
         message = ""
-
         if 'pray' in request.POST:
             Prayer.objects.create(
                 name=request.POST.get('name'),
@@ -178,30 +180,22 @@ def Pray(request):
             )
             message = """
                 Your prayer request has been received and thoughtfully added to Mepkin Abbey’s Prayer List.<br><br>
-
                 “May God grant you your heart’s desire and fulfill all your plans.” - Psalms 20:4.<br>
                 We hold you in our prayers, trusting in the Lord’s guidance and comfort for you and your loved ones during this time.<br>
                 May you feel His presence and peace more profoundly each day.
             """
-
-
         elif 'admin_login' in request.POST:
             username = request.POST.get('username')
             password = request.POST.get('password')
-
             user = authenticate(request, username=username, password=password)
-
             if user is not None:
                 login(request, user)
                 if user.is_superuser:
                     return redirect('list-of-prayers')
             else:
                 message = "Invalid username or password."
-
         return render(request, 'pray.html', {'message': message})
-
     return render(request, 'pray.html')
-
 
 @login_required(login_url='pray')
 def ListOfPrayers(request):
