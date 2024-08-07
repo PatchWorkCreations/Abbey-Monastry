@@ -26,13 +26,11 @@ urlpatterns = [
     path('twitter-updates/', views.TwitterUpdates, name='twitter-updates'),
 
     path('monastic-prayer/', views.MonasticPrayer, name='monastic-prayer'),
-
     path('grounds-tour-map/', views.GroundsTourMap, name='grounds-tour-map'),
     path('virtual-tour-street-view/', views.VirtualTourStreetView, name='virtual-tour-street-view'),
     path('pray/', views.Pray, name="pray"),
     path('support/', views.Support, name='support'),
     path('connect/', views.Connect, name='connect'),
-
     path('list-of-prayers/', views.ListOfPrayers, name="list-of-prayers"),
     path('prayer-request/', views.PrayerRequest, name="prayer-request"),
     path('gratitude-prayer/', views.GratitudePrayer, name="gratitude-prayer"),

@@ -182,7 +182,8 @@ def Pray(request):
                 Your prayer request has been received and thoughtfully added to Mepkin Abbey’s Prayer List.<br><br>
                 “May God grant you your heart’s desire and fulfill all your plans.” - Psalms 20:4.<br>
                 We hold you in our prayers, trusting in the Lord’s guidance and comfort for you and your loved ones during this time.<br>
-                May you feel His presence and peace more profoundly each day.
+                May you feel His presence and peace more profoundly each day.<br>
+                For other information - retreats, visits, vocation, etc., please see our website: <a href="https://mepkinabbey.org" target="_blank">https://mepkinabbey.org</a>
             """
         elif 'admin_login' in request.POST:
             username = request.POST.get('username')
