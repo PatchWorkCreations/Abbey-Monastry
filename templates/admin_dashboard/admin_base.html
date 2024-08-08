@@ -153,9 +153,44 @@ form button:hover {
     border: 1px solid #ffeeba;
 }
 
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    content: " ▼";
+    font-size: 0.8em;
+}
+
+.dropdown-menu {
+    display: none;
+    padding-left: 20px; /* Indent the dropdown content */
+    list-style: none;
+    margin: 0;
+}
+
+.dropdown-menu li a {
+    padding: 10px;
+    padding-left: 20px; /* Add extra padding for indentation */
+}
+
+.dropdown-menu li a:hover {
+    background-color: #575757;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
 
 </style>
 <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMRY9i91HSgEAJZUr3Vxx3HrztXRJQueM&callback=initMap" defer></script>
+    <script src="https://kit.fontawesome.com/18ee09c425.js" crossorigin="anonymous" defer></script>
+
 <body>
     <div class="sidebar">
         <h2>Admin Dashboard</h2>
@@ -163,7 +198,15 @@ form button:hover {
             <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
             <li><a href="{% url 'admin_edit' %}">Edit</a></li>
             <li><a href="{% url 'admin_upload_photo' %}">Upload Photo</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropdown-toggle">List of Prayers</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'admin_prayer_request' %}">Prayer Requests</a></li>
+                    <li><a href="{% url 'admin_gratitude_prayer' %}">Gratitude Prayers</a></li>
+                </ul>
+            </li><!-- Add this line -->
         </ul>
+        
     </div>
     <div class="content">
         {% if messages %}

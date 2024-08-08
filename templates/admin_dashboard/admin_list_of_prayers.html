@@ -1,0 +1,74 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+
+    .header-section h1 {
+        display: flex;
+        align-items: center;
+    }
+
+    .header-section h1 a {
+        color: white;
+        margin-right: 1rem;
+        text-decoration: none;
+    }
+
+    .header-section img {
+        height: 75px;
+    }
+
+    .content-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 150px);
+        gap: 1rem;
+    }
+
+    .content-section a {
+        width: 100%;
+        max-width: 300px;
+        padding: 1rem;
+        text-align: center;
+        border: 2px solid #6c757d;
+        background-color: white;
+        color: #6c757d;
+        font-size: 1.25rem;
+        transition: all 0.3s ease-in-out;
+        border-radius: 0.5rem;
+    }
+
+    .content-section a:hover {
+        background-color: #6c757d;
+        color: white;
+    }
+</style>
+
+<div class="header-section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>
+                <a href="{% url 'pray' %}">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                List of Prayers
+            </h1>
+            <img src="{% static 'MEPKING/logo.png' %}" alt="Mepkin Abbey Logo">
+        </div>
+    </div>
+</div>
+
+<div class="container content-section">
+    <a href="{% url 'admin_prayer_request' %}" class="btn">
+        PETITION
+    </a>
+    <a href="{% url 'admin_gratitude_prayer' %}" class="btn">
+        GRATITUDE
+    </a>
+</div>
+
+
+{% endblock %}

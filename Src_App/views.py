@@ -200,7 +200,38 @@ def Pray(request):
 
 @login_required(login_url='pray')
 def ListOfPrayers(request):
-    return render(request, 'list-of-prayers.html')
+    prayers = Prayer.objects.all()
+    return render(request, 'list-of-prayers.html', {'prayers': prayers})
+
+@login_required(login_url='pray')
+def admin_list_of_prayers(request):
+    prayers = Prayer.objects.all()
+    return render(request, 'admin_dashboard/admin_list_of_prayers.html', {'prayers': prayers})
+
+from django.core.paginator import Paginator
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Prayer
+
+@login_required(login_url='pray')
+def admin_prayer_request(request):
+    list_of_prayers = Prayer.objects.filter(type="Prayer Request").order_by("-created")
+    paginator = Paginator(list_of_prayers, 10)  # Show 10 prayers per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'admin_dashboard/admin_prayer_request.html', {'page_obj': page_obj})
+
+@login_required(login_url='pray')
+def admin_gratitude_prayer(request):
+    list_of_prayers = Prayer.objects.filter(type="Gratitude Prayer").order_by("-created")
+    paginator = Paginator(list_of_prayers, 10)  # Show 10 prayers per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'admin_dashboard/admin_gratitude_prayer.html', {'page_obj': page_obj})
 
 
 def Support(request):
@@ -500,6 +531,15 @@ def login_view(request):
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.files.storage import FileSystemStorage
+import os
+from django.conf import settings
+from datetime import datetime, timedelta
+from pytz import timezone
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 import os
 from django.conf import settings
 from datetime import datetime
@@ -540,10 +580,68 @@ def admin_edit(request):
         pass
     return render(request, 'admin_dashboard/edit.html')
 
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+from datetime import datetime, timedelta
+from pytz import timezone
+import os
+
+@login_required
+def upload_photos(request):
+    artwork_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+    eastern = timezone('US/Eastern')
+
+    if request.method == 'POST':
+        section = request.POST.get('section')
+        start_date = request.POST.get('start_date')
+        num_days = int(request.POST.get('num_days'))
+        files = request.FILES.getlist('photos')
+
+        if section == 'francis_artwork':
+            fs = FileSystemStorage(location=artwork_path)
+            start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
+
+            for i, file in enumerate(files):
+                if i < num_days:
+                    current_date = start_date + timedelta(days=i)
+                    current_date_str = current_date.strftime("%Y-%m-%d")
+                    filename = fs.save(current_date_str + '.jpg', file)
+                else:
+                    break
+
+            messages.success(request, 'Photos uploaded successfully for Francis Artwork.')
+            return redirect('admin_dashboard')
+
+    # Calculate future covered dates
+    now_eastern = datetime.now(eastern)
+    photos = [f for f in os.listdir(artwork_path) if os.path.isfile(os.path.join(artwork_path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
+    future_covered_dates = []
+
+    for photo in photos:
+        try:
+            photo_date = datetime.strptime(photo.split('.')[0], "%Y-%m-%d")
+            photo_date = eastern.localize(photo_date)
+            if photo_date > now_eastern:
+                future_covered_dates.append(photo_date.strftime("%Y-%m-%d"))
+        except ValueError:
+            pass
+
+    return render(request, 'admin_dashboard/upload_photo.html', {'covered_dates': future_covered_dates})
+
+
+@login_required
+def admin_edit(request):
+    if request.method == 'POST':
+        # Handle the form submission
+        pass
+    return render(request, 'admin_dashboard/edit.html')
+
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # Ensure this import is present
+from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 import os
 from django.conf import settings
@@ -552,15 +650,18 @@ from pytz import timezone
 
 @login_required
 def upload_photos(request):
+    future_covered_dates = []
+    eastern = timezone('US/Eastern')
+    artwork_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+
     if request.method == 'POST':
         section = request.POST.get('section')
         start_date = request.POST.get('start_date')
         num_days = int(request.POST.get('num_days'))
-        files = request.FILES.getlist('photos')  # Ensure this matches the form field name
+        files = request.FILES.getlist('photos')
 
         if section == 'francis_artwork':
-            fs = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork'))
-            eastern = timezone('US/Eastern')
+            fs = FileSystemStorage(location=artwork_path)
             start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
 
             for i, file in enumerate(files):
@@ -573,11 +674,22 @@ def upload_photos(request):
 
             messages.success(request, 'Photos uploaded successfully for Francis Artwork.')
 
-        # Add handling for other sections as needed
-
         return redirect('admin_dashboard')
 
-    return render(request, 'admin_dashboard/upload_photo.html')
+    # Calculate future covered dates
+    now_eastern = datetime.now(eastern)
+    photos = [f for f in os.listdir(artwork_path) if os.path.isfile(os.path.join(artwork_path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
+    for photo in photos:
+        try:
+            photo_date = datetime.strptime(photo.split('.')[0], "%B %d, %Y")
+            photo_date = eastern.localize(photo_date)
+            if photo_date > now_eastern:
+                future_covered_dates.append(photo_date.strftime("%Y-%m-%d"))
+        except ValueError:
+            pass
+
+    return render(request, 'admin_dashboard/upload_photo.html', {'covered_dates': future_covered_dates})
+
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
