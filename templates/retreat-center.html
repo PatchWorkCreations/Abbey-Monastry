@@ -4,46 +4,63 @@
 
 <style>
     .retreat-offerings {
-        padding: 20px;
-        background-color: #f8f9fa;
-        border-radius: 10px;
-    }
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
 
-    .retreat-offerings h2 {
-        font-size: 2rem;
-        color: #343a40;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
+.retreat-offerings h2 {
+    font-size: 2rem;
+    color: #343a40;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
 
-    .retreat-offerings .card {
-        border: none;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
+.retreat-offerings .card {
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    .retreat-offerings .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
+.retreat-offerings .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .retreat-offerings .card h5 {
-        font-size: 1.25rem;
-        font-weight: 500;
-        color: #495057;
-    }
+.retreat-offerings .card h5 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #495057;
+}
 
-    .retreat-offerings .card p {
-        color: #6c757d;
-        font-size: 0.9rem;
-    }
+.retreat-offerings .card p {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
 
-    .retreat-offerings .card img {
-        border-radius: 10px 10px 0 0;
-    }
+.retreat-offerings .card img {
+    border-radius: 10px 10px 0 0;
+}
 
-    .retreat-offerings .card-body {
-        padding: 15px;
-    }
+.retreat-offerings .card-body {
+    padding: 15px;
+}
+
+.retreat-offerings .row {
+    display: flex;
+    justify-content: center;  /* Center the cards horizontally */
+    flex-wrap: wrap;
+}
+
+.retreat-offerings .col {
+    flex: 1 1 45%; /* Allow cards to take up more space */
+    max-width: 45%; /* Maximum width of each card */
+    margin: 10px; /* Space between cards */
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
 </style>
 
 <div class="bg-secondary text-white sticky-top">
@@ -122,11 +139,44 @@
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ offering.title }}</h5>
-                        <p class="card-text">{{ offering.description }}</p>
+                        {% if offering.description|length > 250 %}
+                        <p class="card-text">
+                            {{ offering.description|truncatechars:250|linebreaks }}
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal-{{ forloop.counter }}">Learn More</a>
+                        </p>
+                        {% else %}
+                        <p class="card-text">{{ offering.description|linebreaks }}</p>
+                        {% endif %}
                         <p class="card-text"><small class="text-muted"><strong>Date:</strong> {{ offering.date }}</small></p>
+                        <p class="card-text"><small class="text-muted"><strong>End Date:</strong> {{ offering.end_date }}</small></p>
                         <p class="card-text"><small class="text-muted"><strong>Location:</strong> {{ offering.location }}</small></p>
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal-{{ forloop.counter }}" tabindex="-1" aria-labelledby="modalLabel-{{ forloop.counter }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel-{{ forloop.counter }}">{{ offering.title }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% if offering.image %}
+                                <img src="{{ offering.image.url }}" class="card-img-top" alt="{{ offering.title }} image" style="height: 15rem; object-fit: cover;">
+                                {% endif %}
+                                {{ offering.description|linebreaks }}
+                                {% if offering.registration_link %}
+                                <p><a href="{{ offering.registration_link }}" class="btn btn-primary mt-3" target="_blank">Register Now</a></p>
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             {% empty %}
             <p class="text-center">No retreat offerings available at the moment. Please check back later.</p>
@@ -151,11 +201,14 @@
         </div>
 
         <div class="ratio ratio-16x9 mt-2">
-            <iframe src="https://momento360.com/e/u/5951a3598cf04999a4147e2a8dd99776?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
+            <iframe src="https://momento360.com/e/u/5951a3598cf04999a4147e2cfb6d5df6?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
                     title="Virtual Tour" allowfullscreen></iframe>
         </div>
     </div>
 </div>
 
-{% include 'navbar.html' %}
+<!-- Scripts for Bootstrap Modal -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9z5L5O0hsyhW1cJkz9nHmd8ubkHtFzj5F11B9P1xk41aNfXjFwM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-5lF4mURJ5D+50IXdKQ8ET6hWyDF5j0oWoPV0l2p1Xv0lY5dWPGJ6M8Fmdy4UuK6v" crossorigin="anonymous"></script>
+
 {% endblock %}

@@ -1,39 +1,56 @@
 {% extends 'admin_dashboard/admin_base.html' %}
+{% load custom_filters %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="mb-4">Edit Retreat Offering</h1>
-
-    <!-- Form for Editing an Existing Offering -->
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            {{ form.title }}
+<h1>Add Retreat Offering</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Title Field -->
+    <div class="mb-3">
+        <label for="{{ form.title.id_for_label }}" class="form-label">Title:</label>
+        {{ form.title|add_class:"form-control" }}
+    </div>
+    
+    <!-- Description Field -->
+    <div class="mb-3">
+        <label for="{{ form.description.id_for_label }}" class="form-label">Description:</label>
+        <div class="form-control" id="{{ form.description.id_for_label }}">
+            {{ form.description.value|linebreaks }}
         </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            {{ form.description }}
-        </div>
-        <div class="mb-3">
-            <label for="date" class="form-label">Date</label>
-            {{ form.date }}
-        </div>
-        <div class="mb-3">
-            <label for="location" class="form-label">Location</label>
-            {{ form.location }}
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            {% if form.instance.image %}
-            <div class="mb-2">
-                <img src="{{ form.instance.image.url }}" alt="{{ form.instance.title }}" style="max-height: 100px;">
-            </div>
-            {% endif %}
-            {{ form.image }}
-        </div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'admin_retreat_offerings' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
+    </div>
+    
+    <!-- Start Date Field with Date Picker -->
+    <div class="mb-3">
+        <label for="{{ form.date.id_for_label }}" class="form-label">Start Date:</label>
+        {{ form.date|add_class:"form-control" }}
+    </div>
+    
+    <!-- End Date Field with Date Picker -->
+    <div class="mb-3">
+        <label for="{{ form.end_date.id_for_label }}" class="form-label">End Date:</label>
+        {{ form.end_date|add_class:"form-control" }}
+    </div>
+    
+    <!-- Location Field -->
+    <div class="mb-3">
+        <label for="{{ form.location.id_for_label }}" class="form-label">Location:</label>
+        {{ form.location|add_class:"form-control" }}
+    </div>
+    
+    <!-- Image Upload Field -->
+    <div class="mb-3">
+        <label for="{{ form.image.id_for_label }}" class="form-label">Image:</label>
+        {{ form.image|add_class:"form-control" }}
+    </div>
+    
+    <!-- Registration Link Field -->
+    <div class="mb-3">
+        <label for="{{ form.registration_link.id_for_label }}" class="form-label">Registration Link:</label>
+        {{ form.registration_link|add_class:"form-control" }}
+    </div>
+    
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 {% endblock %}

@@ -51,12 +51,20 @@ class Visitor(models.Model):
         return f"{self.ip_address} - Session {self.session_key} on {self.current_page} at {self.last_active}"
 
 
+
+from django.db import models
+import datetime
+
 class RetreatOffering(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+    title = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     date = models.DateField(null=True, blank=True)
-    location = models.CharField(max_length=200, null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)  # New end_date field
+    location = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='retreatofferings/', null=True, blank=True)
+    registration_link = models.URLField(blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return self.title if self.title else "No Title"
+
+
