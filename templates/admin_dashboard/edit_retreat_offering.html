@@ -1,0 +1,39 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Edit Retreat Offering</h1>
+
+    <!-- Form for Editing an Existing Offering -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            {{ form.date }}
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            {{ form.location }}
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            {% if form.instance.image %}
+            <div class="mb-2">
+                <img src="{{ form.instance.image.url }}" alt="{{ form.instance.title }}" style="max-height: 100px;">
+            </div>
+            {% endif %}
+            {{ form.image }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'admin_retreat_offerings' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

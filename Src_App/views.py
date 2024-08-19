@@ -129,8 +129,13 @@ def Vocation(request):
     return render(request, 'vocation.html')
 
 
+from django.shortcuts import render
+from .models import RetreatOffering
+
 def RetreatCenter(request):
-    return render(request, 'retreat-center.html')
+    offerings = RetreatOffering.objects.all()
+    return render(request, 'retreat-center.html', {'offerings': offerings})
+
 
 
 def NewsUpdates(request):
@@ -720,3 +725,59 @@ def upload_francis_artwork(request):
         return redirect('admin_dashboard')
     
     return render(request, 'admin_dashboard/upload_photo.html')
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import RetreatOffering
+from .forms import RetreatOfferingForm
+
+@login_required
+def manage_retreat_offerings(request):
+    offerings = RetreatOffering.objects.all()
+    return render(request, 'admin_dashboard/manage_retreat_offerings.html', {'offerings': offerings})
+
+def add_retreat_offering(request):
+    if request.method == 'POST':
+        form = RetreatOfferingForm(request.POST, request.FILES)  # Handle file uploads
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully added a retreat offering.')
+            return redirect('admin_retreat_offerings')  # Redirect to the manage page
+    else:
+        form = RetreatOfferingForm()
+    return render(request, 'admin_dashboard/add_retreat_offering.html', {'form': form})
+
+@login_required
+def edit_retreat_offering(request, pk):
+    offering = RetreatOffering.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = RetreatOfferingForm(request.POST, request.FILES, instance=offering)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Retreat Offering updated successfully.')
+            return redirect('admin_retreat_offerings')
+    else:
+        form = RetreatOfferingForm(instance=offering)
+    return render(request, 'admin_dashboard/edit_retreat_offering.html', {'form': form})
+
+from django.shortcuts import get_object_or_404, redirect
+
+def DeleteRetreatOffering(request, pk):
+    offering = get_object_or_404(RetreatOffering, pk=pk)
+    if request.method == 'POST':
+        offering.delete()
+        messages.success(request, 'Retreat offering deleted successfully.')
+        return redirect('admin_retreat_offerings')
+    return redirect('admin_retreat_offerings')  # Redirect if method is not POST
+
+
+# Src_App/templatetags/custom_filters.py
+from django import template
+
+register = template.Library()
+
+@register.filter(name='add_class')
+def add_class(field, css_class):
+    return field.as_widget(attrs={'class': css_class})
+

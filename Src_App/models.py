@@ -49,3 +49,14 @@ class Visitor(models.Model):
 
     def __str__(self):
         return f"{self.ip_address} - Session {self.session_key} on {self.current_page} at {self.last_active}"
+
+
+class RetreatOffering(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    date = models.DateField(null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(upload_to='retreatofferings/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title

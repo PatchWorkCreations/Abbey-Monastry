@@ -2,6 +2,50 @@
 {% block content %}
 {% load static %}
 
+<style>
+    .retreat-offerings {
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+    }
+
+    .retreat-offerings h2 {
+        font-size: 2rem;
+        color: #343a40;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .retreat-offerings .card {
+        border: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .retreat-offerings .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .retreat-offerings .card h5 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .retreat-offerings .card p {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .retreat-offerings .card img {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .retreat-offerings .card-body {
+        padding: 15px;
+    }
+</style>
+
 <div class="bg-secondary text-white sticky-top">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center py-2">
@@ -13,7 +57,7 @@
                 </span>
                 St. Francis Retreat Center
             </h1>
-            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="">
+            <img src="{% static 'MEPKING/logo.png' %}" height="75rem" alt="St. Francis Retreat Center Logo">
         </div>
     </div>
 </div>
@@ -40,7 +84,7 @@
             <a href="https://youtu.be/zp_vmecwmxI" target="_blank" class="text-decoration-none">
                 <div class="card border-0">
                     <img src="{% static 'MEPKING/g3.png' %}"
-                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                         class="card-img rounded-3" alt="Video thumbnail" style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
@@ -55,7 +99,7 @@
             <a href="https://mepkinabbey.org/retreat-center-news/" target="_blank" class="text-decoration-none">
                 <div class="card border-0">
                     <img src="{% static 'MEPKING/center.png' %}"
-                         class="card-img rounded-3" alt="..." style="height: 15rem; object-fit: cover;">
+                         class="card-img rounded-3" alt="About the Center" style="height: 15rem; object-fit: cover;">
                     <div class="card-img-overlay">
                         <h6 class="card-text fw-bold position-absolute bottom-0 mb-2 p-2"
                             style="color: #fff; background-color: rgba(0, 0, 0, 0.6)">
@@ -65,30 +109,53 @@
                 </div>
             </a>
         </div>
+    </div>
 
+    <div class="retreat-offerings mt-5">
+        <h2 class="text-center">Retreat Offerings</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+            {% for offering in offerings %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    {% if offering.image %}
+                    <img src="{{ offering.image.url }}" class="card-img-top" alt="{{ offering.title }} image" style="height: 15rem; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ offering.title }}</h5>
+                        <p class="card-text">{{ offering.description }}</p>
+                        <p class="card-text"><small class="text-muted"><strong>Date:</strong> {{ offering.date }}</small></p>
+                        <p class="card-text"><small class="text-muted"><strong>Location:</strong> {{ offering.location }}</small></p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No retreat offerings available at the moment. Please check back later.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
         <div class="ratio ratio-16x9 mt-2">
             <iframe src="https://momento360.com/e/u/29fa35b4b1e34c62906f152490fdb8b1?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
-                    title="Image" allowfullscreen></iframe>
+                    title="Virtual Tour" allowfullscreen></iframe>
         </div>
 
         <div class="ratio ratio-16x9 mt-2">
             <iframe src="https://momento360.com/e/u/eda426de8d704077b994c0b59fc08bec?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
-                    title="Image" allowfullscreen></iframe>
+                    title="Virtual Tour" allowfullscreen></iframe>
         </div>
 
         <div class="ratio ratio-16x9 mt-2">
             <iframe src="https://momento360.com/e/u/3cffdd96704d487f8b6efcb2a27133a7?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
-                    title="Image" allowfullscreen></iframe>
+                    title="Virtual Tour" allowfullscreen></iframe>
         </div>
 
         <div class="ratio ratio-16x9 mt-2">
             <iframe src="https://momento360.com/e/u/5951a3598cf04999a4147e2a8dd99776?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=medium&display-plan=true"
-                    title="Image" allowfullscreen></iframe>
+                    title="Virtual Tour" allowfullscreen></iframe>
         </div>
     </div>
 </div>
-<br>
-<br>
-<br>
+
 {% include 'navbar.html' %}
 {% endblock %}

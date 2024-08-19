@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('', views.Intro, name='intro'),
     path('francis-artwork', views.FrancisArtwork, name='francis-artwork'),
@@ -74,4 +77,14 @@ urlpatterns = [
     path('admin_list_of_prayers/', views.admin_list_of_prayers, name='admin_list_of_prayers'),  # Add this line
     path('admin_prayer_request/', views.admin_prayer_request, name='admin_prayer_request'),
     path('admin_gratitude_prayer/', views.admin_gratitude_prayer, name='admin_gratitude_prayer'),
+
+    path('admin_dashboard/', views.manage_retreat_offerings, name='admin_retreat_offerings'),
+    path('admin_dashboard/add/', views.add_retreat_offering, name='add_retreat_offering'),
+    path('admin_dashboard/edit/<int:pk>/', views.edit_retreat_offering, name='edit_retreat_offering'),
+    path('retreat-offering/delete/<int:pk>/', views.DeleteRetreatOffering, name='delete_retreat_offering'),
+
+    
     ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
