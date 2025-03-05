@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+  /* Loading screen styling */
+  #loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+</style>
+
+<!-- Loading screen -->
+<div id="loading-screen" style="height: 100%;">
+    <img src="{% static 'MEPKING/calling.gif' %}" alt="Loading..." style="max-width: 400px;">
+    <button id="skip-button" class="btn btn-sm btn-secondary px-3"
+            style="position: absolute; top: 10px; right: 10px; display: none;" onclick="skipLoading()">SKIP
+    </button>
+</div>
+
+<script>
+function skipLoading() {
+    // Redirect to the vocation page after skipping
+    window.location.href = "{% url 'vocation' %}";
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Function to hide loading screen and redirect
+    function hideLoading() {
+        // Redirect to the vocation page after loading for 32 seconds
+        window.location.href = "{% url 'vocation' %}";
+    }
+
+    // Hide loading screen after 32 seconds
+    setTimeout(hideLoading, 32000);
+
+    // Show skip button after 5 seconds
+    setTimeout(function() {
+        document.getElementById("skip-button").style.display = "block";
+    }, 5000);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    .container {
+        height: 100%;
+        opacity: 0;
+        transition: opacity 3s ease-in-out;
+    }
+</style>
+
+<div class="container d-flex flex-column justify-content-center align-items-center gap-2">
+    <div class="card mb-3" style="width: 20rem;">
+        {% if today_image_path %}
+    <img src="{% static today_image_path %}" id="artwork-image" alt="Today's Psalter Artwork">
+        {% else %}
+            <p>No artwork available for today.</p>
+        {% endif %}
+
+
+        <div class="card-body text-center">
+            <div class="card-title">
+                Psalm for The Day
+                <br class="mt-5">
+                <span class="mt-5" id="today-date">{{ today_date }}</span>
+                <br>
+            </div>
+            <p class="text-muted mb-0" style="font-size: 0.8rem;">© 2024 Our Lady of Mepkin Abbey</p>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex gap-2 justify-content-center align-items-center">
+                <!--        
+                <a href="{% url 'gallery' %}" class="btn btn-sm btn-success">View Psalter Gallery</a>
+                -->
+                <button type="button" class="btn btn-sm btn-primary" id="nextButton">Next</button>
+                <a href="{% url 'index' %}" class="btn btn-sm btn-success">Proceed</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.container').style.opacity = 1;
+
+        // Preload the next image
+        preloadNextImage();
+
+        // Hide the "Next" button if the artwork is for the current date on page load
+        hideNextButtonIfToday();
+
+        // Add event listeners to the buttons
+        document.getElementById('nextButton').addEventListener('click', loadNextArtwork);
+    });
+
+    function preloadNextImage() {
+    var currentDate = document.getElementById('today-date').innerText;
+    var currentDateObject = new Date(currentDate);
+    currentDateObject.setDate(currentDateObject.getDate() + 1);
+    
+    var newDate = currentDateObject.toISOString().split('T')[0]; // YYYY-MM-DD format
+    var newImagePath = '{% static "gallery/Psalter Artwork/" %}' + newDate + '.jpg';
+    
+    var img = new Image();
+    img.src = newImagePath;
+    img.onerror = function() {
+        console.error('Error loading image:', newImagePath);
+    };
+}
+
+function loadNextArtwork() {
+    var currentDate = document.getElementById('today-date').innerText;
+    var currentDateObject = new Date(currentDate);
+    currentDateObject.setDate(currentDateObject.getDate() + 1);
+
+    var newDate = currentDateObject.toISOString().split('T')[0]; // Convert to YYYY-MM-DD
+    var newImagePath = '{% static "gallery/Psalter Artwork/" %}' + newDate + '.jpg';
+
+    document.getElementById('artwork-image').src = newImagePath;
+    document.getElementById('today-date').innerText = newDate;
+    hideNextButtonIfToday();
+}
+
+    function hideNextButtonIfToday() {
+        var nextButton = document.getElementById('nextButton');
+        var options = { timeZone: 'America/New_York' };
+        var today = new Date().toLocaleString('en-US', options);
+        var currentDate = new Date(document.getElementById('today-date').innerText);
+
+        if (currentDate.toDateString() === new Date(today).toDateString()) {
+            nextButton.style.display = 'none';
+        } else {
+            nextButton.style.display = 'block';
+        }
+    }
+</script>
+
+{% endblock %}

@@ -9,9 +9,10 @@
         <label for="section" class="form-label">Select Section:</label>
         <select id="section" name="section" class="form-select" required>
             <option value="francis_artwork">Francis Artwork</option>
+            <option value="psalter_artwork">Psalter Artwork</option>
             <option value="other_section">Other Section</option>
-            <!-- Add more options as needed -->
         </select>
+        
         <div class="invalid-feedback">
             Please select a section.
         </div>
@@ -41,11 +42,22 @@
 </form>
 
 <h2>Covered Future Dates</h2>
-<ul id="covered-dates-list" class="list-group">
-    {% for date in covered_dates %}
-    <li class="list-group-item">{{ date }}</li>
-    {% endfor %}
-</ul>
+<div id="covered-dates-container">
+    <h3>Francis Artwork</h3>
+    <ul id="covered-dates-list-francis" class="list-group">
+        {% for date in covered_dates.francis_artwork %}
+        <li class="list-group-item">{{ date }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Psalter Artwork</h3>
+    <ul id="covered-dates-list-psalter" class="list-group">
+        {% for date in covered_dates.psalter_artwork %}
+        <li class="list-group-item">{{ date }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -54,17 +66,23 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const coveredDates = JSON.parse('{{ covered_dates|escapejs }}');
-        const coveredDatesSet = new Set(coveredDates);
 
         const dateInput = document.getElementById('start_date');
+        const sectionSelect = document.getElementById('section');
 
-        dateInput.addEventListener('change', function() {
+        function checkDateCoverage() {
+            const selectedSection = sectionSelect.value;
+            const coveredDatesSet = new Set(coveredDates[selectedSection] || []);
             const selectedDate = dateInput.value;
+
             if (coveredDatesSet.has(selectedDate)) {
                 alert('This date is already covered. Please choose another date.');
                 dateInput.value = '';  // Clear the input
             }
-        });
+        }
+
+        dateInput.addEventListener('change', checkDateCoverage);
+        sectionSelect.addEventListener('change', checkDateCoverage);
 
         // Bootstrap validation
         const forms = document.querySelectorAll('.needs-validation');

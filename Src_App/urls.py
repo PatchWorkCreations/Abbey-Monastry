@@ -6,17 +6,22 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.Intro, name='intro'),
+    path('calling', views.calling, name='calling'),
     path('francis-artwork', views.FrancisArtwork, name='francis-artwork'),
     path('mepkin-daily-word/', views.ViewMepkinDailyWord, name='mepkin-daily-word'),
     path('create-mepkin-daily-word/', views.CreateMepkinDailyWord, name='create-mepkin-daily-word'),
     path('delete-mepkin-daily-word/<int:pk>/', views.DeleteMepkinDailyWord, name='delete-mepkin-daily-word'),
+
+    path('psalter/', views.Psalter, name='psalter'),
+    path('francis-artwork/', views.FrancisArtwork, name='francis-artwork'),
+
     path('index/', views.Index, name='index'),
 
     path('home/', views.Home, name='home'),
 
     path('virtual-tour/', views.VirtualTour, name='virtual-tour'),
     path('the-gardens/', views.TheGardens, name='the-gardens'),
-    path('francis-artwork/', views.FrancisArtwork, name='francis-artwork'),
+    
     path('the-brothers/', views.TheBrothers, name='the-brothers'),
     path('vocation/', views.Vocation, name='vocation'),
     path('retreat-center/', views.RetreatCenter, name='retreat-center'),
@@ -83,7 +88,11 @@ urlpatterns = [
     path('admin_dashboard/edit/<int:pk>/', views.edit_retreat_offering, name='edit_retreat_offering'),
     path('retreat-offering/delete/<int:pk>/', views.DeleteRetreatOffering, name='delete_retreat_offering'),
 
-    
+    path('update-activity/', views.update_activity, name='update-activity'),
+    path('track-click/', views.track_click, name='track-click'),
+    path('get-metrics/', views.get_metrics, name='get-metrics'),
+
+    path('custom_admin/analytics-report/', views.full_analytics_report, name='full_analytics_report'),
     ]
 
 if settings.DEBUG:

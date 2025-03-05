@@ -1,0 +1,207 @@
+{% extends 'admin_dashboard/admin_base.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    /* Modernized Analytics Dashboard */
+    .analytics-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px;
+    }
+
+    .analytics-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .analytics-header h1 {
+        font-weight: 600;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .analytics-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h5 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .badge {
+        font-size: 1rem;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .badge-primary { background: #007bff; color: #fff; }
+    .badge-success { background: #28a745; color: #fff; }
+    .badge-danger { background: #dc3545; color: #fff; }
+    .badge-info { background: #17a2b8; color: #fff; }
+
+    .btn-modern {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        background: #6c757d;
+        color: #fff;
+        font-weight: 500;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-modern:hover {
+        background: #495057;
+    }
+
+    .chart-container {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 30px;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+</style>
+
+<div class="analytics-container">
+    <div class="analytics-header">
+        <h1>Full Website Analytics</h1>
+        <p>View in-depth visitor statistics for the website.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="card">
+            <h5>Total Visitors</h5>
+            <span class="badge badge-primary">{{ total_visitors }}</span>
+        </div>
+        
+        <div class="card">
+            <h5>Live Visitors (Last 5 mins)</h5>
+            <span class="badge badge-danger">{{ live_visitors }}</span>
+        </div>
+
+        <div class="card">
+            <h5>Avg. Session Duration</h5>
+            <span class="badge badge-success">{{ avg_session_duration }} seconds</span>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="card">
+            <h5>Visitor Locations</h5>
+            {% for location in visitor_locations %}
+                <p>{{ location.country }} <span class="badge badge-info">{{ location.count }} visitors</span></p>
+            {% empty %}
+                <p>No data available yet.</p>
+            {% endfor %}
+        </div>
+
+        <div class="card">
+            <h5>Top Clicked Pages</h5>
+            {% for page in top_clicked_pages %}
+                <p>{{ page.url }} <span class="badge badge-primary">{{ page.count }} clicks</span></p>
+            {% empty %}
+                <p>No data available yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Chart for visualizing visitor trends -->
+    <div class="chart-container">
+        <canvas id="visitorChart"></canvas>
+    </div>
+
+    <a href="{% url 'admin_dashboard' %}" class="btn-modern">Back to Dashboard</a>
+</div>
+
+<!-- Hidden script tag to store JSON data -->
+<script id="visitor-data" type="application/json">
+    {
+        "dates": {{ visitor_dates|safe }},
+        "counts": {{ visitor_counts|safe }}
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var ctx = document.getElementById('visitorChart').getContext('2d');
+
+    // Fetch the JSON data safely
+    let visitorData = JSON.parse(document.getElementById('visitor-data').textContent);
+    
+    if (!visitorData.dates || !visitorData.counts) {
+        console.error("Chart Data Error: visitorData is missing values.");
+        return;
+    }
+
+    console.log("Visitor Dates:", visitorData.dates);
+    console.log("Visitor Counts:", visitorData.counts);
+
+    var visitorChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: visitorData.dates,
+            datasets: [{
+                label: 'Daily Visitors',
+                data: visitorData.counts,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                pointRadius: 5,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true },
+                tooltip: { enabled: true }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Date' } },
+                y: { beginAtZero: true, title: { display: true, text: 'Visitors' } }
+            }
+        }
+    });
+});
+</script>
+
+
+{% endblock %}

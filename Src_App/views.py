@@ -15,6 +15,9 @@ from django.views.decorators.csrf import csrf_exempt
 def Intro(request):
     return render(request, 'intro.html')
 
+def calling(request):
+    return render(request, 'calling.html')
+
 
 def FrancisArtwork(request):
     # Set the time zone to 'US/Eastern'
@@ -35,6 +38,36 @@ def FrancisArtwork(request):
     }
 
     return render(request, 'francis-artwork.html', context)
+
+
+from datetime import datetime
+from pytz import timezone
+from django.shortcuts import render
+import os
+from django.conf import settings
+
+def Psalter(request):
+    # Set the time zone to 'US/Eastern'
+    eastern = timezone('US/Eastern')
+    now_eastern = datetime.now(eastern)
+
+    # Generate today's date in the correct format (YYYY-MM-DD)
+    today_filename = now_eastern.strftime("%Y-%m-%d") + ".jpg"
+
+    # Define the file path
+    psalter_folder = os.path.join(settings.BASE_DIR, 'static/gallery/Psalter Artwork')
+    today_image_path = f'gallery/Psalter Artwork/{today_filename}'  # Django uses relative static path
+
+    # Check if the file exists
+    if not os.path.exists(os.path.join(psalter_folder, today_filename)):
+        today_image_path = None  # If file not found, set to None
+
+    context = {
+        'today_image_path': today_image_path,
+        'today_date': now_eastern.strftime("%B %d, %Y"),  # Keep human-readable format for display
+    }
+
+    return render(request, 'psalter.html', context)
 
 
 from django.core.paginator import Paginator
@@ -313,6 +346,11 @@ def get_active_visitors(request):
     return JsonResponse({"active_visitors_count": active_visitors_count})
 
 
+from django.utils.timezone import now as tz_now
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import VisitorActivity  # Correct import for new model
+
 @csrf_exempt
 def update_activity(request):
     if request.method == 'POST':
@@ -320,14 +358,26 @@ def update_activity(request):
         if not session_key:
             request.session.save()
             session_key = request.session.session_key
+
         ip_address = request.META.get('REMOTE_ADDR', '')
 
-        Visitor.objects.update_or_create(
+        # Ensure existing visitors are updated instead of being replaced
+        visitor, created = VisitorActivity.objects.get_or_create(
             session_key=session_key,
-            defaults={'last_active': tz.now(), 'ip_address': ip_address}
+            defaults={'first_visit': tz_now(), 'last_active': tz_now()}
         )
-        return JsonResponse({"status": "success"})
+
+        # Update fields only if necessary (to avoid overwriting existing data)
+        visitor.last_active = tz_now()
+        if not visitor.ip_address:
+            visitor.ip_address = ip_address
+        visitor.total_time_spent += 60  # Assuming this function runs every minute
+        visitor.save()
+
+        return JsonResponse({"status": "success", "session_key": session_key})
+
     return JsonResponse({"status": "error"}, status=400)
+
 
 
 def LuceGardens(request):
@@ -541,42 +591,85 @@ import os
 from django.conf import settings
 from datetime import datetime, timedelta
 from pytz import timezone
-
+from django.db.models import Count, Avg
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import os
+from collections import Counter  # Import Counter for counting URLs
+from .models import VisitorActivity  # Ensure this import is here
+from django.contrib.messages import get_messages
+
+from django.utils.timezone import now
+from datetime import datetime, timedelta
+from django.db.models import Count, Avg
+from collections import Counter
+from django.shortcuts import render
+from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
+import os
 from django.conf import settings
-from datetime import datetime
-from pytz import timezone
+from .models import VisitorActivity  # Ensure the model is correctly imported
 
 @login_required
 def admin_dashboard(request):
+    """ Fetches admin analytics, visitor tracking, and photo management data. """
+
     # Set the time zone to 'US/Eastern'
     eastern = timezone('US/Eastern')
-
-    # Get the current time in the 'US/Eastern' time zone
     now_eastern = datetime.now(eastern)
 
+    # 1️⃣ **Count future photos left for Francis Artwork**
     artwork_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
     photos = [f for f in os.listdir(artwork_path) if os.path.isfile(os.path.join(artwork_path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
 
-    # Filter photos with future dates
     future_photos = []
     for photo in photos:
         try:
             photo_date = datetime.strptime(photo.split('.')[0], "%B %d, %Y")
-            photo_date = eastern.localize(photo_date)  # Make the datetime timezone-aware
+            photo_date = eastern.localize(photo_date)
             if photo_date > now_eastern:
                 future_photos.append(photo)
         except ValueError:
-            # Handle the case where the filename doesn't match the expected date format
-            pass
+            pass  # Ignore files that don’t match the date format
+
+    # **Clear previous messages before adding new ones**
+    storage = messages.get_messages(request)
+    storage.used = True  # Mark messages as consumed
 
     if len(future_photos) <= 3:
         messages.warning(request, 'Only 3 or fewer future photos are left in the Francis Artwork section. Please upload more photos.')
 
-    return render(request, 'admin_dashboard/admin_dashboard.html', {'photos_left': len(future_photos)})
+    # 2️⃣ **Visitor Analytics**
+    active_threshold = now() - timedelta(minutes=1)
+    active_visitors_count = VisitorActivity.objects.filter(last_active__gte=active_threshold).count()
+
+    total_visitors = VisitorActivity.objects.count()
+    avg_session_duration = VisitorActivity.objects.aggregate(
+        avg_duration=Avg('total_time_spent')
+    )['avg_duration'] or 0
+
+    # 3️⃣ **Extract Top Clicked URLs from `page_visits` JSONField**
+    all_urls = VisitorActivity.objects.values_list('page_visits', flat=True)
+    url_counter = Counter()
+
+    for visits in all_urls:
+        if isinstance(visits, dict):  # Ensure it's a dictionary
+            url_counter.update(visits.keys())
+
+    top_clicked_urls = url_counter.most_common(5)  # Get top 5 clicked URLs
+
+    # **Prepare Data for Template**
+    context = {
+        'photos_left': len(future_photos),
+        'total_visitors': total_visitors,
+        'active_visitors_count': active_visitors_count,
+        'avg_session_duration': round(avg_session_duration, 2),
+        'top_clicked_urls': top_clicked_urls,
+    }
+
+    return render(request, 'admin_dashboard/admin_dashboard.html', context)
+
 
 @login_required
 def admin_edit(request):
@@ -585,17 +678,21 @@ def admin_edit(request):
         pass
     return render(request, 'admin_dashboard/edit.html')
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from django.contrib import messages
 from datetime import datetime, timedelta
 from pytz import timezone
 import os
 
 @login_required
 def upload_photos(request):
-    artwork_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+    # Define paths for both Francis and Psalter artworks
+    francis_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+    psalter_path = os.path.join(settings.BASE_DIR, 'static/gallery/Psalter Artwork')
+    
     eastern = timezone('US/Eastern')
 
     if request.method == 'POST':
@@ -604,36 +701,53 @@ def upload_photos(request):
         num_days = int(request.POST.get('num_days'))
         files = request.FILES.getlist('photos')
 
+        # Select the correct storage path
         if section == 'francis_artwork':
-            fs = FileSystemStorage(location=artwork_path)
-            start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
-
-            for i, file in enumerate(files):
-                if i < num_days:
-                    current_date = start_date + timedelta(days=i)
-                    current_date_str = current_date.strftime("%Y-%m-%d")
-                    filename = fs.save(current_date_str + '.jpg', file)
-                else:
-                    break
-
-            messages.success(request, 'Photos uploaded successfully for Francis Artwork.')
+            storage_path = francis_path
+            success_message = 'Photos uploaded successfully for Francis Artwork.'
+        elif section == 'psalter_artwork':
+            storage_path = psalter_path
+            success_message = 'Photos uploaded successfully for Psalter Artwork.'
+        else:
+            messages.error(request, 'Invalid section selected.')
             return redirect('admin_dashboard')
 
-    # Calculate future covered dates
+        fs = FileSystemStorage(location=storage_path)
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
+
+        for i, file in enumerate(files):
+            if i < num_days:
+                current_date = start_date + timedelta(days=i)
+                current_date_str = current_date.strftime("%Y-%m-%d")
+                filename = fs.save(current_date_str + '.jpg', file)
+            else:
+                break
+
+        messages.success(request, success_message)
+        return redirect('admin_dashboard')
+
+    # Calculate future covered dates for both sections
     now_eastern = datetime.now(eastern)
-    photos = [f for f in os.listdir(artwork_path) if os.path.isfile(os.path.join(artwork_path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
-    future_covered_dates = []
+    future_covered_dates = {}
 
-    for photo in photos:
-        try:
-            photo_date = datetime.strptime(photo.split('.')[0], "%Y-%m-%d")
-            photo_date = eastern.localize(photo_date)
-            if photo_date > now_eastern:
-                future_covered_dates.append(photo_date.strftime("%Y-%m-%d"))
-        except ValueError:
-            pass
+    for section, path in [('francis_artwork', francis_path), ('psalter_artwork', psalter_path)]:
+        photos = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
+        covered_dates = []
+        
+        for photo in photos:
+            try:
+                photo_date = datetime.strptime(photo.split('.')[0], "%Y-%m-%d")
+                photo_date = eastern.localize(photo_date)
+                if photo_date > now_eastern:
+                    covered_dates.append(photo_date.strftime("%Y-%m-%d"))
+            except ValueError:
+                pass
 
-    return render(request, 'admin_dashboard/upload_photo.html', {'covered_dates': future_covered_dates})
+        future_covered_dates[section] = covered_dates
+
+    return render(request, 'admin_dashboard/upload_photo.html', {
+        'covered_dates': future_covered_dates
+    })
 
 
 @login_required
@@ -655,45 +769,58 @@ from pytz import timezone
 
 @login_required
 def upload_photos(request):
-    future_covered_dates = []
-    eastern = timezone('US/Eastern')
-    artwork_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
-
     if request.method == 'POST':
+        print("🛠 Upload request received")  # Debugging
+
         section = request.POST.get('section')
         start_date = request.POST.get('start_date')
-        num_days = int(request.POST.get('num_days'))
+        num_days = int(request.POST.get('num_days', 0))
         files = request.FILES.getlist('photos')
 
-        if section == 'francis_artwork':
-            fs = FileSystemStorage(location=artwork_path)
-            start_date = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
+        print(f"Selected section: {section}")
+        print(f"Received files: {len(files)}")  # Print number of files received
 
-            for i, file in enumerate(files):
-                if i < num_days:
-                    current_date = start_date + timedelta(days=i)
-                    current_date_str = current_date.strftime("%B %d, %Y")
-                    filename = fs.save(current_date_str + '.jpg', file)
-                else:
-                    break
+        if not files:
+            print("❌ No files received!")
+            return render(request, 'admin_dashboard/upload_photo.html', {'error': 'No files uploaded.'})
 
-            messages.success(request, 'Photos uploaded successfully for Francis Artwork.')
+        # Define storage path
+        base_dir = settings.BASE_DIR
+        storage_paths = {
+            'francis_artwork': os.path.join(base_dir, 'static/gallery/Francis Artwork'),
+            'psalter_artwork': os.path.join(base_dir, 'static/gallery/Psalter Artwork')
+        }
 
+        if section not in storage_paths:
+            messages.error(request, "Invalid section selected.")
+            return redirect('admin_dashboard')
+
+        storage_path = storage_paths[section]
+        fs = FileSystemStorage(location=storage_path)
+
+        # Ensure directory exists
+        os.makedirs(storage_path, exist_ok=True)
+
+        # Timezone setup
+        eastern = timezone('US/Eastern')
+        start_date_dt = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
+
+        # Upload images for the selected number of days
+        for i, file in enumerate(files):
+            if i < num_days:
+                current_date = start_date_dt + timedelta(days=i)
+                current_date_str = current_date.strftime("%Y-%m-%d")
+                filename = f"{current_date_str}.jpg"
+
+                print(f"📂 Saving: {filename}")  # Debugging
+
+                fs.save(filename, file)
+
+        messages.success(request, f"✅ {len(files)} file(s) uploaded successfully for {section}.")
         return redirect('admin_dashboard')
 
-    # Calculate future covered dates
-    now_eastern = datetime.now(eastern)
-    photos = [f for f in os.listdir(artwork_path) if os.path.isfile(os.path.join(artwork_path, f)) and f.endswith(('.jpg', '.jpeg', '.png'))]
-    for photo in photos:
-        try:
-            photo_date = datetime.strptime(photo.split('.')[0], "%B %d, %Y")
-            photo_date = eastern.localize(photo_date)
-            if photo_date > now_eastern:
-                future_covered_dates.append(photo_date.strftime("%Y-%m-%d"))
-        except ValueError:
-            pass
+    return render(request, 'admin_dashboard/upload_photo.html')
 
-    return render(request, 'admin_dashboard/upload_photo.html', {'covered_dates': future_covered_dates})
 
 
 from django.shortcuts import render, redirect
@@ -725,6 +852,51 @@ def upload_francis_artwork(request):
         return redirect('admin_dashboard')
     
     return render(request, 'admin_dashboard/upload_photo.html')
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+import os
+from django.conf import settings
+from datetime import datetime
+from pytz import timezone
+
+@login_required
+def upload_psalter_artwork(request):
+    if request.method == 'POST' and request.FILES.get('photo'):
+        artwork = request.FILES['photo']
+
+        # Debugging: Check if the file is received
+        print(f"Received file: {artwork.name}")
+
+        # Set storage path
+        storage_path = os.path.join(settings.BASE_DIR, 'static/gallery/Psalter Artwork')
+        print(f"Saving to: {storage_path}")  
+
+        # Ensure directory exists
+        if not os.path.exists(storage_path):
+            os.makedirs(storage_path)
+
+        fs = FileSystemStorage(location=storage_path)
+
+        # Generate filename
+        eastern = timezone('US/Eastern')
+        now_eastern = datetime.now(eastern)
+        today_date = now_eastern.strftime("%B %d, %Y")
+        filename = f"{today_date}.jpg"
+
+        # Debugging: Print filename
+        print(f"Saving file as: {filename}")
+
+        # Save the file
+        saved_filename = fs.save(filename, artwork)
+        print(f"File saved: {saved_filename}")
+
+        return redirect('admin_dashboard')
+
+    return render(request, 'admin_dashboard/upload_photo.html')
+
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -781,3 +953,112 @@ register = template.Library()
 def add_class(field, css_class):
     return field.as_widget(attrs={'class': css_class})
 
+
+
+
+from django.utils.timezone import now
+from django.http import JsonResponse
+from django.shortcuts import render
+from .models import VisitorActivity
+
+def update_activity(request):
+    """ Tracks visitor's time spent and most clicked URLs. """
+    if request.method == 'POST':
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.save()
+            session_key = request.session.session_key
+
+        visitor, created = VisitorActivity.objects.get_or_create(session_key=session_key)
+        visitor.last_active = now()
+        visitor.duration = (visitor.last_active - visitor.start_time).seconds  # Update duration
+        visitor.save()
+
+        return JsonResponse({"status": "success", "duration": visitor.duration})
+    return JsonResponse({"status": "error"}, status=400)
+
+def track_click(request):
+    """ Stores most clicked URL per session. """
+    if request.method == 'POST':
+        session_key = request.session.session_key
+        clicked_url = request.POST.get('url')
+
+        if session_key and clicked_url:
+            visitor = VisitorActivity.objects.filter(session_key=session_key).first()
+            if visitor:
+                visitor.most_clicked_url = clicked_url
+                visitor.save()
+
+        return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "error"}, status=400)
+
+def get_metrics(request):
+    """ Returns site stats (e.g., average session duration, most clicked links). """
+    total_visitors = VisitorActivity.objects.count()
+    avg_session_duration = VisitorActivity.objects.aggregate(avg_duration=models.Avg('duration'))['avg_duration'] or 0
+    top_clicked = VisitorActivity.objects.values('most_clicked_url').annotate(count=models.Count('most_clicked_url')).order_by('-count')[:5]
+
+    return JsonResponse({
+        "total_visitors": total_visitors,
+        "avg_session_duration": avg_session_duration,
+        "top_clicked_urls": list(top_clicked)
+    })
+
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.db.models import Avg, Count
+from collections import Counter
+from datetime import timedelta
+from django.utils.timezone import now
+from django.http import JsonResponse
+from .models import VisitorActivity
+
+@login_required
+def full_analytics_report(request):
+    """Generates an in-depth report about the website's visitors and interactions."""
+
+    total_visitors = VisitorActivity.objects.count()
+
+    # Calculate average session duration
+    avg_session_duration = VisitorActivity.objects.aggregate(avg_duration=Avg('total_time_spent'))['avg_duration'] or 0
+
+    # Count live visitors in the last 5 minutes
+    active_threshold = now() - timedelta(minutes=5)
+    live_visitors = VisitorActivity.objects.filter(last_active__gte=active_threshold).count()
+
+    # Extract the most clicked URLs
+    all_urls = []
+    for visitor in VisitorActivity.objects.all():
+        if isinstance(visitor.page_visits, dict):
+            all_urls.extend(visitor.page_visits.keys())
+
+    url_counts = Counter(all_urls)
+    top_clicked_urls = url_counts.most_common(10)  # Get top 10 most clicked URLs
+
+    # Get visitor locations (assuming we store IP or location data)
+    visitor_locations = VisitorActivity.objects.values('country').annotate(count=Count('country')).order_by('-count')
+
+    return render(request, 'admin_dashboard/full_analytics_report.html', {
+        'total_visitors': total_visitors,
+        'avg_session_duration': round(avg_session_duration, 2),
+        'live_visitors': live_visitors,
+        'top_clicked_urls': top_clicked_urls,
+        'visitor_locations': visitor_locations,
+    })
+
+
+import requests
+
+def get_user_country(request):
+    """Fetches the user's country using their IP address."""
+    ip = request.META.get('REMOTE_ADDR', '')
+    if ip == '127.0.0.1' or ip.startswith("192.168"):  # Handle local development
+        return "Localhost"
+
+    try:
+        response = requests.get(f"https://ipinfo.io/{ip}/json")
+        data = response.json()
+        return data.get("country", "Unknown")  # Get country code (e.g., US, CA)
+    except Exception:
+        return "Unknown"

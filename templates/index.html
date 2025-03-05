@@ -1,6 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+<style>
+    .modal-footer-custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;  /* Adjust spacing */
+    padding-bottom: 20px;  /* Ensures it stays at the bottom */
+}
+
+.contemplative-btn {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    background-color: #b49f6bd5; /* Muted Gold */
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.contemplative-btn:hover {
+    background-color: #C4A484; /* Warmer Gold */
+    transform: scale(1.05);
+}
+
+
+</style>
 
 <div class="d-flex flex-column" style="height: 100vh;">
     <img src="{% static 'MEPKING/oak-allee4.jpeg' %}" class="img-fluid" style="height: 60%; object-fit: cover;" alt="View of Oak Allee at Mepkin Abbey">
@@ -27,6 +55,11 @@
                 <div class="my-5">
                     If NO, <a href="{% url 'home' %}" class="btn btn-secondary">Click Here</a> to find out general information about Mepkin.
                 </div>
+            </div>
+            <div class="modal-footer-custom">
+                <a href="{% url 'calling' %}" class="btn btn-primary contemplative-btn">
+                    Is the Contemplative Life calling you?
+                </a>
             </div>
         </div>
     </div>

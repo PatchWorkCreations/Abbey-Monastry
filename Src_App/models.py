@@ -68,3 +68,19 @@ class RetreatOffering(models.Model):
         return self.title if self.title else "No Title"
 
 
+from django.db import models
+from django.utils import timezone
+
+
+class VisitorActivity(models.Model):
+    session_key = models.CharField(max_length=255, unique=True)
+    first_visit = models.DateTimeField(default=timezone.now)  # Provide default value
+    last_active = models.DateTimeField(auto_now=True)
+    total_time_spent = models.IntegerField(default=0)
+    page_visits = models.JSONField(default=dict)
+    country = models.CharField(max_length=100, blank=True, null=True)
+
+
+    def __str__(self):
+        return f"Session: {self.session_key} | Visits: {self.page_visits}"
+
