@@ -1,0 +1,8 @@
+[build]
+builder = "nixpacks"
+
+[variables]
+PYTHON_VERSION = "3.9"
+
+[dependencies]
+packages = ["gcc", "postgresql_16", "python3"]
