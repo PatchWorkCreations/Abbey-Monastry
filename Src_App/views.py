@@ -19,12 +19,24 @@ def calling(request):
     return render(request, 'calling.html')
 
 
+from django.shortcuts import render
+from django.templatetags.static import static
+from datetime import datetime
+from pytz import timezone
+
+from django.shortcuts import render
+from django.templatetags.static import static
+from datetime import datetime
+from pytz import timezone
+
 def FrancisArtwork(request):
     eastern = timezone('US/Eastern')
     now_eastern = datetime.now(eastern)
-    today = now_eastern.strftime("%B %d, %Y")
 
-    # ✅ Ensure correct static file path
+    # ✅ Use YYYY-MM-DD format (2025-03-07)
+    today = now_eastern.strftime("%Y-%m-%d")
+
+    # ✅ Look for the correct filename format
     today_image_path = f'gallery/Francis Artwork/{today}.jpg'
 
     context = {
@@ -827,22 +839,30 @@ from django.conf import settings
 from datetime import datetime
 from pytz import timezone
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import FileSystemStorage
+import os
+from django.conf import settings
+from datetime import datetime
+from pytz import timezone
+
 @login_required
 def upload_francis_artwork(request):
     if request.method == 'POST' and request.FILES.get('photo'):
         artwork = request.FILES['photo']
         
         # Debugging: Confirm file received
-        print(f"Received file: {artwork.name}")
+        print(f"🖼 Received file: {artwork.name}")
 
+        # Define storage path
         storage_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
 
         # Debugging: Confirm the correct storage path
-        print(f"Saving to: {storage_path}")
+        print(f"📂 Saving to: {storage_path}")
 
         # Ensure directory exists
-        if not os.path.exists(storage_path):
-            os.makedirs(storage_path)
+        os.makedirs(storage_path, exist_ok=True)
 
         fs = FileSystemStorage(location=storage_path)
 
@@ -850,15 +870,16 @@ def upload_francis_artwork(request):
         eastern = timezone('US/Eastern')
         now_eastern = datetime.now(eastern)
 
-        # Format today's date
-        today_date = now_eastern.strftime("%B %d, %Y")
+        # ✅ Fix: Use expected date format "March 07 2025" instead of "2025-03-07"
+        today_date = now_eastern.strftime("%B %d %Y")  # Example: "March 07 2025"
 
-        # Ensure filename follows correct format
+        # ✅ Ensure filename format matches what the view expects
         filename = f"{today_date}.jpg"
-        print(f"Saving file as: {filename}")
+        print(f"📸 Saving file as: {filename}")
 
+        # Save the file
         saved_filename = fs.save(filename, artwork)
-        print(f"File saved: {saved_filename}")
+        print(f"✅ File saved: {saved_filename}")
 
         return redirect('admin_dashboard')
 
