@@ -20,17 +20,12 @@ def calling(request):
 
 
 def FrancisArtwork(request):
-    # Set the time zone to 'US/Eastern'
     eastern = timezone('US/Eastern')
-
-    # Get the current time in the 'US/Eastern' time zone
     now_eastern = datetime.now(eastern)
-
-    # Format today's date
     today = now_eastern.strftime("%B %d, %Y")
 
-    # Generate image path for today
-    today_image_path = f'{today}.jpg'
+    # ✅ Ensure correct static file path
+    today_image_path = f'gallery/Francis Artwork/{today}.jpg'
 
     context = {
         'today_image_path': today_image_path,
@@ -38,6 +33,7 @@ def FrancisArtwork(request):
     }
 
     return render(request, 'francis-artwork.html', context)
+
 
 
 from datetime import datetime
@@ -833,25 +829,41 @@ from pytz import timezone
 
 @login_required
 def upload_francis_artwork(request):
-    if request.method == 'POST' and request.FILES['photo']:
+    if request.method == 'POST' and request.FILES.get('photo'):
         artwork = request.FILES['photo']
-        fs = FileSystemStorage(location=os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork'))
         
+        # Debugging: Confirm file received
+        print(f"Received file: {artwork.name}")
+
+        storage_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+
+        # Debugging: Confirm the correct storage path
+        print(f"Saving to: {storage_path}")
+
+        # Ensure directory exists
+        if not os.path.exists(storage_path):
+            os.makedirs(storage_path)
+
+        fs = FileSystemStorage(location=storage_path)
+
         # Set the time zone to 'US/Eastern'
         eastern = timezone('US/Eastern')
-
-        # Get the current time in the 'US/Eastern' time zone
         now_eastern = datetime.now(eastern)
 
         # Format today's date
         today_date = now_eastern.strftime("%B %d, %Y")
 
-        # Use today's date as the file name
-        filename = fs.save(today_date + '.jpg', artwork)
-        
+        # Ensure filename follows correct format
+        filename = f"{today_date}.jpg"
+        print(f"Saving file as: {filename}")
+
+        saved_filename = fs.save(filename, artwork)
+        print(f"File saved: {saved_filename}")
+
         return redirect('admin_dashboard')
-    
+
     return render(request, 'admin_dashboard/upload_photo.html')
+
 
 
 from django.shortcuts import render, redirect
