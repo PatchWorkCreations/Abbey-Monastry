@@ -18,6 +18,16 @@
         </div>
     </div>
     <div class="mb-3">
+        <label for="upload_type" class="form-label">Upload Type:</label>
+        <select id="upload_type" name="upload_type" class="form-select" required>
+            <option value="single">Single Image per Day</option>
+            <option value="double">Two Images per Day</option>
+        </select>
+        <div class="invalid-feedback">
+            Please select an upload type.
+        </div>
+    </div>    
+    <div class="mb-3">
         <label for="start_date" class="form-label">Start Date: Please Check the covered dates before choosing from the date picker</label>
         <input type="date" id="start_date" name="start_date" class="form-control" required>
         <div class="invalid-feedback">
