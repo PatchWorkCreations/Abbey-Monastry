@@ -14,7 +14,8 @@
     <div class="card mb-3" style="width: 20rem;">
         <!-- ✅ Fix static path by using Django's `static` properly -->
         {% load static %}
-    <img id="artwork-image" src="{% static today_image_path %}" class="card-img-top" alt="Today's Artwork">
+    <img id="artwork-image" src="{{ today_image_path }}" class="card-img-top" alt="Today's Artwork">
+
 
         <div class="card-body text-center">
             <div class="card-title">
@@ -50,28 +51,35 @@
     });
 
     function preloadNextImage() {
-        var currentDate = document.getElementById('today-date').innerText;
-        var currentDateObject = new Date(currentDate);
-        currentDateObject.setDate(currentDateObject.getDate() + 1);
-        var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
-        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpg';
-        var img = new Image();
-        img.src = newImagePath;
-        img.onerror = function() {
-            console.error('Error loading image:', newImagePath);
-        };
-    }
+    var currentDate = document.getElementById('today-date').innerText;
+    var currentDateObject = new Date(currentDate);
+    currentDateObject.setDate(currentDateObject.getDate() + 1);
+    
+    // ✅ Fix: Generate filenames in "YYYY-MM-DD_1.jpg" format
+    var newDate = currentDateObject.toISOString().split('T')[0];  // "2025-03-12"
+    var newImagePath = "/static/gallery/Francis Artwork/" + newDate + "_1.jpg";
 
-    function loadNextArtwork() {
-        var currentDate = document.getElementById('today-date').innerText;
-        var currentDateObject = new Date(currentDate);
-        currentDateObject.setDate(currentDateObject.getDate() + 1);
-        var newDate = currentDateObject.toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
-        var newImagePath = '{% static "gallery/Francis Artwork/" %}' + newDate + '.jpg';
-        document.getElementById('artwork-image').src = newImagePath;
-        document.getElementById('today-date').innerText = newDate;
-        hideNextButtonIfToday();
-    }
+    var img = new Image();
+    img.src = newImagePath;
+    img.onerror = function() {
+        console.error('Error loading image:', newImagePath);
+    };
+}
+
+function loadNextArtwork() {
+    var currentDate = document.getElementById('today-date').innerText;
+    var currentDateObject = new Date(currentDate);
+    currentDateObject.setDate(currentDateObject.getDate() + 1);
+    
+    // ✅ Fix: Generate filenames in "YYYY-MM-DD_1.jpg" format
+    var newDate = currentDateObject.toISOString().split('T')[0];  // "2025-03-12"
+    var newImagePath = "/static/gallery/Francis Artwork/" + newDate + "_1.jpg";
+
+    document.getElementById('artwork-image').src = newImagePath;
+    document.getElementById('today-date').innerText = newDate;
+    hideNextButtonIfToday();
+}
+
 
     function hideNextButtonIfToday() {
         var nextButton = document.getElementById('nextButton');

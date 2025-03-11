@@ -24,22 +24,20 @@ from django.templatetags.static import static
 from datetime import datetime
 from pytz import timezone
 
-from django.shortcuts import render
 import os
 from django.conf import settings
 from datetime import datetime
 from pytz import timezone
 
-
 def FrancisArtwork(request):
     eastern = timezone('US/Eastern')
     now_eastern = datetime.now(eastern)
 
-    # ✅ Use YYYY-MM-DD format to match uploaded file format
+    # ✅ Use YYYY-MM-DD format to match uploaded filenames
     today = now_eastern.strftime("%Y-%m-%d")  # "2025-03-11"
-    today_image_path = f'gallery/Francis Artwork/{today}_1.jpg'  # Add `_1` to match upload format
+    today_image_path = f'gallery/Francis Artwork/{today}_1.jpg'  # Matches uploaded file format
 
-    # ✅ Ensure the file exists before passing it to the template
+    # ✅ Check if file exists
     static_path = os.path.join(settings.BASE_DIR, 'static', today_image_path)
     file_exists = os.path.exists(static_path)
 
@@ -47,8 +45,8 @@ def FrancisArtwork(request):
         print(f"🚨 Image not found: {static_path}")
 
     context = {
-        'today_image_path': today_image_path if file_exists else 'gallery/default.jpg',  # Fallback image
-        'today_date': now_eastern.strftime("%B %d %Y"),  # "March 11 2025"
+        'today_image_path': today_image_path if file_exists else 'gallery/default.jpg',  # Fallback
+        'today_date': today,  # Use YYYY-MM-DD for consistency
     }
 
     return render(request, 'francis-artwork.html', context)
