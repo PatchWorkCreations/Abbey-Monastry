@@ -19,34 +19,34 @@ def calling(request):
     return render(request, 'calling.html')
 
 
-from django.shortcuts import render
-from django.templatetags.static import static
-from datetime import datetime
-from pytz import timezone
-
 import os
 from django.conf import settings
 from datetime import datetime
 from pytz import timezone
 
 def FrancisArtwork(request):
+    # Set timezone to 'US/Eastern'
     eastern = timezone('US/Eastern')
     now_eastern = datetime.now(eastern)
 
-    # ✅ Use YYYY-MM-DD format to match uploaded filenames
-    today = now_eastern.strftime("%Y-%m-%d")  # "2025-03-11"
-    today_image_path = f'gallery/Francis Artwork/{today}_1.jpg'  # Matches uploaded file format
+    # ✅ Generate filenames with `_1` and `_2`
+    today_date = now_eastern.strftime("%Y-%m-%d")  # "2025-03-07"
+    today_filename_1 = f"{today_date}_1.jpg"
+    today_filename_2 = f"{today_date}_2.jpg"
 
-    # ✅ Check if file exists
-    static_path = os.path.join(settings.BASE_DIR, 'static', today_image_path)
-    file_exists = os.path.exists(static_path)
+    # ✅ Check if files exist before sending to template
+    francis_folder = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
+    today_image_path_1 = f'gallery/Francis Artwork/{today_filename_1}' if os.path.exists(os.path.join(francis_folder, today_filename_1)) else None
+    today_image_path_2 = f'gallery/Francis Artwork/{today_filename_2}' if os.path.exists(os.path.join(francis_folder, today_filename_2)) else None
 
-    if not file_exists:
-        print(f"🚨 Image not found: {static_path}")
+    # Debugging output
+    print(f"🔍 Checking for Francis Artwork: {today_filename_1}, {today_filename_2}")
+    print(f"✅ Exists? {today_image_path_1}, {today_image_path_2}")
 
     context = {
-        'today_image_path': today_image_path if file_exists else 'gallery/default.jpg',  # Fallback
-        'today_date': today,  # Use YYYY-MM-DD for consistency
+        'today_image_path_1': today_image_path_1,
+        'today_image_path_2': today_image_path_2,
+        'today_date': now_eastern.strftime("%B %d, %Y"),  # "March 07, 2025"
     }
 
     return render(request, 'francis-artwork.html', context)
@@ -792,41 +792,46 @@ from pytz import timezone
 
 @login_required
 def upload_francis_artwork(request):
-    if request.method == 'POST' and request.FILES.get('photo'):
-        artwork = request.FILES['photo']
+    if request.method == 'POST' and request.FILES.getlist('photos'):  # Accept multiple images
+        files = request.FILES.getlist('photos')  # Get all uploaded files
         
-        # Debugging: Confirm file received
-        print(f"🖼 Received file: {artwork.name}")
+        print(f"📸 Received {len(files)} file(s) for Francis Artwork.")
 
         # Define storage path
         storage_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
-
-        # Debugging: Confirm the correct storage path
-        print(f"📂 Saving to: {storage_path}")
-
-        # Ensure directory exists
-        os.makedirs(storage_path, exist_ok=True)
+        os.makedirs(storage_path, exist_ok=True)  # Ensure the directory exists
 
         fs = FileSystemStorage(location=storage_path)
 
-        # Set the time zone to 'US/Eastern'
+        # Set timezone to 'US/Eastern'
         eastern = timezone('US/Eastern')
         now_eastern = datetime.now(eastern)
+        today_date = now_eastern.strftime("%Y-%m-%d")  # YYYY-MM-DD format
 
-        # ✅ Fix: Use expected date format "March 07 2025" instead of "2025-03-07"
-        today_date = now_eastern.strftime("%B %d %Y")  # Example: "March 07 2025"
+        # Check existing images for today
+        existing_files = [f for f in os.listdir(storage_path) if f.startswith(today_date)]
+        existing_count = len(existing_files)  # Count existing (_1, _2)
 
-        # ✅ Ensure filename format matches what the view expects
-        filename = f"{today_date}.jpg"
-        print(f"📸 Saving file as: {filename}")
+        if existing_count >= 2:
+            messages.warning(request, f"⚠️ Maximum of 2 images per day reached for {today_date}. No files uploaded.")
+            return redirect('admin_dashboard')
 
-        # Save the file
-        saved_filename = fs.save(filename, artwork)
-        print(f"✅ File saved: {saved_filename}")
+        for i, file in enumerate(files):
+            if existing_count + i >= 2:  # Limit to 2 images per day
+                messages.warning(request, f"⚠️ Only 2 images allowed per day. Skipping extra files.")
+                break
 
+            image_number = existing_count + i + 1  # Assign _1 or _2
+            filename = f"{today_date}_{image_number}.jpg"
+
+            print(f"📂 Saving: {filename}")  # Debugging output
+            fs.save(filename, file)
+
+        messages.success(request, f"✅ {len(files)} file(s) uploaded successfully for Francis Artwork.")
         return redirect('admin_dashboard')
 
     return render(request, 'admin_dashboard/upload_photo.html')
+
 
 
 from django.shortcuts import render, redirect
