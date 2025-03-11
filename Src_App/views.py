@@ -25,7 +25,8 @@ from datetime import datetime
 from pytz import timezone
 
 from django.shortcuts import render
-from django.templatetags.static import static
+import os
+from django.conf import settings
 from datetime import datetime
 from pytz import timezone
 
@@ -33,19 +34,23 @@ def FrancisArtwork(request):
     eastern = timezone('US/Eastern')
     now_eastern = datetime.now(eastern)
 
-    # ✅ Use YYYY-MM-DD format (2025-03-07)
-    today = now_eastern.strftime("%Y-%m-%d")
-
-    # ✅ Look for the correct filename format
+    # ✅ Match filename format exactly ("March 07 2025.jpg")
+    today = now_eastern.strftime("%B %d %Y")
     today_image_path = f'gallery/Francis Artwork/{today}.jpg'
 
+    # ✅ Ensure the file actually exists before sending it to the template
+    static_path = os.path.join(settings.BASE_DIR, 'static', today_image_path)
+    file_exists = os.path.exists(static_path)
+
+    if not file_exists:
+        print(f"🚨 Image not found: {static_path}")
+
     context = {
-        'today_image_path': today_image_path,
+        'today_image_path': today_image_path if file_exists else 'gallery/default.jpg',  # Fallback image
         'today_date': today,
     }
 
     return render(request, 'francis-artwork.html', context)
-
 
 
 from datetime import datetime
@@ -73,6 +78,8 @@ def Psalter(request):
         'today_image_path_2': today_image_path_2,
         'today_date': now_eastern.strftime("%B %d, %Y"),  # Keep human-readable format for display
     }
+
+    
 
     return render(request, 'psalter.html', context)
 
