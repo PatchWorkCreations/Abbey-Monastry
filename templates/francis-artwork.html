@@ -12,9 +12,17 @@
 
 <div class="container d-flex flex-column justify-content-center align-items-center gap-2">
     <div class="card mb-3" style="width: 20rem;">
-        <!-- ✅ Fix static path by using Django's `static` properly -->
-        {% load static %}
-    <img id="artwork-image" src="{{ today_image_path }}" class="card-img-top" alt="Today's Artwork">
+        
+
+        {% if today_image_path_1 %}
+    <img id="artwork-image-1" src="{{ today_image_path_1 }}" class="card-img-top" alt="Today's Artwork 1">
+{% else %}
+    <p class="text-muted">No artwork available for today.</p>
+{% endif %}
+
+{% if today_image_path_2 %}
+    <img id="artwork-image-2" src="{{ today_image_path_2 }}" class="card-img-top" alt="Today's Artwork 2">
+{% endif %}
 
 
         <div class="card-body text-center">

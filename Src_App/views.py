@@ -29,15 +29,17 @@ def FrancisArtwork(request):
     eastern = timezone('US/Eastern')
     now_eastern = datetime.now(eastern)
 
-    # ✅ Generate filenames with `_1` and `_2`
-    today_date = now_eastern.strftime("%Y-%m-%d")  # "2025-03-07"
+    # ✅ Correct filename format
+    today_date = now_eastern.strftime("%Y-%m-%d")  # "2025-03-11"
     today_filename_1 = f"{today_date}_1.jpg"
     today_filename_2 = f"{today_date}_2.jpg"
 
-    # ✅ Check if files exist before sending to template
+    # ✅ Correct folder path
     francis_folder = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
-    today_image_path_1 = f'gallery/Francis Artwork/{today_filename_1}' if os.path.exists(os.path.join(francis_folder, today_filename_1)) else None
-    today_image_path_2 = f'gallery/Francis Artwork/{today_filename_2}' if os.path.exists(os.path.join(francis_folder, today_filename_2)) else None
+
+    # ✅ Ensure full static URL is passed to template
+    today_image_path_1 = f"/static/gallery/Francis Artwork/{today_filename_1}" if os.path.exists(os.path.join(francis_folder, today_filename_1)) else None
+    today_image_path_2 = f"/static/gallery/Francis Artwork/{today_filename_2}" if os.path.exists(os.path.join(francis_folder, today_filename_2)) else None
 
     # Debugging output
     print(f"🔍 Checking for Francis Artwork: {today_filename_1}, {today_filename_2}")
@@ -46,10 +48,11 @@ def FrancisArtwork(request):
     context = {
         'today_image_path_1': today_image_path_1,
         'today_image_path_2': today_image_path_2,
-        'today_date': now_eastern.strftime("%B %d, %Y"),  # "March 07, 2025"
+        'today_date': now_eastern.strftime("%B %d, %Y"),  # "March 11, 2025"
     }
 
     return render(request, 'francis-artwork.html', context)
+
 
 
 from datetime import datetime
