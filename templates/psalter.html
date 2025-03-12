@@ -130,22 +130,15 @@
         <p>DEBUG: {{ today_image_path_1 }}</p>
 
         {% if today_image_path_1 %}
-            <div class="artwork-card" onclick="openModal('{% static today_image_path_1 %}')">
-                <img src="{% static today_image_path_1 %}" class="artwork-image" alt="Today's Psalter Artwork 1">
-                <div class="card-body">
-                    <p class="card-title">Psalm for the Day</p>
-                </div>
-            </div>
+    <img id="artwork-image-1" src="{{ today_image_path_1 }}" class="card-img-top" alt="Today's Artwork 1">
+        {% else %}
+            <p class="text-muted">No artwork available for today.</p>
         {% endif %}
 
         {% if today_image_path_2 %}
-            <div class="artwork-card" onclick="openModal('{% static today_image_path_2 %}')">
-                <img src="{% static today_image_path_2 %}" class="artwork-image" alt="Today's Psalter Artwork 2">
-                <div class="card-body">
-                    <p class="card-title">Psalm for the Day</p>
-                </div>
-            </div>
+            <img id="artwork-image-2" src="{{ today_image_path_2 }}" class="card-img-top" alt="Today's Artwork 2">
         {% endif %}
+
     </div>
 
     <div class="text-center mt-3">
