@@ -126,6 +126,9 @@
 <!-- Artwork Container -->
 <div class="container d-flex flex-column justify-content-center align-items-center gap-3">
     <div class="artwork-container">
+
+        <p>DEBUG: {{ today_image_path_1 }}</p>
+
         {% if today_image_path_1 %}
             <div class="artwork-card" onclick="openModal('{% static today_image_path_1 %}')">
                 <img src="{% static today_image_path_1 %}" class="artwork-image" alt="Today's Psalter Artwork 1">

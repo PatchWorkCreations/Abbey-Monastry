@@ -72,8 +72,8 @@ def Psalter(request):
 
     # Define the file path
     psalter_folder = os.path.join(settings.BASE_DIR, 'static/gallery/Psalter Artwork')
-    today_image_path_1 = f'gallery/Psalter Artwork/{today_filename_1}' if os.path.exists(os.path.join(psalter_folder, today_filename_1)) else None
-    today_image_path_2 = f'gallery/Psalter Artwork/{today_filename_2}' if os.path.exists(os.path.join(psalter_folder, today_filename_2)) else None
+    today_image_path_1 = f'/static/gallery/Psalter Artwork/{today_filename_1}' if os.path.exists(os.path.join(psalter_folder, today_filename_1)) else None
+    today_image_path_2 = f'/static/gallery/Psalter Artwork/{today_filename_2}' if os.path.exists(os.path.join(psalter_folder, today_filename_2)) else None
 
     context = {
         'today_image_path_1': today_image_path_1,
