@@ -125,31 +125,30 @@
 
 <!-- Artwork Container -->
 <div class="container d-flex flex-column justify-content-center align-items-center gap-3">
-    <div class="artwork-container">
+    
+<div class="artwork-container">
+    {% if today_image_path_1 %}
+        <div class="artwork-card" onclick="openModal('{{ today_image_path_1 }}')">
+            <img src="{{ today_image_path_1 }}" class="artwork-image" alt="Today's Psalter Artwork 1">
+            <div class="card-body">
+                <p class="card-title">Psalm for the Day</p>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">No artwork available for today.</p>
+    {% endif %}
 
-        
-    
-        {% if today_image_path_1 %}
-            <div class="artwork-card" onclick="openModal('{{ today_image_path_1 }}')">
-                <img src="{{ today_image_path_1 }}" class="artwork-image" alt="Today's Psalter Artwork 1">
-                <div class="card-body">
-                    <p class="card-title">Psalm for the Day</p>
-                </div>
+    {% if today_image_path_2 %}
+        <div class="artwork-card" onclick="openModal('{{ today_image_path_2 }}')">
+            <img src="{{ today_image_path_2 }}" class="artwork-image" alt="Today's Psalter Artwork 2">
+            <div class="card-body">
+                <p class="card-title">Psalm for the Day</p>
             </div>
-        {% else %}
-            <p class="text-muted">No artwork available for today.</p>
-        {% endif %}
+        </div>
+    {% endif %}
+</div>
+
     
-        {% if today_image_path_2 %}
-            <div class="artwork-card" onclick="openModal('{{ today_image_path_2 }}')">
-                <img src="{{ today_image_path_2 }}" class="artwork-image" alt="Today's Psalter Artwork 2">
-                <div class="card-body">
-                    <p class="card-title">Psalm for the Day</p>
-                </div>
-            </div>
-        {% endif %}
-    
-    </div>
     
 
     <div class="text-center mt-3">

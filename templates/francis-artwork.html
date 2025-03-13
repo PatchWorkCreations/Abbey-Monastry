@@ -13,17 +13,16 @@
 <div class="container d-flex flex-column justify-content-center align-items-center gap-2">
     <div class="card mb-3" style="width: 20rem;">
         
-
         {% if today_image_path_1 %}
-    <img id="artwork-image-1" src="{{ today_image_path_1 }}" class="card-img-top" alt="Today's Artwork 1">
-{% else %}
-    <p class="text-muted">No artwork available for today.</p>
-{% endif %}
+            <img id="artwork-image-1" src="{{ today_image_path_1 }}" class="card-img-top" alt="Today's Artwork 1">
+        {% else %}
+            <p class="text-muted">No artwork available for today.</p>
+        {% endif %}
 
-{% if today_image_path_2 %}
-    <img id="artwork-image-2" src="{{ today_image_path_2 }}" class="card-img-top" alt="Today's Artwork 2">
-{% endif %}
 
+        {% if today_image_path_2 %}
+            <img id="artwork-image-2" src="{{ today_image_path_2 }}" class="card-img-top" alt="Today's Artwork 2">
+        {% endif %}
 
         <div class="card-body text-center">
             <div class="card-title">
@@ -47,50 +46,47 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.container').style.opacity = 1;
-
-        // Preload the next image
         preloadNextImage();
-
-        // Hide the "Next" button if the artwork is for the current date on page load
         hideNextButtonIfToday();
-
-        // Add event listeners to the buttons
-        document.getElementById('nextButton').addEventListener('click', loadNextArtwork);
     });
 
     function preloadNextImage() {
-    var currentDate = document.getElementById('today-date').innerText;
-    var currentDateObject = new Date(currentDate);
-    currentDateObject.setDate(currentDateObject.getDate() + 1);
-    
-    // ✅ Fix: Generate filenames in "YYYY-MM-DD_1.jpg" format
-    var newDate = currentDateObject.toISOString().split('T')[0];  // "2025-03-12"
-    var newImagePath = "/static/gallery/Francis Artwork/" + newDate + "_1.jpg";
+        var currentDate = document.getElementById('today-date').innerText;
+        var currentDateObject = new Date(currentDate);
+        currentDateObject.setDate(currentDateObject.getDate() + 1);
 
-    var img = new Image();
-    img.src = newImagePath;
-    img.onerror = function() {
-        console.error('Error loading image:', newImagePath);
-    };
-}
+        // ✅ Fix: Use Cloudinary URLs instead of hardcoded static paths
+        var newDate = currentDateObject.toISOString().split('T')[0]; // "2025-03-12"
+        var cloudinaryBaseUrl = "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/francis_artwork/";
 
-function loadNextArtwork() {
-    var currentDate = document.getElementById('today-date').innerText;
-    var currentDateObject = new Date(currentDate);
-    currentDateObject.setDate(currentDateObject.getDate() + 1);
-    
-    // ✅ Fix: Generate filenames in "YYYY-MM-DD_1.jpg" format
-    var newDate = currentDateObject.toISOString().split('T')[0];  // "2025-03-12"
-    var newImagePath = "/static/gallery/Francis Artwork/" + newDate + "_1.jpg";
+        var newImagePath = cloudinaryBaseUrl + newDate + "_1.jpg";
 
-    document.getElementById('artwork-image').src = newImagePath;
-    document.getElementById('today-date').innerText = newDate;
-    hideNextButtonIfToday();
-}
+        var img = new Image();
+        img.src = newImagePath;
+        img.onerror = function() {
+            console.error("Error loading image:", newImagePath);
+        };
+    }
 
+    function loadNextArtwork() {
+        var currentDate = document.getElementById('today-date').innerText;
+        var currentDateObject = new Date(currentDate);
+        currentDateObject.setDate(currentDateObject.getDate() + 1);
+
+        var newDate = currentDateObject.toISOString().split('T')[0]; // "2025-03-12"
+        var cloudinaryBaseUrl = "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/francis_artwork/";
+
+        var newImagePath = cloudinaryBaseUrl + newDate + "_1.jpg";
+
+        document.getElementById('artwork-image-1').src = newImagePath;
+        document.getElementById('today-date').innerText = newDate;
+        hideNextButtonIfToday();
+    }
 
     function hideNextButtonIfToday() {
         var nextButton = document.getElementById('nextButton');
+        if (!nextButton) return;
+
         var options = { timeZone: 'America/New_York' };
         var today = new Date().toLocaleString('en-US', options);
         var currentDate = new Date(document.getElementById('today-date').innerText);

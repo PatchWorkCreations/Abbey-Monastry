@@ -84,3 +84,27 @@ class VisitorActivity(models.Model):
     def __str__(self):
         return f"Session: {self.session_key} | Visits: {self.page_visits}"
 
+from django.db import models
+from cloudinary.models import CloudinaryField
+from django.utils.text import slugify
+from django.utils.timezone import now
+
+class Artwork(models.Model):
+    CATEGORY_CHOICES = [
+        ("psalter", "Psalter Artwork"),
+        ("francis", "Francis Artwork"),
+    ]
+
+    category = models.CharField(
+        max_length=20, choices=CATEGORY_CHOICES, default="psalter"
+    )
+    title = models.CharField(max_length=200, help_text="Title of the artwork")
+    image1 = CloudinaryField("image", help_text="First artwork image")
+    image2 = CloudinaryField("image", blank=True, null=True, help_text="Second artwork image")
+    date_uploaded = models.DateTimeField(default=now, help_text="Timestamp of artwork upload")
+
+    def __str__(self):
+        return f"{self.get_category_display()} - {self.title} ({self.date_uploaded.date()})"
+    
+    class Meta:
+        ordering = ["-date_uploaded"]  # Show newest first

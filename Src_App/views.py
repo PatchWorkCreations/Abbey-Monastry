@@ -19,71 +19,53 @@ def calling(request):
     return render(request, 'calling.html')
 
 
-import os
-from django.conf import settings
-from datetime import datetime
-from pytz import timezone
+from django.shortcuts import render
+from django.utils.timezone import now
+from .models import Artwork
 
 def FrancisArtwork(request):
-    # Set timezone to 'US/Eastern'
-    eastern = timezone('US/Eastern')
-    now_eastern = datetime.now(eastern)
+    today_date = now().date()
 
-    # ✅ Correct filename format
-    today_date = now_eastern.strftime("%Y-%m-%d")  # "2025-03-11"
-    today_filename_1 = f"{today_date}_1.jpg"
-    today_filename_2 = f"{today_date}_2.jpg"
+    # Fetch today's Francis Artwork
+    artwork = Artwork.objects.filter(category="francis_artwork", date_uploaded__date=today_date).first()
 
-    # ✅ Correct folder path
-    francis_folder = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
-
-    # ✅ Ensure full static URL is passed to template
-    today_image_path_1 = f"/static/gallery/Francis Artwork/{today_filename_1}" if os.path.exists(os.path.join(francis_folder, today_filename_1)) else None
-    today_image_path_2 = f"/static/gallery/Francis Artwork/{today_filename_2}" if os.path.exists(os.path.join(francis_folder, today_filename_2)) else None
-
-    # Debugging output
-    print(f"🔍 Checking for Francis Artwork: {today_filename_1}, {today_filename_2}")
-    print(f"✅ Exists? {today_image_path_1}, {today_image_path_2}")
+    # Ensure the correct file extension (.jpg)
+    today_image_path_1 = f"{artwork.image1.url}.jpg" if artwork and artwork.image1 else None
+    today_image_path_2 = f"{artwork.image2.url}.jpg" if artwork and artwork.image2 else None
 
     context = {
-        'today_image_path_1': today_image_path_1,
-        'today_image_path_2': today_image_path_2,
-        'today_date': now_eastern.strftime("%B %d, %Y"),  # "March 11, 2025"
+        "today_image_path_1": today_image_path_1,
+        "today_image_path_2": today_image_path_2,
+        "today_date": today_date.strftime("%B %d, %Y"),
     }
 
-    return render(request, 'francis-artwork.html', context)
+    return render(request, "francis-artwork.html", context)
 
 
-
-from datetime import datetime
-from pytz import timezone
 from django.shortcuts import render
-import os
-from django.conf import settings
+from django.utils.timezone import now
+from django.db.models.functions import TruncDate
+from .models import Artwork
 
 def Psalter(request):
-    # Set the time zone to 'US/Eastern'
-    eastern = timezone('US/Eastern')
-    now_eastern = datetime.now(eastern)
+    today_date = now().date()
 
-    # Generate possible filenames for today’s two images
-    today_filename_1 = now_eastern.strftime("%Y-%m-%d") + "_1.jpg"
-    today_filename_2 = now_eastern.strftime("%Y-%m-%d") + "_2.jpg"
+    # Fetch today's Psalter Artwork and fix date filtering
+    artwork = (
+        Artwork.objects.annotate(upload_date=TruncDate("date_uploaded"))
+        .filter(category="psalter_artwork", upload_date=today_date)
+        .first()
+    )
 
-    # Define the file path
-    psalter_folder = os.path.join(settings.BASE_DIR, 'static/gallery/Psalter Artwork')
-    today_image_path_1 = f'/static/gallery/Psalter Artwork/{today_filename_1}' if os.path.exists(os.path.join(psalter_folder, today_filename_1)) else None
-    today_image_path_2 = f'/static/gallery/Psalter Artwork/{today_filename_2}' if os.path.exists(os.path.join(psalter_folder, today_filename_2)) else None
+    print("DEBUG: Retrieved Artwork:", artwork)
 
     context = {
-        'today_image_path_1': today_image_path_1,
-        'today_image_path_2': today_image_path_2,
-        'today_date': now_eastern.strftime("%B %d, %Y"),  # Keep human-readable format for display
+        "today_image_path_1": artwork.image1.url if artwork and artwork.image1 else None,
+        "today_image_path_2": artwork.image2.url if artwork and artwork.image2 else None,
+        "today_date": today_date.strftime("%B %d, %Y"),
     }
 
-    
-
-    return render(request, 'psalter.html', context)
+    return render(request, "psalter.html", context)
 
 
 from django.core.paginator import Paginator
@@ -697,93 +679,64 @@ def admin_edit(request):
     return render(request, 'admin_dashboard/edit.html')
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.core.files.storage import FileSystemStorage
-import os
-from django.conf import settings
-from datetime import datetime, timedelta
-from pytz import timezone
+
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.files.storage import FileSystemStorage
-import os
-from django.conf import settings
+from .models import Artwork
+import cloudinary.uploader
 from datetime import datetime, timedelta
-from pytz import timezone
+from django.utils.timezone import now
 
 @login_required
-def upload_photos(request):
-    if request.method == 'POST':
-        print("🛠 Upload request received")  # Debugging
+def upload_artwork(request):
+    if request.method == "POST" and request.FILES.getlist("photos"):
+        section = request.POST.get("section")
+        upload_type = request.POST.get("upload_type")
+        start_date = request.POST.get("start_date")
+        num_days = int(request.POST.get("num_days", 1))
 
-        section = request.POST.get('section')
-        start_date = request.POST.get('start_date')
-        num_days = int(request.POST.get('num_days', 0))
-        upload_type = request.POST.get('upload_type')  # "single" or "double"
-        files = request.FILES.getlist('photos')
+        files = request.FILES.getlist("photos")[:2]  # Limit 2 images max
 
-        print(f"Selected section: {section}")
-        print(f"Received files: {len(files)}")  # Print number of files received
-        print(f"Upload type: {upload_type}")
+        # Validate input
+        if not section or not start_date:
+            messages.error(request, "Invalid input. Please try again.")
+            return redirect("admin_dashboard")
 
-        if not files:
-            print("❌ No files received!")
-            return render(request, 'admin_dashboard/upload_photo.html', {'error': 'No files uploaded.'})
+        start_date_obj = datetime.strptime(start_date, "%Y-%m-%d").date()
 
-        # Define storage paths
-        base_dir = settings.BASE_DIR
-        storage_paths = {
-            'francis_artwork': os.path.join(base_dir, 'static/gallery/Francis Artwork'),
-            'psalter_artwork': os.path.join(base_dir, 'static/gallery/Psalter Artwork')
-        }
-
-        if section not in storage_paths:
-            messages.error(request, "Invalid section selected.")
-            return redirect('admin_dashboard')
-
-        storage_path = storage_paths[section]
-        os.makedirs(storage_path, exist_ok=True)  # Ensure directory exists
-
-        # Timezone setup
-        eastern = timezone('US/Eastern')
-        start_date_dt = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=eastern)
-
-        # Upload images for the selected number of days
+        # Upload images for each day
         for i in range(num_days):
-            current_date = start_date_dt + timedelta(days=i)
-            current_date_str = current_date.strftime("%Y-%m-%d")
+            upload_date = start_date_obj + timedelta(days=i)
+            today_date_str = upload_date.strftime("%Y-%m-%d")
 
-            # Get the images for the current day
-            images_for_day = files[i * (2 if upload_type == "double" else 1): (i + 1) * (2 if upload_type == "double" else 1)]
+            # Upload to Cloudinary
+            upload_results = []
+            for j, file in enumerate(files):
+                upload_result = cloudinary.uploader.upload(
+                    file,
+                    folder=f"{section}",
+                    public_id=f"{today_date_str}_{j+1}",
+                    overwrite=True,
+                    resource_type="image"
+                )
+                upload_results.append(upload_result["secure_url"])
 
-            # Ensure max 2 images per day
-            if len(images_for_day) > 2:
-                messages.warning(request, f"⚠️ Only 2 images per day allowed! Skipping extra images for {current_date_str}.")
-                continue
+            # Save to database
+            Artwork.objects.create(
+                category=section,
+                title=f"{section.replace('_', ' ').title()} - {today_date_str}",
+                image1=upload_results[0] if len(upload_results) > 0 else None,
+                image2=upload_results[1] if len(upload_results) > 1 else None,
+                date_uploaded=upload_date
+            )
 
-            for j, file in enumerate(images_for_day):
-                filename = f"{current_date_str}_{j+1}.jpg"  # Ensure `_1.jpg` or `_2.jpg`
-                print(f"📂 Saving: {filename}")  # Debugging
-                fs = FileSystemStorage(location=storage_path)
-                fs.save(filename, file)
+        messages.success(request, "✅ Artwork uploaded successfully!")
+        return redirect("admin_dashboard")
 
-        messages.success(request, f"✅ {len(files)} file(s) uploaded successfully for {section}.")
-        return redirect('admin_dashboard')
+    return render(request, "admin_dashboard/upload_photo.html")
 
-    return render(request, 'admin_dashboard/upload_photo.html')
-
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.core.files.storage import FileSystemStorage
-import os
-from django.conf import settings
-from datetime import datetime
-from pytz import timezone
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -795,98 +748,44 @@ from pytz import timezone
 
 @login_required
 def upload_francis_artwork(request):
-    if request.method == 'POST' and request.FILES.getlist('photos'):  # Accept multiple images
-        files = request.FILES.getlist('photos')  # Get all uploaded files
-        
-        print(f"📸 Received {len(files)} file(s) for Francis Artwork.")
+    if request.method == "POST" and request.FILES.getlist("photos"):
+        files = request.FILES.getlist("photos")[:2]  # Max 2 images
 
-        # Define storage path
-        storage_path = os.path.join(settings.BASE_DIR, 'static/gallery/Francis Artwork')
-        os.makedirs(storage_path, exist_ok=True)  # Ensure the directory exists
+        artwork = Artwork.objects.create(
+            category="francis",
+            title=f"Francis Artwork {now().strftime('%B %d, %Y')}",
+            image1=files[0],
+            image2=files[1] if len(files) > 1 else None
+        )
 
-        fs = FileSystemStorage(location=storage_path)
+        messages.success(request, "✅ Francis Artwork uploaded successfully!")
+        return redirect("admin_dashboard")
 
-        # Set timezone to 'US/Eastern'
-        eastern = timezone('US/Eastern')
-        now_eastern = datetime.now(eastern)
-        today_date = now_eastern.strftime("%Y-%m-%d")  # YYYY-MM-DD format
-
-        # Check existing images for today
-        existing_files = [f for f in os.listdir(storage_path) if f.startswith(today_date)]
-        existing_count = len(existing_files)  # Count existing (_1, _2)
-
-        if existing_count >= 2:
-            messages.warning(request, f"⚠️ Maximum of 2 images per day reached for {today_date}. No files uploaded.")
-            return redirect('admin_dashboard')
-
-        for i, file in enumerate(files):
-            if existing_count + i >= 2:  # Limit to 2 images per day
-                messages.warning(request, f"⚠️ Only 2 images allowed per day. Skipping extra files.")
-                break
-
-            image_number = existing_count + i + 1  # Assign _1 or _2
-            filename = f"{today_date}_{image_number}.jpg"
-
-            print(f"📂 Saving: {filename}")  # Debugging output
-            fs.save(filename, file)
-
-        messages.success(request, f"✅ {len(files)} file(s) uploaded successfully for Francis Artwork.")
-        return redirect('admin_dashboard')
-
-    return render(request, 'admin_dashboard/upload_photo.html')
+    return render(request, "admin_dashboard/upload_photo.html")
 
 
 
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.core.files.storage import FileSystemStorage
-import os
-from django.conf import settings
-from datetime import datetime
-from pytz import timezone
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Artwork
 
 @login_required
 def upload_psalter_artwork(request):
-    if request.method == 'POST' and request.FILES.getlist('photos'):  # Accept multiple files
-        files = request.FILES.getlist('photos')  # Get all uploaded files
-        
-        print(f"📸 Received {len(files)} file(s) for Psalter Artwork.")
+    if request.method == "POST" and request.FILES.getlist("photos"):
+        files = request.FILES.getlist("photos")[:2]  # Max 2 images
 
-        # Define storage path
-        storage_path = os.path.join(settings.BASE_DIR, 'static/gallery/Psalter Artwork')
-        os.makedirs(storage_path, exist_ok=True)  # Ensure the directory exists
+        artwork = Artwork.objects.create(
+            category="psalter",
+            title=f"Psalter Artwork {now().strftime('%B %d, %Y')}",
+            image1=files[0],
+            image2=files[1] if len(files) > 1 else None
+        )
 
-        fs = FileSystemStorage(location=storage_path)
+        messages.success(request, "✅ Psalter Artwork uploaded successfully!")
+        return redirect("admin_dashboard")
 
-        # Set timezone to 'US/Eastern'
-        eastern = timezone('US/Eastern')
-        now_eastern = datetime.now(eastern)
-        today_date = now_eastern.strftime("%Y-%m-%d")  # Standardized YYYY-MM-DD format
-
-        # Check how many images already exist for today
-        existing_files = [f for f in os.listdir(storage_path) if f.startswith(today_date)]
-        existing_count = len(existing_files)  # Get current count (_1, _2)
-
-        if existing_count >= 2:
-            messages.warning(request, f"⚠️ Maximum of 2 images per day reached for {today_date}. No files uploaded.")
-            return redirect('admin_dashboard')
-
-        for i, file in enumerate(files):
-            if existing_count + i >= 2:  # Prevent uploading more than 2 images per day
-                messages.warning(request, f"⚠️ Only 2 images allowed per day. Skipping extra files.")
-                break
-
-            image_number = existing_count + i + 1  # Assign _1 or _2
-            filename = f"{today_date}_{image_number}.jpg"
-
-            print(f"📂 Saving: {filename}")  # Debugging output
-            fs.save(filename, file)
-
-        messages.success(request, f"✅ {len(files)} file(s) uploaded successfully for Psalter Artwork.")
-        return redirect('admin_dashboard')
-
-    return render(request, 'admin_dashboard/upload_photo.html')
-
+    return render(request, "admin_dashboard/upload_photo.html")
 
 
 from django.shortcuts import render, redirect
