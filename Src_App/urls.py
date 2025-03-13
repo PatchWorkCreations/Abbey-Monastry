@@ -12,6 +12,7 @@ urlpatterns = [
     path('create-mepkin-daily-word/', views.CreateMepkinDailyWord, name='create-mepkin-daily-word'),
     path('delete-mepkin-daily-word/<int:pk>/', views.DeleteMepkinDailyWord, name='delete-mepkin-daily-word'),
 
+    path("psalter-intro/", views.psalter_intro, name="psalter_intro"),
     path('psalter/', views.Psalter, name='psalter'),
     path('francis-artwork/', views.FrancisArtwork, name='francis-artwork'),
 

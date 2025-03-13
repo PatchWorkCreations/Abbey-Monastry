@@ -68,6 +68,30 @@ def Psalter(request):
     return render(request, "psalter.html", context)
 
 
+import os
+from django.conf import settings
+from django.shortcuts import render
+
+def psalter_intro(request):
+    """
+    View to display the Psalter Introduction page with four images.
+    """
+    # Define the folder path
+    psalter_intro_folder = os.path.join(settings.BASE_DIR, "static/gallery/psalterintro")
+
+    # Image filenames (assuming they're named 1.jpg, 2.jpg, 3.jpg, 4.jpg)
+    image_paths = []
+    for i in range(1, 5):  # Loop through images 1 to 4
+        img_path = f"gallery/psalterintro/{i}.jpg"  # Static relative path
+        full_path = os.path.join(psalter_intro_folder, f"{i}.jpg")
+        if os.path.exists(full_path):
+            image_paths.append(img_path)
+
+    context = {"image_paths": image_paths}
+
+    return render(request, "psalter_intro.html", context)
+
+
 from django.core.paginator import Paginator
 
 def ViewMepkinDailyWord(request):
