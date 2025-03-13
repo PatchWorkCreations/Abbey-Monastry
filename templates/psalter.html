@@ -3,8 +3,8 @@
 {% load static %}
 
 <style>
-    /* General Container */
-    .container {
+        /* General Container */
+        .container {
         height: 100%;
         opacity: 0;
         transition: opacity 3s ease-in-out;
@@ -28,38 +28,38 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         transition: transform 0.3s ease;
-        max-width: 320px;
+        max-width: 360px;
+        width: 100%;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px; /* Default margin */
     }
 
-    .artwork-card:hover {
-        transform: scale(1.03);
-    }
-
-    /* Image Styling */
+    /* Image Styling - Fix Cutoff Issue */
     .artwork-image {
         width: 100%;
         height: auto;
-        display: block;
-        border-bottom: 4px solid #004085;
+        max-height: 100%;
+        object-fit: contain;
+        padding: 10px;
+        background-color: white;
     }
 
     /* Card Body */
     .card-body {
         text-align: center;
         padding: 1rem;
-    }
-
-    .card-title {
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: #333;
+        width: 100%;
+        background: white;
     }
 
     /* Footer Buttons */
     .footer-buttons {
         display: flex;
-        gap: 1rem; /* Added spacing between buttons */
+        gap: 1rem;
         justify-content: center;
         padding: 1rem;
     }
@@ -77,20 +77,41 @@
     }
 
     /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-        .artwork-container {
-            flex-direction: column; /* Stack images vertically on small screens */
-        }
-
-        .footer-buttons {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .btn-primary, .btn-success {
-            width: 100%; /* Full-width buttons for better tap experience */
-        }
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        margin-top: 200px !important; /* ✅ Ensure enough spacing */
     }
+
+    .artwork-container {
+        flex-direction: column; /* Stack images vertically */
+        gap: 1rem; /* Reduce gap for cleaner spacing */
+    }
+
+    .artwork-card {
+        max-width: 100%;
+        width: 100%;
+
+    }
+
+    .artwork-image {
+        width: 100%;
+        max-height: 350px;
+        object-fit: contain;
+    }
+
+    .footer-buttons {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px; /* ✅ Ensure buttons are spaced properly */
+    }
+
+    .btn-primary, .btn-success {
+        width: 100%;
+    }
+}
+
+
 
     /* Zoom Modal Styling */
     .modal {
@@ -124,7 +145,7 @@
 </style>
 
 <!-- Artwork Container -->
-<div class="container d-flex flex-column justify-content-center align-items-center gap-3">
+<div class="container d-flex flex-column justify-content-center align-items-center gap-3" >
     
 <div class="artwork-container">
     {% if today_image_path_1 %}
