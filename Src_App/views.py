@@ -19,54 +19,6 @@ def calling(request):
     return render(request, 'calling.html')
 
 
-from django.shortcuts import render
-from django.utils.timezone import now
-from .models import Artwork
-
-def FrancisArtwork(request):
-    today_date = now().date()
-
-    # Fetch today's Francis Artwork
-    artwork = Artwork.objects.filter(category="francis_artwork", date_uploaded__date=today_date).first()
-
-    # Ensure the correct file extension (.jpg)
-    today_image_path_1 = f"{artwork.image1.url}.jpg" if artwork and artwork.image1 else None
-    today_image_path_2 = f"{artwork.image2.url}.jpg" if artwork and artwork.image2 else None
-
-    context = {
-        "today_image_path_1": today_image_path_1,
-        "today_image_path_2": today_image_path_2,
-        "today_date": today_date.strftime("%B %d, %Y"),
-    }
-
-    return render(request, "francis-artwork.html", context)
-
-
-from django.shortcuts import render
-from django.utils.timezone import now
-from django.db.models.functions import TruncDate
-from .models import Artwork
-
-def Psalter(request):
-    today_date = now().date()
-
-    # Fetch today's Psalter Artwork and fix date filtering
-    artwork = (
-        Artwork.objects.annotate(upload_date=TruncDate("date_uploaded"))
-        .filter(category="psalter_artwork", upload_date=today_date)
-        .first()
-    )
-
-    print("DEBUG: Retrieved Artwork:", artwork)
-
-    context = {
-        "today_image_path_1": artwork.image1.url if artwork and artwork.image1 else None,
-        "today_image_path_2": artwork.image2.url if artwork and artwork.image2 else None,
-        "today_date": today_date.strftime("%B %d, %Y"),
-    }
-
-    return render(request, "psalter.html", context)
-
 
 import os
 from django.conf import settings
@@ -705,84 +657,143 @@ def admin_edit(request):
 
 
 
-from django.shortcuts import render, redirect
+
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Artwork
-import cloudinary.uploader
 from datetime import datetime, timedelta
 from django.utils.timezone import now
+from cloudinary.uploader import upload  # Import Cloudinary uploader
 
 @login_required
 def upload_artwork(request):
     if request.method == "POST" and request.FILES.getlist("photos"):
-        section = request.POST.get("section")
-        upload_type = request.POST.get("upload_type")
+        # Get form inputs
+        section = request.POST.get("section")  # "francis_artwork" or "psalter_artwork"
+        upload_type = request.POST.get("upload_type")  # "single" or "double"
         start_date = request.POST.get("start_date")
         num_days = int(request.POST.get("num_days", 1))
+        files = request.FILES.getlist("photos")
 
-        files = request.FILES.getlist("photos")[:2]  # Limit 2 images max
+        # Map the section input to model categories
+        category_map = {
+            "francis_artwork": "francis",
+            "psalter_artwork": "psalter"
+        }
 
-        # Validate input
-        if not section or not start_date:
-            messages.error(request, "Invalid input. Please try again.")
+        # Validate inputs
+        if not section or not start_date or section not in category_map:
+            messages.error(request, "Invalid section or start date.")
             return redirect("admin_dashboard")
 
+        # Convert the string start_date to a date object
         start_date_obj = datetime.strptime(start_date, "%Y-%m-%d").date()
+        category = category_map[section]
 
-        # Upload images for each day
+        # Determine number of images per day
+        images_per_day = 2 if upload_type == "double" else 1
+
+        # Ensure enough images were uploaded
+        required_images = num_days * images_per_day
+        if len(files) < required_images:
+            messages.error(request, f"Not enough images. You need at least {required_images} images for {num_days} days.")
+            return redirect("admin_dashboard")
+
+        # Assign images to days
+        file_index = 0
         for i in range(num_days):
             upload_date = start_date_obj + timedelta(days=i)
-            today_date_str = upload_date.strftime("%Y-%m-%d")
+            title = f"{category.replace('_', ' ').title()} Artwork {upload_date.strftime('%B %d, %Y')}"
 
-            # Upload to Cloudinary
-            upload_results = []
-            for j, file in enumerate(files):
-                upload_result = cloudinary.uploader.upload(
-                    file,
-                    folder=f"{section}",
-                    public_id=f"{today_date_str}_{j+1}",
-                    overwrite=True,
-                    resource_type="image"
+            # Upload images to Cloudinary and resize before saving
+            image1_url = None
+            image2_url = None
+
+            if file_index < len(files):
+                upload_result = upload(
+                    files[file_index],
+                    folder=f"{category}_artwork",
+                    transformation=[{"width": 800, "height": 800, "crop": "limit"}]
                 )
-                upload_results.append(upload_result["secure_url"])
+                image1_url = upload_result.get("secure_url")
 
-            # Save to database
+            if (file_index + 1 < len(files)) and images_per_day == 2:
+                upload_result = upload(
+                    files[file_index + 1],
+                    folder=f"{category}_artwork",
+                    transformation=[{"width": 800, "height": 800, "crop": "limit"}]
+                )
+                image2_url = upload_result.get("secure_url")
+
+            # Save artwork entry
             Artwork.objects.create(
-                category=section,
-                title=f"{section.replace('_', ' ').title()} - {today_date_str}",
-                image1=upload_results[0] if len(upload_results) > 0 else None,
-                image2=upload_results[1] if len(upload_results) > 1 else None,
+                category=category,
+                title=title,
+                image1=image1_url,
+                image2=image2_url,
                 date_uploaded=upload_date
             )
 
-        messages.success(request, "✅ Artwork uploaded successfully!")
+            # Move to the next images
+            file_index += images_per_day
+
+        messages.success(request, f"✅ {len(files)} images uploaded successfully over {num_days} days!")
         return redirect("admin_dashboard")
 
     return render(request, "admin_dashboard/upload_photo.html")
 
 
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.core.files.storage import FileSystemStorage
-import os
-from django.conf import settings
-from datetime import datetime
-from pytz import timezone
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Artwork
+from datetime import datetime, timedelta
+from django.utils.timezone import now
+from cloudinary.uploader import upload  # Import Cloudinary uploader
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Artwork
+from datetime import timedelta
+from django.utils.timezone import localtime, now
+from cloudinary.uploader import upload  # Import Cloudinary uploader
 
 @login_required
 def upload_francis_artwork(request):
     if request.method == "POST" and request.FILES.getlist("photos"):
-        files = request.FILES.getlist("photos")[:2]  # Max 2 images
+        files = request.FILES.getlist("photos")  # Allow multiple images
+        num_days = len(files)  # Each image gets its own day
+        start_date = localtime(now()).date()  # ✅ Ensures correct timezone handling
 
-        artwork = Artwork.objects.create(
-            category="francis",
-            title=f"Francis Artwork {now().strftime('%B %d, %Y')}",
-            image1=files[0],
-            image2=files[1] if len(files) > 1 else None
-        )
+        uploaded_images = []
 
-        messages.success(request, "✅ Francis Artwork uploaded successfully!")
+        for i, file in enumerate(files):
+            upload_date = start_date + timedelta(days=i)
+            title = f"Francis Artwork {upload_date.strftime('%B %d, %Y')}"
+
+            upload_result = upload(
+                file,
+                folder="francis_artwork",  # ✅ Ensuring the correct directory
+                transformation=[{"width": 800, "height": 800, "crop": "limit"}]
+            )
+
+            image_url = upload_result.get("secure_url")
+
+            # ✅ Save the artwork to the database
+            Artwork.objects.create(
+                category="francis",
+                title=title,
+                image1=image_url,
+                date_uploaded=upload_date  # ✅ Ensures correct date storage
+            )
+
+            uploaded_images.append(image_url)
+
+        print("✅ Uploaded Images:", uploaded_images)
+
+        messages.success(request, f"✅ {len(files)} Francis Artwork images uploaded successfully!")
         return redirect("admin_dashboard")
 
     return render(request, "admin_dashboard/upload_photo.html")
@@ -793,23 +804,93 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Artwork
-
+from django.utils.timezone import now
+from cloudinary.uploader import upload  # Import Cloudinary uploader
 @login_required
 def upload_psalter_artwork(request):
     if request.method == "POST" and request.FILES.getlist("photos"):
-        files = request.FILES.getlist("photos")[:2]  # Max 2 images
+        files = request.FILES.getlist("photos")  # Allow multiple images
+        num_days = len(files)  # Each image gets its own day
+        start_date = now().date()
 
-        artwork = Artwork.objects.create(
-            category="psalter",
-            title=f"Psalter Artwork {now().strftime('%B %d, %Y')}",
-            image1=files[0],
-            image2=files[1] if len(files) > 1 else None
-        )
+        uploaded_images = []
 
-        messages.success(request, "✅ Psalter Artwork uploaded successfully!")
+        for i, file in enumerate(files):
+            upload_date = start_date + timedelta(days=i)
+            title = f"Psalter Artwork {upload_date.strftime('%B %d, %Y')}"
+
+            upload_result = upload(
+                file,
+                folder="psalter_artwork",
+                transformation=[{"width": 800, "height": 800, "crop": "limit"}]
+            )
+
+            image_url = upload_result.get("secure_url")
+
+            Artwork.objects.create(
+                category="psalter",
+                title=title,
+                image1=image_url,
+                date_uploaded=upload_date
+            )
+
+            uploaded_images.append(image_url)
+
+        print("Uploaded Images:", uploaded_images)
+
+        messages.success(request, f"✅ {len(files)} Psalter Artwork images uploaded successfully!")
         return redirect("admin_dashboard")
 
     return render(request, "admin_dashboard/upload_photo.html")
+
+
+
+
+from django.shortcuts import render
+from django.utils.timezone import now
+from .models import Artwork
+
+def FrancisArtwork(request):
+    today_date = now().date()
+
+    # Fetch today's Francis Artwork
+    artwork = Artwork.objects.filter(category="francis", date_uploaded__date=today_date).first()
+
+    context = {
+        "today_image_path_1": artwork.image1 if artwork and artwork.image1 else None,
+        "today_image_path_2": artwork.image2 if artwork and artwork.image2 else None,
+        "today_date": today_date.strftime("%Y-%m-%d"),
+    }
+
+    return render(request, "francis-artwork.html", context)
+
+
+from django.shortcuts import render
+from django.utils.timezone import now
+from django.db.models.functions import TruncDate
+from .models import Artwork
+
+from django.db.models.functions import TruncDate
+
+def Psalter(request):
+    today_date = now().date()
+
+    # Fetch today's Psalter Artwork
+    artwork = (
+        Artwork.objects.annotate(upload_date=TruncDate("date_uploaded"))
+        .filter(category="psalter", upload_date=today_date)
+        .first()
+    )
+
+    print("DEBUG: Retrieved Artwork:", artwork)
+
+    context = {
+        "today_image_path_1": artwork.image1.url if artwork and artwork.image1 else None,
+        "today_image_path_2": artwork.image2.url if artwork and artwork.image2 else None,
+        "today_date": today_date.strftime("%B %d, %Y"),
+    }
+
+    return render(request, "psalter.html", context)
 
 
 from django.shortcuts import render, redirect
