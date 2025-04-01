@@ -875,7 +875,6 @@ from django.db.models.functions import TruncDate
 def Psalter(request):
     today_date = now().date()
 
-    # Fetch today's Psalter Artwork
     artwork = (
         Artwork.objects.annotate(upload_date=TruncDate("date_uploaded"))
         .filter(category="psalter", upload_date=today_date)
@@ -884,9 +883,13 @@ def Psalter(request):
 
     print("DEBUG: Retrieved Artwork:", artwork)
 
+    today_image_paths = [
+        artwork.image1.url if artwork and artwork.image1 else None,
+        artwork.image2.url if artwork and artwork.image2 else None,
+    ]
+
     context = {
-        "today_image_path_1": artwork.image1.url if artwork and artwork.image1 else None,
-        "today_image_path_2": artwork.image2.url if artwork and artwork.image2 else None,
+        "today_image_paths": today_image_paths,
         "today_date": today_date.strftime("%B %d, %Y"),
     }
 
