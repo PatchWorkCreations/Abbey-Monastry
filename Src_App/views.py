@@ -875,18 +875,18 @@ from django.db.models.functions import TruncDate
 def Psalter(request):
     today_date = now().date()
 
-    artwork = (
+    artworks = (
         Artwork.objects.annotate(upload_date=TruncDate("date_uploaded"))
         .filter(category="psalter", upload_date=today_date)
-        .first()
     )
 
-    print("DEBUG: Retrieved Artwork:", artwork)
-
-    today_image_paths = [
-        artwork.image1.url if artwork and artwork.image1 else None,
-        artwork.image2.url if artwork and artwork.image2 else None,
-    ]
+    # Flatten images from all artworks into a list
+    today_image_paths = []
+    for artwork in artworks:
+        if artwork.image1:
+            today_image_paths.append(artwork.image1.url)
+        if artwork.image2:
+            today_image_paths.append(artwork.image2.url)
 
     context = {
         "today_image_paths": today_image_paths,
