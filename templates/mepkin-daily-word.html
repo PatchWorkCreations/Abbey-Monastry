@@ -7,27 +7,71 @@
 {% load paginator_tags %}
 
 <style>
+/* Container with bottom padding for mobile buttons */
+.main-container {
+    padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+    .main-container {
+        padding-bottom: 0;
+    }
+}
+
+/* Hero Card Section */
+.hero-card {
+    height: 20rem;
+    overflow: hidden;
+}
+
+.hero-card .card-img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.profile-image-overlay {
+    width: 8rem;
+    height: 8rem;
+    border: 4px solid #FFF2E0C8;
+    display: block;
+    object-fit: cover;
+    position: relative;
+    z-index: 9999;
+}
+
+.hero-card .position-absolute {
+    z-index: 9999 !important;
+}
+
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     padding: 1rem 0;
+    gap: 0.5rem;
 }
 
 .pagination a, .pagination span {
-    margin: 0 5px;
-    padding: 8px 12px;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
     border: 1px solid #ddd;
     color: #3498db;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    min-width: 2.5rem;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 .pagination a:hover {
     background-color: #2980b9;
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .pagination .current {
@@ -37,35 +81,226 @@
     pointer-events: none;
 }
 
-
+/* Action Buttons - Desktop: Fixed */
 #prayButton, #proceedButton {
-    position: fixed;
-    bottom: 1rem;
     background-color: #3498db;
     color: #fff;
     font-size: 15px;
-    padding: 10px 15px;
+    padding: 12px 20px;
     border: 2px solid #2980b9;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
     text-decoration: none;
-    z-index: 1000; /* Ensure the button is above other elements */
-}
-
-#prayButton {
-    left: 1rem;
-}
-
-#proceedButton {
-    right: 1rem;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-weight: 500;
 }
 
 #prayButton:hover, #proceedButton:hover {
     background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Desktop: Fixed positioning */
+@media (min-width: 768px) {
+    #prayButton, #proceedButton {
+        position: fixed;
+        bottom: 1rem;
+    }
+    
+    #prayButton {
+        left: 1rem;
+    }
+    
+    #proceedButton {
+        right: 1rem;
+    }
+}
+
+/* Mobile: Sticky bottom bar */
+@media (max-width: 767px) {
+    .mobile-action-buttons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 0.75rem;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: flex;
+        gap: 0.75rem;
+    }
+    
+    .mobile-action-buttons a {
+        flex: 1;
+        text-align: center;
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+        background-color: #3498db;
+        color: #fff;
+        border: 2px solid #2980b9;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-action-buttons a:active {
+        background-color: #2980b9;
+        transform: scale(0.98);
+    }
+    
+    #prayButton, #proceedButton {
+        position: static;
+        display: none;
+    }
+}
+
+/* List Group Improvements */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    padding: 1rem 0.75rem;
+    transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 767px) {
+    .hero-card {
+        height: 16rem;
+        margin-bottom: 2rem;
+    }
+    
+    .profile-image-overlay {
+        width: 6rem !important;
+        height: 6rem !important;
+        border-width: 3px !important;
+    }
+    
+    .hero-card .position-absolute {
+        margin-bottom: -3rem !important;
+    }
+    
+    .title-section {
+        margin-top: 3.5rem !important;
+    }
+    
+    .bio-text {
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+        line-height: 1.6;
+    }
+    
+    .section-header {
+        font-size: 0.95rem;
+        padding: 0.5rem;
+    }
+    
+    .list-group {
+        font-size: 0.85rem;
+    }
+    
+    .list-group-item {
+        padding: 0.875rem 0.5rem;
+    }
+    
+    .list-group-item > .d-flex {
+        flex-wrap: wrap;
+    }
+    
+    .list-group-item > .d-flex > div:last-child {
+        width: 100%;
+        text-align: right;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    .list-group-item img {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    .list-group-item h4,
+    .list-group-item h6 {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .list-group-item p {
+        font-size: 0.85rem;
+        line-height: 1.6;
+        text-align: left !important;
+    }
+    
+    .pagination {
+        padding: 0.75rem 0;
+        gap: 0.35rem;
+    }
+    
+    .pagination a, .pagination span {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+        min-width: 2.25rem;
+    }
+    
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 375px) {
+    .hero-card {
+        height: 14rem;
+    }
+    
+    .profile-image-overlay {
+        width: 5rem !important;
+        height: 5rem !important;
+    }
+    
+    .title-section {
+        margin-top: 3rem !important;
+        font-size: 1.1rem;
+    }
+    
+    .mobile-action-buttons {
+        padding: 0.6rem;
+    }
+    
+    .mobile-action-buttons a {
+        font-size: 0.85rem;
+        padding: 0.75rem 0.75rem;
+    }
+}
+
+/* Improve readability */
+.list-group-item p {
+    line-height: 1.7;
+    color: #333;
+}
+
+.bio-text {
+    line-height: 1.7;
+    color: #555;
+    padding: 0 1rem;
 }
 </style>
 
-<div class="container mt-3">
+<div class="container mt-3 main-container">
     {% if message %}
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -89,40 +324,46 @@
         </div>
     </div>
     {% endif %}
-    <div class="card border-0 rounded-3 mb-3 position-relative" style="height: 20rem;">
-        <img src="{% static 'MEPKING/9.jpeg' %}" class="card-img" style="height: 100%; object-fit: cover;" alt="...">
-        <div class="position-absolute bottom-0 start-50 translate-middle-x" style="margin-bottom: -4rem;">
-            <img src="{% static 'MEPKING/Homilies.jpg' %}" class="rounded-circle" alt="Profile Image"
-                 style="width: 8rem; height: 8rem; border: 4px solid #FFF2E0C8;">
+    
+    <!-- Hero Card Section -->
+    <div class="card border-0 rounded-3 mb-3 position-relative hero-card">
+        <img src="{% static 'MEPKING/9.jpeg' %}" class="card-img" alt="Mepkin Abbey">
+        <div class="position-absolute bottom-0 start-50 translate-middle-x" style="margin-bottom: -4rem; z-index: 9999;">
+            <img src="{% static 'MEPKING/Homilies.jpg' %}" class="rounded-circle profile-image-overlay" alt="Profile Image" style="display: block;">
         </div>
     </div>
 
-    <div class="h5 fw-bold text-center" style="margin-top: 4.5rem;">
+    <!-- Title Section -->
+    <div class="h5 fw-bold text-center title-section" style="margin-top: 4.5rem;">
         <a href="#" class="text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Mepkin Daily Word</a>
     </div>
-    <p class="text-center" style="font-family: 'Times New Roman', Times, serif; font-style: italic;">{{ bio.content }}</p>
+    
+    <!-- Bio Text -->
+    <p class="text-center bio-text" style="font-family: 'Times New Roman', Times, serif; font-style: italic;">{{ bio.content }}</p>
 
-    <h6 class="fw-bold text-center py-1" style="background-color: #AC9362;">Daily Word</h6>
+    <!-- Section Header -->
+    <h6 class="fw-bold text-center py-2 section-header" style="background-color: #AC9362; color: white; margin: 1rem 0;">Daily Word</h6>
 
+    <!-- Daily Word List -->
     <div class="list-group" style="font-size: 0.8rem;">
         {% for mepkin_daily_word in page_obj %}
         <div class="list-group-item">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-grow-1">
                     <div class="flex-shrink-0">
                         <img src="{% static 'MEPKING/Homilies.jpg' %}" class="rounded-circle" alt="Profile Image"
                              style="width: 2.5rem; height: 2.5rem;">
                     </div>
                     <div class="flex-grow-1 ms-3">
                         {% if forloop.first %}
-                        <h4 class="fw-bold mb-1">Mepkin Daily Word</h4>
+                        <h4 class="fw-bold mb-2">Mepkin Daily Word</h4>
                         {% else %}
-                        <h6 class="fw-bold mb-1">Mepkin Daily Word</h6>
+                        <h6 class="fw-bold mb-2">Mepkin Daily Word</h6>
                         {% endif %}
-                        <p class="mb-1 {% if forloop.first %}d-5 fw-bold{% endif %}" style="text-align: justify;">{{ mepkin_daily_word.post|linebreaks }}</p>
+                        <p class="mb-0 {% if forloop.first %}fs-5 fw-bold{% endif %}">{{ mepkin_daily_word.post|linebreaks }}</p>
                     </div>
                 </div>
-                <div class="text-muted {% if forloop.first %}fw-bold{% endif %}" style="white-space: nowrap;">
+                <div class="text-muted {% if forloop.first %}fw-bold{% endif %}" style="white-space: nowrap; margin-left: 0.5rem;">
                     {{ mepkin_daily_word.created|date:"M d" }}
                 </div>
             </div>
@@ -130,6 +371,7 @@
         {% endfor %}
     </div>
 
+    <!-- Pagination -->
     <div class="pagination">
         {% if page_obj.has_previous %}
             <a href="?{% url_replace request 'page' page_obj.previous_page_number %}">Previous</a>
@@ -148,6 +390,7 @@
         {% endif %}
     </div>
 
+    <!-- Login Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -175,9 +418,14 @@
         </div>
     </div>
 
+    <!-- Desktop Action Buttons -->
     <a href="{% url 'pray' %}" id="prayButton">Click to Submit a Prayer</a>
     <a href="{% url 'psalter' %}" id="proceedButton">Click here to proceed</a>
+    
+    <!-- Mobile Action Buttons -->
+    <div class="mobile-action-buttons">
+        <a href="{% url 'pray' %}">Submit a Prayer</a>
+        <a href="{% url 'psalter' %}">Proceed</a>
+    </div>
 </div>
-
-<br>
 {% endblock %}

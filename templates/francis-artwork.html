@@ -3,41 +3,227 @@
 {% load static %}
 
 <style>
-    .container {
-        height: 100%;
+    .francis-container {
+        min-height: 100vh;
+        height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
         opacity: 0;
         transition: opacity 3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    .francis-card {
+        width: 100%;
+        max-width: 22rem;
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-height: calc(100vh - 2rem);
+    }
+
+    .artwork-images-container {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        background: #fafafa;
+    }
+
+    .francis-card .card-img-top {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+        background: white;
+    }
+
+    #artwork-image-1 {
+        max-height: 45vh;
+    }
+
+    #artwork-image-2 {
+        max-height: 45vh;
+    }
+
+    .francis-card .card-body {
+        flex-shrink: 0;
+        padding: 1rem;
+        text-align: center;
+        background: white;
+    }
+
+    .francis-card .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #333;
+        line-height: 1.4;
+    }
+
+    .francis-card .card-title span#today-date {
+        font-size: 0.95rem;
+        font-weight: 400;
+        display: block;
+        margin: 0.5rem 0;
+        color: #666;
+    }
+
+    .francis-card .text-muted {
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+        color: #999;
+    }
+
+    .francis-card .card-footer {
+        flex-shrink: 0;
+        padding: 1rem;
+        background: white;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .francis-card .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        white-space: nowrap;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 576px) {
+        .francis-container {
+            padding: 0.75rem;
+        }
+
+        .francis-card {
+            max-width: 100%;
+            max-height: calc(100vh - 1.5rem);
+            border-radius: 8px;
+        }
+
+        #artwork-image-1,
+        #artwork-image-2 {
+            max-height: 38vh;
+        }
+
+        .francis-card .card-body {
+            padding: 0.75rem;
+        }
+
+        .francis-card .card-title {
+            font-size: 1rem;
+        }
+
+        .francis-card .card-title span#today-date {
+            font-size: 0.85rem;
+        }
+
+        .francis-card .card-footer {
+            padding: 0.75rem;
+        }
+
+        .francis-card .btn {
+            font-size: 0.85rem;
+            padding: 0.45rem 0.9rem;
+        }
+
+        .francis-card .text-muted {
+            font-size: 0.7rem;
+        }
+    }
+
+    /* Very small screens */
+    @media (max-height: 700px) {
+        #artwork-image-1,
+        #artwork-image-2 {
+            max-height: 32vh;
+        }
+
+        .francis-card .card-body {
+            padding: 0.6rem;
+        }
+
+        .francis-card .card-title {
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .francis-card .card-title span#today-date {
+            font-size: 0.8rem;
+            margin: 0.4rem 0;
+        }
+
+        .francis-card .card-footer {
+            padding: 0.6rem;
+        }
+
+        .francis-card .btn {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+        }
+    }
+
+    /* Extra small height */
+    @media (max-height: 600px) {
+        #artwork-image-1,
+        #artwork-image-2 {
+            max-height: 28vh;
+        }
+
+        .francis-card .card-body {
+            padding: 0.5rem;
+        }
+
+        .francis-card .card-title {
+            font-size: 0.9rem;
+        }
+
+        .francis-card .card-title span#today-date {
+            font-size: 0.75rem;
+        }
     }
 </style>
 
-<div class="container d-flex flex-column justify-content-center align-items-center gap-2">
-    <div class="card mb-3" style="width: 20rem;">
-        
-        {% if today_image_path_1 %}
-            <img id="artwork-image-1" src="{{ today_image_path_1 }}" class="card-img-top" alt="Today's Artwork 1">
-        {% else %}
-            <p class="text-muted">No artwork available for today.</p>
-        {% endif %}
+<div class="francis-container">
+    <div class="card francis-card">
+        <div class="artwork-images-container">
+            {% if today_image_path_1 %}
+                <img id="artwork-image-1" src="{{ today_image_path_1 }}" class="card-img-top" alt="Today's Artwork 1">
+            {% else %}
+                <div class="text-center p-4">
+                    <p class="text-muted">No artwork available for today.</p>
+                </div>
+            {% endif %}
 
+            {% if today_image_path_2 %}
+                <img id="artwork-image-2" src="{{ today_image_path_2 }}" class="card-img-top" alt="Today's Artwork 2">
+            {% endif %}
+        </div>
 
-        {% if today_image_path_2 %}
-            <img id="artwork-image-2" src="{{ today_image_path_2 }}" class="card-img-top" alt="Today's Artwork 2">
-        {% endif %}
-
-        <div class="card-body text-center">
+        <div class="card-body">
             <div class="card-title">
                 Daily Wisdom Art
-                <br class="mt-5">
-                <span class="mt-5" id="today-date">{{ today_date }}</span>
-                <br>
+                <span id="today-date">{{ today_date }}</span>
                 Deepening Belief
             </div>
-            <p class="text-muted mb-0" style="font-size: 0.8rem;">© 2024 Our Lady of Mepkin Abbey</p>
+            <p class="text-muted mb-0">© 2026 Our Lady of Mepkin Abbey</p>
         </div>
+        
         <div class="card-footer">
-            <div class="d-flex gap-2 justify-content-center align-items-center">
-                <a href="{% url 'gallery' %}" class="btn btn-sm btn-success">View Gallery</a>
-                <a href="{% url 'mepkin-daily-word' %}" class="btn btn-sm btn-success">Proceed</a>
+            <div class="d-flex gap-2 justify-content-center align-items-center flex-wrap">
+                <a href="{% url 'gallery' %}" class="btn btn-success">View Gallery</a>
+                <a href="{% url 'mepkin-daily-word' %}" class="btn btn-success">Proceed</a>
             </div>
         </div>
     </div>
@@ -45,7 +231,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('.container').style.opacity = 1;
+        document.querySelector('.francis-container').style.opacity = 1;
         preloadNextImage();
         hideNextButtonIfToday();
     });

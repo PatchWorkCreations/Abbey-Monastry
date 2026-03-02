@@ -589,8 +589,8 @@ from .models import VisitorActivity  # Ensure the model is correctly imported
 def admin_dashboard(request):
     """ Fetches admin analytics, visitor tracking, and photo management data. """
 
-    # Set the time zone to 'US/Eastern'
-    eastern = timezone('US/Eastern')
+    # Set the time zone to 'America/New_York'
+    eastern = timezone('America/New_York')
     now_eastern = datetime.now(eastern)
 
     # 1️⃣ **Count future photos left for Francis Artwork**
@@ -848,7 +848,9 @@ def upload_psalter_artwork(request):
 
 from django.shortcuts import render
 from django.utils.timezone import now
+from django.conf import settings
 from .models import Artwork
+import random
 
 def FrancisArtwork(request):
     today_date = now().date()
@@ -856,6 +858,31 @@ def FrancisArtwork(request):
     # Fetch today's Francis Artwork
     artwork = Artwork.objects.filter(category="francis", date_uploaded__date=today_date).first()
 
+    # If no artwork found in database, fallback to static folder images
+    if not artwork or not artwork.image1:
+        artwork_path = os.path.join(settings.BASE_DIR, 'static', 'gallery', 'Francis Artwork')
+        if os.path.exists(artwork_path):
+            # Get all image files from the folder
+            image_files = [
+                f for f in os.listdir(artwork_path) 
+                if os.path.isfile(os.path.join(artwork_path, f)) 
+                and f.lower().endswith(('.jpg', '.jpeg', '.png'))
+            ]
+            
+            if image_files:
+                # Randomly select one or two images
+                selected_images = random.sample(image_files, min(2, len(image_files)))
+                image1_path = f"/static/gallery/Francis Artwork/{selected_images[0]}"
+                image2_path = f"/static/gallery/Francis Artwork/{selected_images[1]}" if len(selected_images) > 1 else None
+                
+                context = {
+                    "today_image_path_1": image1_path,
+                    "today_image_path_2": image2_path,
+                    "today_date": today_date.strftime("%Y-%m-%d"),
+                }
+                return render(request, "francis-artwork.html", context)
+
+    # Use database artwork if available
     context = {
         "today_image_path_1": artwork.image1 if artwork and artwork.image1 else None,
         "today_image_path_2": artwork.image2 if artwork and artwork.image2 else None,

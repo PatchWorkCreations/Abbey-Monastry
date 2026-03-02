@@ -153,7 +153,7 @@
         <span class="mt-5" id="today-date">{{ today_date }}</span>
     </div>
 
-    <div class="text-muted" style="font-size: 0.8rem;">© 2024 Our Lady of Mepkin Abbey</div>
+    <div class="text-muted" style="font-size: 0.8rem;">© 2026 Our Lady of Mepkin Abbey</div>
 
     <div class="footer-buttons">
         <a href="{% url 'psalter_intro' %}" class="btn btn-primary">About The Mepkin Psalter</a>
@@ -162,39 +162,78 @@
 </div>
 
 <script>
-let currentIndex = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const track = document.querySelector('.carousel-track');
-const dots = document.querySelectorAll('.dot');
-
-function updateCarousel() {
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
-}
-
-function moveSlide(dir) {
-    currentIndex = (currentIndex + dir + slides.length) % slides.length;
-    updateCarousel();
-}
-
-function currentSlide(idx) {
-    currentIndex = idx;
-    updateCarousel();
-}
-
-setInterval(() => moveSlide(1), 20000);
-updateCarousel();
-
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.container').style.opacity = 1;
+    // Fade in container
+    const container = document.querySelector('.container');
+    if (container) {
+        container.style.opacity = 1;
+    }
+
+    // Initialize carousel only if elements exist
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (track && slides.length > 0) {
+        let currentIndex = 0;
+        let carouselInterval = null;
+
+        function updateCarousel() {
+            if (track && slides.length > 0) {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                dots.forEach((dot, idx) => {
+                    if (dot) {
+                        dot.classList.toggle('active', idx === currentIndex);
+                    }
+                });
+            }
+        }
+
+        function moveSlide(dir) {
+            if (slides.length > 0) {
+                currentIndex = (currentIndex + dir + slides.length) % slides.length;
+                updateCarousel();
+            }
+        }
+
+        function currentSlide(idx) {
+            if (slides.length > 0 && idx >= 0 && idx < slides.length) {
+                currentIndex = idx;
+                updateCarousel();
+            }
+        }
+
+        // Make functions globally available for onclick handlers
+        window.moveSlide = moveSlide;
+        window.currentSlide = currentSlide;
+
+        // Initialize carousel
+        updateCarousel();
+
+        // Auto-slide every 20 seconds
+        carouselInterval = setInterval(() => {
+            if (slides.length > 1) {
+                moveSlide(1);
+            }
+        }, 20000);
+    }
 });
 
 function openModal(src) {
+    if (!src) return;
+    
     const modal = document.createElement('div');
-    modal.innerHTML = `<div onclick="this.remove()" class="modal" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
-        <span style="position:absolute; top:20px; right:30px; color:white; font-size:2rem;">&times;</span>
-        <img src="${src}" style="max-width:90%; max-height:90%; object-fit:contain;">
-    </div>`;
+    modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:10000;';
+    modal.onclick = function(e) {
+        if (e.target === modal || e.target.tagName === 'SPAN') {
+            modal.remove();
+        }
+    };
+    
+    modal.innerHTML = `
+        <span style="position:absolute; top:20px; right:30px; color:white; font-size:2rem; cursor:pointer; z-index:10001;">&times;</span>
+        <img src="${src}" style="max-width:90%; max-height:90%; object-fit:contain; cursor:default;" onclick="event.stopPropagation();">
+    `;
     document.body.appendChild(modal);
 }
 </script>
